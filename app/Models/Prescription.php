@@ -9,6 +9,17 @@ class Prescription extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'patient_id',
+        'doctor_id',
+        'notes',
+        'issued_at'
+    ];
+
+    protected $casts = [
+        'issued_at' => 'datetime',
+    ];
+
     public function patient()
     {
         return $this->belongsTo(Patient::class);

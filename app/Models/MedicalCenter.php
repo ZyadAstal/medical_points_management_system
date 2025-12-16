@@ -9,6 +9,8 @@ class MedicalCenter extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'location', 'phone'];
+
     public function users()
     {
         return $this->hasMany(User::class);

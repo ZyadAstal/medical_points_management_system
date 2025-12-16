@@ -9,6 +9,12 @@ class Inventory extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'medical_center_id',
+        'medicine_id',
+        'quantity'
+    ];
+
     public function medicalCenter()
     {
         return $this->belongsTo(MedicalCenter::class);

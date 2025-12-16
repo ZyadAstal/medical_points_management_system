@@ -9,6 +9,12 @@ class Medicine extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'points_cost', 'expiry_date'];
+
+    protected $casts = [
+        'expiry_date' => 'date',
+    ];
+
     public function prescriptionItems()
     {
         return $this->hasMany(PrescriptionItem::class);
@@ -17,5 +23,10 @@ class Medicine extends Model
     public function inventories()
     {
         return $this->hasMany(Inventory::class);
+    }
+
+    public function dispenses()
+    {
+        return $this->hasMany(Dispense::class);
     }
 }

@@ -9,6 +9,20 @@ class User extends Authenticatable
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'username',
+        'email',
+        'password',
+        'role_id',
+        'medical_center_id'
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token'
+    ];
+
     public function role()
     {
         return $this->belongsTo(Role::class);

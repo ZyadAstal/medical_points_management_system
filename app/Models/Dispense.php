@@ -9,6 +9,13 @@ class Dispense extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'prescription_item_id',
+        'medical_center_id',
+        'quantity',
+        'points_used'
+    ];
+
     public function prescriptionItem()
     {
         return $this->belongsTo(PrescriptionItem::class);

@@ -13,7 +13,6 @@ return new class extends Migration {
             $table->string('name');
             $table->integer('points_cost');
 
-            // تاريخ الانتهاء
             $table->date('expiry_date');
 
             $table->timestamps();

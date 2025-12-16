@@ -10,10 +10,8 @@ return new class extends Migration {
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
 
-            // المريض المرتبط بالوصفة
             $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
 
-            // الطبيب الذي أصدر الوصفة
             $table->foreignId('doctor_id')->constrained('users')->cascadeOnDelete();
 
             $table->text('notes')->nullable();

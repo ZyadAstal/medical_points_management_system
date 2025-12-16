@@ -15,7 +15,7 @@ class DoctorSeeder extends Seeder
             'username'          => 'doctor1',
             'email'             => 'doctor1@example.com',
             'password'          => Hash::make('password'),
-            'role_id'           => 4, // Doctor
+            'role_id'           => 4,
             'medical_center_id' => 1,
         ]);
     }

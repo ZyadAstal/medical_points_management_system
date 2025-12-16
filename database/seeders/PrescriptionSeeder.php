@@ -11,7 +11,7 @@ class PrescriptionSeeder extends Seeder
 {
     public function run(): void
     {
-        $doctor = User::where('role_id', 4)->first(); // أول طبيب
+        $doctor = User::where('role_id', 4)->first();
         $patients = Patient::all();
 
         foreach ($patients as $patient) {

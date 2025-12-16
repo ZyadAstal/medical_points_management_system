@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('prescription_id')->constrained()->cascadeOnDelete();
             $table->foreignId('medicine_id')->constrained()->cascadeOnDelete();
-            $table->integer('quantity')->default(1); // الكمية المقررة
+            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }

@@ -11,7 +11,6 @@ class PatientSeeder extends Seeder
 {
     public function run(): void
     {
-        // إنشاء حساب مستخدم للمريض
         $user = User::create([
             'name'              => 'Patient User',
             'username'          => 'patient1',
@@ -21,7 +20,6 @@ class PatientSeeder extends Seeder
             'medical_center_id' => 1,
         ]);
 
-        // إنشاء بيانات المريض
         Patient::create([
             'user_id'     => $user->id,
             'full_name'   => 'Ahmed Ali',

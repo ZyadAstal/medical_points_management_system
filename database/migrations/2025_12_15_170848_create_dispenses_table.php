@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('prescription_item_id')->constrained()->cascadeOnDelete();
             $table->foreignId('medical_center_id')->constrained()->cascadeOnDelete();
-            $table->integer('quantity')->default(0); // الكمية المصروفة
-            $table->integer('points_used')->default(0); // النقاط المخصومة
+            $table->integer('quantity')->default(0);
+            $table->integer('points_used')->default(0);
             $table->timestamps();
         });
     }

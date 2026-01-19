@@ -20,4 +20,9 @@ class MedicalCenter extends Model
     {
         return $this->hasMany(Inventory::class);
     }
+
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
+    }
 }

@@ -29,4 +29,9 @@ class PrescriptionItem extends Model
     {
         return $this->hasMany(Dispense::class);
     }
+
+    public function dispense()
+    {
+        return $this->hasOne(Dispense::class);
+    }
 }

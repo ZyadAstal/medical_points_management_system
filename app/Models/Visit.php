@@ -5,21 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dispense extends Model
+class Visit extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'prescription_item_id',
-        'pharmacist_id',
+        'patient_id',
+        'doctor_id',
         'medical_center_id',
-        'quantity',
-        'points_used'
+        'status',
+        'priority',
+        'visit_date',
+        'notes',
     ];
 
-    public function prescriptionItem()
+    public function patient()
     {
-        return $this->belongsTo(PrescriptionItem::class);
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'doctor_id');
     }
 
     public function medicalCenter()

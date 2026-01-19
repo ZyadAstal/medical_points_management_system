@@ -33,7 +33,12 @@ class User extends Authenticatable
         return $this->belongsTo(MedicalCenter::class);
     }
 
-    public function patientProfile()
+    public function doctorVisits()
+    {
+        return $this->hasMany(Visit::class, 'doctor_id');
+    }
+
+    public function patient()
     {
         return $this->hasOne(Patient::class);
     }

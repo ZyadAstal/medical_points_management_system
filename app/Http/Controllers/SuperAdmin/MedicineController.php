@@ -8,10 +8,17 @@ use Illuminate\Http\Request;
 
 class MedicineController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $medicines = Medicine::all();
-        return view('superadmin.medicines.index', compact('medicines'));
+        $query = Medicine::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        $medicines = $query->paginate(10)->withQueryString();
+        return view('superadmin.medicines', compact('medicines'));
     }
 
     public function create()

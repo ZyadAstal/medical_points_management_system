@@ -15,11 +15,13 @@ class SuperAdminDashboardController extends Controller
     {
         // إحصائيات عامة للنظام
         $stats = [
+            'users_count' => User::count(),
             'doctors_count' => User::whereHas('role', function($q) { $q->where('name', 'Doctor'); })->count(),
             'pharmacists_count' => User::whereHas('role', function($q) { $q->where('name', 'Pharmacist'); })->count(),
             'patients_count' => Patient::count(),
             'centers_count' => MedicalCenter::count(),
             'medicines_count' => Medicine::count(),
+            'total_points' => \App\Models\Dispense::sum('points_used'),
         ];
 
         return view('superadmin.dashboard', compact('stats'));

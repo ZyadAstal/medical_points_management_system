@@ -11,18 +11,38 @@ use Illuminate\Support\Facades\Auth;
 
 class StaffController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $centerId = Auth::user()->medical_center_id;
         
-        $staff = User::with('role')
+        $query = User::with('role')
             ->where('medical_center_id', $centerId)
             ->whereHas('role', function($q) {
                 $q->whereIn('name', ['Doctor', 'Pharmacist', 'Reception']);
-            })
-            ->get();
+            });
 
-        return view('manager.staff.index', compact('staff'));
+        // Search Filter (by name, email, or username)
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('username', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Role Filter
+        if ($request->filled('role') && $request->role !== 'all') {
+            $query->whereHas('role', function($q) use ($request) {
+                $q->where('name', $request->role);
+            });
+        }
+
+        $staff = $query->paginate(10)->withQueryString();
+        
+        $availableRoles = Role::whereIn('name', ['Doctor', 'Pharmacist', 'Reception'])->get();
+
+        return view('manager.employee', compact('staff', 'availableRoles'));
     }
 
     public function create()
@@ -55,27 +75,27 @@ class StaffController extends Controller
         return redirect()->route('manager.staff.index')->with('success', 'تم إضافة الموظف بنجاح');
     }
 
-    public function edit(User $user)
+    public function edit(User $staff)
     {
         // التأكد من أن الموظف يتبع لنفس المركز
-        if ($user->medical_center_id !== Auth::user()->medical_center_id) {
+        if ($staff->medical_center_id !== Auth::user()->medical_center_id) {
             abort(403);
         }
 
         $roles = Role::whereIn('name', ['Doctor', 'Pharmacist', 'Reception'])->get();
-        return view('manager.staff.edit', compact('user', 'roles'));
+        return view('manager.staff.edit', compact('staff', 'roles'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $staff)
     {
-        if ($user->medical_center_id !== Auth::user()->medical_center_id) {
+        if ($staff->medical_center_id !== Auth::user()->medical_center_id) {
             abort(403);
         }
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'username' => 'required|string|unique:users,username,' . $user->id,
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'username' => 'required|string|unique:users,username,' . $staff->id,
+            'email' => 'required|email|unique:users,email,' . $staff->id,
             'password' => 'nullable|min:8',
             'role_id' => 'required|exists:roles,id',
         ]);
@@ -91,18 +111,18 @@ class StaffController extends Controller
             $data['password'] = Hash::make($request->password);
         }
 
-        $user->update($data);
+        $staff->update($data);
 
         return redirect()->route('manager.staff.index')->with('success', 'تم تحديث بيانات الموظف بنجاح');
     }
 
-    public function destroy(User $user)
+    public function destroy(User $staff)
     {
-        if ($user->medical_center_id !== Auth::user()->medical_center_id) {
+        if ($staff->medical_center_id !== Auth::user()->medical_center_id) {
             abort(403);
         }
         
-        $user->delete();
+        $staff->delete();
         return redirect()->route('manager.staff.index')->with('success', 'تم حذف الموظف بنجاح');
     }
 }

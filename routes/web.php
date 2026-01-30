@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Shared\ProfileController;
 
 // SuperAdmin Controllers
 use App\Http\Controllers\SuperAdmin\SuperAdminDashboardController;
@@ -20,6 +21,17 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+// Password Reset Routes
+Route::get('password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// --- Shared Authenticated Routes ---
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.update.personal');
+    Route::put('/profile/security', [ProfileController::class, 'updateSecurity'])->name('profile.update.security');
+});
+
 // --- Super Admin Routes ---
 Route::middleware(['auth', RoleMiddleware::class . ':SuperAdmin'])->prefix('superadmin')->name('superadmin.')->group(function () {
     Route::get('/dashboard', [SuperAdminDashboardController::class, 'index'])->name('dashboard');
@@ -27,8 +39,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':SuperAdmin'])->prefix('supe
     Route::resource('users', UsersController::class)->except(['show']);
     Route::resource('centers', MedicalCenterController::class)->except(['show']);
     Route::resource('medicines', MedicineController::class)->except(['show']);
+    Route::resource('roles', App\Http\Controllers\SuperAdmin\RoleController::class)->only(['index', 'update']);
     
     Route::get('/reports', [App\Http\Controllers\SuperAdmin\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/pdf', [App\Http\Controllers\SuperAdmin\ReportController::class, 'downloadPdf'])->name('reports.pdf');
 });
 
 // --- Doctor Routes ---
@@ -59,11 +73,18 @@ Route::middleware(['auth', RoleMiddleware::class . ':Pharmacist'])->prefix('phar
 Route::middleware(['auth', RoleMiddleware::class . ':CenterManager'])->prefix('manager')->name('manager.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\CenterManager\DashboardController::class, 'index'])->name('dashboard');
     
+    // Inventory (Medicines)
     Route::get('/inventory', [\App\Http\Controllers\CenterManager\InventoryController::class, 'index'])->name('inventory.index');
     Route::post('/inventory', [\App\Http\Controllers\CenterManager\InventoryController::class, 'update'])->name('inventory.update');
 
+    // Dispensing History
+    Route::get('/dispensing', [\App\Http\Controllers\CenterManager\DispensingController::class, 'index'])->name('dispensing.index');
+
     // Staff Management
     Route::resource('staff', \App\Http\Controllers\CenterManager\StaffController::class);
+
+    // Patients
+    Route::resource('patients', \App\Http\Controllers\CenterManager\PatientController::class)->only(['index', 'show']);
 
     // Reports
     Route::get('/reports', [\App\Http\Controllers\CenterManager\ReportController::class, 'index'])->name('reports.index');

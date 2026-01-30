@@ -12,16 +12,45 @@ use Illuminate\Support\Facades\Hash;
 class UsersController extends Controller
 {
     // عرض قائمة المستخدمين (أطباء، صيادلة، استقبال)
-    public function index()
+    public function index(Request $request)
     {
-        // استثناء المرضى والسوبر أدمن من القائمة
-        $users = User::with(['role', 'medicalCenter'])
+        $query = User::with(['role', 'medicalCenter'])
             ->whereHas('role', function($q) {
                 $q->whereNotIn('name', ['Super Admin', 'Patient']);
-            })
-            ->get();
+            });
 
-        return view('superadmin.users.index', compact('users'));
+        // Search Filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('username', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Role Filter
+        if ($request->filled('role')) {
+            $query->whereHas('role', function($q) use ($request) {
+                // Handle both ID and Name if needed, but here we expect name
+                if (is_numeric($request->role)) {
+                    $q->where('id', $request->role);
+                } else {
+                    $q->where('name', $request->role);
+                }
+            });
+        }
+
+        // Medical Center Filter
+        if ($request->filled('center')) {
+            $query->where('medical_center_id', $request->center);
+        }
+
+        $users = $query->paginate(10)->withQueryString();
+        $roles = Role::whereNotIn('name', ['Super Admin', 'Patient'])->get();
+        $centers = MedicalCenter::all();
+
+        return view('superadmin.users', compact('users', 'roles', 'centers'));
     }
 
     // صفحة إنشاء مستخدم جديد

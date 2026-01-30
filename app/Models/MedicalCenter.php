@@ -25,4 +25,9 @@ class MedicalCenter extends Model
     {
         return $this->hasMany(Visit::class);
     }
+
+    public function dispenses()
+    {
+        return $this->hasMany(Dispense::class);
+    }
 }

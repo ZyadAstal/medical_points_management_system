@@ -35,14 +35,31 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        $staff = $user->medicalCenter->users()->with('role')->get();
+        $patients_count = \App\Models\Visit::where('medical_center_id', $center_id)
+            ->distinct('patient_id')
+            ->count('patient_id');
+
+        $doctors_count = $user->medicalCenter->users()->whereHas('role', function($q) {
+            $q->where('name', 'Doctor');
+        })->count();
+
+        $pharmacists_count = $user->medicalCenter->users()->whereHas('role', function($q) {
+            $q->where('name', 'Pharmacist');
+        })->count();
+
+        $points_today = Dispense::where('medical_center_id', $center_id)
+            ->whereDate('created_at', now())
+            ->sum('points_used');
 
         return view('manager.dashboard', compact(
             'low_stock_count', 
             'total_medicines', 
             'dispensed_today', 
             'recent_dispenses', 
-            'staff'
+            'patients_count',
+            'doctors_count',
+            'pharmacists_count',
+            'points_today'
         ));
     }
 }

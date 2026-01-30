@@ -34,4 +34,9 @@ class Prescription extends Model
     {
         return $this->hasMany(PrescriptionItem::class);
     }
+
+    public function dispenses()
+    {
+        return $this->hasManyThrough(Dispense::class, PrescriptionItem::class);
+    }
 }

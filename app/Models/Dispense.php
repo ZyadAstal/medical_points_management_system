@@ -26,4 +26,9 @@ class Dispense extends Model
     {
         return $this->belongsTo(MedicalCenter::class);
     }
+
+    public function pharmacist()
+    {
+        return $this->belongsTo(User::class, 'pharmacist_id');
+    }
 }

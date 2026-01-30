@@ -1,0 +1,207 @@
+/* Extra styles for specific pages to keep style.css clean */
+
+/* Users Page */
+body[data-page="users"] {
+    background: #ECECEC;
+}
+
+body[data-page="users"] .main {
+    background: #ECECEC !important;
+}
+
+body[data-page="users"] .header {
+    height: 116px !important;
+    border-bottom: none !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+body[data-page="users"] .main {
+    padding-top: 116px !important;
+}
+
+body[data-page="users"] .users-frame19 {
+    width: 100%;
+    min-height: 899px;
+    background: #FFFFFF;
+    margin: 9px 0 0;
+    box-sizing: border-box;
+    padding: 0 0 30px;
+}
+
+/* Reports Page */
+.reports-page table thead th {
+    height: 55px;
+    background-color: #053052 !important;
+    color: #ffffff !important;
+}
+
+.reports-page table thead th:first-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.reports-page table thead th:last-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.reports-page table th,
+.reports-page table td {
+    border-left: 1px solid #053052;
+}
+
+.reports-page table th:last-child,
+.reports-page table td:last-child {
+    border-left: none;
+}
+
+/* Reports Page Filters Fixes */
+.reports-filters-grid .filter-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 4px !important;
+    width: 120px;
+    height: auto;
+    margin-top: 0;
+    padding-top: 14px;
+}
+
+.btn-reports-apply,
+.btn-reports-reset {
+    height: 28px !important;
+    padding: 0 10px !important;
+    border-radius: 4px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    transition: all 0.2s ease;
+}
+
+.btn-reports-apply {
+    background: linear-gradient(90deg, #053052, #0B6CB8) !important;
+    color: #ffffff !important;
+    border: 1px solid #5B91E9 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.btn-reports-reset {
+    background: #7A7A7A !important;
+    color: #ffffff !important;
+    border: 1px solid #444444 !important;
+    text-decoration: none !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.btn-reports-apply:hover,
+.btn-reports-reset:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* Medicines Page Fixes */
+body[data-page="medicines"] .medicines-page-wrapper {
+    flex-direction: column !important;
+    padding-bottom: 50px;
+}
+
+body[data-page="medicines"] .medicines-alert {
+    width: calc(100% - 138px);
+    margin: 20px 69px 0 auto;
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    direction: rtl;
+}
+
+body[data-page="medicines"] .medicines-alert--success {
+    background-color: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+}
+
+body[data-page="medicines"] .medicines-alert--error {
+    background-color: #FEF2F2;
+    color: #991B1B;
+    border: 1px solid #FECACA;
+}
+
+/* Profile Page Alerts */
+.profile-alert {
+    width: fit-content;
+    margin: 10px 0 20px auto;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 15px;
+    direction: rtl;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid transparent;
+}
+
+.alert-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.alert-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.alert-message {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.alert-message-list {
+    margin: 0;
+    padding-right: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.alert-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.profile-alert--success {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #065F46;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.profile-alert--error {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #991B1B;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.alert-icon {
+    font-size: 18px;
+}

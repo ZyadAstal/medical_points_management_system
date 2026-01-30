@@ -28,10 +28,10 @@ class InventoryController extends Controller
             });
         }
 
-        $inventories = $query->get();
+        $inventories = $query->paginate(10)->withQueryString();
         $all_medicines = Medicine::all();
 
-        return view('manager.inventory.index', compact('inventories', 'all_medicines'));
+        return view('manager.medicines', compact('inventories', 'all_medicines'));
     }
 
     public function update(Request $request)

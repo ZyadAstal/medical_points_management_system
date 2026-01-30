@@ -8,10 +8,21 @@ use Illuminate\Http\Request;
 
 class MedicalCenterController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $centers = MedicalCenter::all();
-        return view('superadmin.centers.index', compact('centers'));
+        $query = MedicalCenter::withCount(['users', 'dispenses']);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%");
+            });
+        }
+
+        $centers = $query->paginate(10)->withQueryString();
+        return view('superadmin.medical-centers', compact('centers'));
     }
 
     public function create()

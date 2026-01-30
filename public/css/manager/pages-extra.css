@@ -1,0 +1,86 @@
+/* Extra styles for Manager's specific pages */
+@import url("../../admin/pages-extra.css");
+
+/* Manager Employee Page */
+body[data-page="users"] {
+    background: #ECECEC;
+}
+
+body[data-page="users"] .main {
+    background: #ECECEC !important;
+}
+
+body[data-page="users"] .header {
+    height: 116px !important;
+    border-bottom: none !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+body[data-page="users"] .main {
+    padding-top: 116px !important;
+}
+
+body[data-page="users"] .users-frame19 {
+    width: 100%;
+    min-height: 899px;
+    background: #FFFFFF;
+    margin: 9px 0 0;
+    box-sizing: border-box;
+    padding: 0 0 30px;
+}
+
+.role-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.role-doctor {
+    background: #E0F2FE;
+    color: #0369A1;
+}
+
+.role-pharmacist {
+    background: #F0FDF4;
+    color: #166534;
+}
+
+.role-reception {
+    background: #FFF7ED;
+    color: #9A3412;
+}
+
+/* Morphology (Exchange Operations) Page */
+.filters {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr;
+    gap: 30px;
+    margin-top: 5rem;
+    width: 85%;
+}
+
+.filters input,
+.filters select {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #0a2e4e;
+    font-size: 14px;
+    font-family: "Cairo", Tahoma, Arial, sans-serif;
+    outline: none;
+    background-color: #ffffff;
+}
+
+.filters input::placeholder {
+    color: #9aa9b8;
+}
+
+.filters input:focus,
+.filters select:focus {
+    border-color: #0a2e4e;
+    box-shadow: 0 0 0 2px rgba(10, 46, 78, 0.1);
+}
+
+/* Manager Reports Page (If any unique styles) */
+/* (Currently reuses SuperAdmin logic via @import) */

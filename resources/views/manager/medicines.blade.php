@@ -3,46 +3,102 @@
 @section('title', 'إدارة الأدوية - Medicare')
 @section('page-id', 'medicines')
 
+@push('styles')
+    <link href="{{ asset('css/manager/medicines.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
-<div class="medicines-page-wrapper">
-    <div class="medicines-page-header">
-        <h1 class="medicines-title"> الأدوية</h1>
-        <p class="medicines-desc">عرض قائمة الأدوية المتاحة في المركز</p>
+<div class="medicines-container">
+    
+    <div class="page-header">
+        <h1 class="page-title">الأدوية</h1>
+        <p class="page-subtitle">عرض وتحديث كميات الأدوية المتاحة في المركز</p>
     </div>
 
-    <div class="medicines-search">
-        <input class="medicines-search-input" type="text" placeholder="ابحث عن اسم الدواء..." />
+    @if(session('success'))
+        <div style="background: #D1FAE5; color: #065F46; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: right; font-weight: 700;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <!-- Update Section -->
+    <div class="update-card">
+        <h2 class="update-title">تحديث الكميات</h2>
+        <form action="{{ route('manager.inventory.update') }}" method="POST" class="update-form">
+            @csrf
+            
+            <div class="form-group">
+                <label>اختر الدواء</label>
+                <select name="medicine_id" class="form-control" required>
+                    <option value="" disabled selected>-- اختر الدواء من القائمة --</option>
+                    @foreach($all_medicines as $med)
+                        <option value="{{ $med->id }}">{{ $med->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>الكمية الكلية الجديدة</label>
+                <input type="number" name="quantity" class="form-control" value="0" min="0" required>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-update">تحديث المخزون</button>
+            </div>
+        </form>
     </div>
 
-    <div class="medicines-table" id="medicines" style="margin-top: 14rem;margin-right: -14rem;">
-        <table class="styled-table" style="border: 1px solid #053052; border-collapse: collapse">
+    <!-- Search Section -->
+    <div class="search-wrapper">
+        <div class="search-box">
+            <form action="{{ route('manager.inventory.index') }}" method="GET">
+                <input type="text" name="search" class="search-input" placeholder="ابحث عن اسم دواء معين..." value="{{ request('search') }}">
+            </form>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-card">
+        <table class="medicine-table">
             <thead>
                 <tr>
-                    <th style="font-family: sans-serif;">اسم الدواء</th>
-                    <th style="font-family: sans-serif;">تكلفة النقاط</th>
-                    <th style="font-family: sans-serif;">تاريخ الانتهاء</th>
+                    <th>اسم الدواء</th>
+                    <th>تكلفة النقاط</th>
+                    <th>الكمية المتوفرة</th>
+                    <th>الحالة</th>
+                    <th>تاريخ الانتهاء</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($inventories as $inventory)
+                @forelse($inventories as $inv)
                 <tr>
-                    <td style="text-align: center;font-weight: bold;font-size: 20px;">{{ $inventory->medicine->name }}</td>
-                    <td style="text-align: center;font-weight: bold;font-size: 20px;">{{ $inventory->medicine->points_cost }}</td>
-                    <td style="text-align: center;font-weight: bold;font-size: 20px;">{{ $inventory->medicine->expiry_date }}</td>
+                    <td style="font-size: 18px;">{{ $inv->medicine->name }}</td>
+                    <td>{{ $inv->medicine->points_cost }}</td>
+                    <td style="color: var(--primary-navy); font-size: 20px;">{{ $inv->quantity }}</td>
+                    <td>
+                        @if($inv->quantity <= 0)
+                            <span class="badge-out">غير متوفر</span>
+                        @elseif($inv->quantity < 10)
+                            <span class="badge-warning">مخزون<br>منخفض</span>
+                        @else
+                            <span class="badge-available">متوفر</span>
+                        @endif
+                    </td>
+                    <td style="font-family: 'Courier New', monospace; font-size: 16px;">
+                        {{ $inv->medicine->expiry_date ? \Carbon\Carbon::parse($inv->medicine->expiry_date)->format('H:i:s Y-m-d') : '---' }}
+                    </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="5" style="padding: 40px; color: #999;">لا توجد أدوية متوفرة في المخزون حالياً</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
+    </div>
 
-        <div class="medicines-pagination" aria-label="pagination">
-            <button type="button" class="pg-prev" id="pgPrev"><span class="pg-arrow">→</span><span class="pg-text">السابق</span></button>
-            <div class="pg-pages" id="pgPages">
-                <button type="button" class="pg-page is-active" data-page="1">١</button>
-                <button type="button" class="pg-page" data-page="2">٢</button>
-                <button type="button" class="pg-page" data-page="3">٣</button>
-            </div>
-            <button type="button" class="pg-next" id="pgNext"><span class="pg-text">التالي</span><span class="pg-arrow">←</span></button>
-        </div>
+    <div style="margin-top: 20px; display: flex; justify-content: center;">
+        {{ $inventories->links() }}
     </div>
 </div>
 @endsection

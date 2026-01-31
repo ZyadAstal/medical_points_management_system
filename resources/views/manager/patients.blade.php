@@ -5,95 +5,7 @@
 
 @push('styles')
     <link href="{{ asset('css/manager/pages-extra.css') }}" rel="stylesheet"/>
-    <style>
-        /* Specific fixes to maintain original look while centering search */
-        .mc-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .mc-search {
-            flex: 0 0 auto;
-            margin: 0 !important;
-        }
-        .mc-search-box {
-            margin: 0 !important;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        /* Modal Style Refinement to match user image */
-        .patient-view-field {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .patient-view-input {
-            width: 280px;
-            padding: 8px 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 4px;
-            text-align: right;
-            background: #f9fafb;
-            color: #374151;
-            font-family: 'Cairo', sans-serif;
-            pointer-events: none;
-        }
-        .patient-view-label {
-            font-weight: 600;
-            color: #0c3e66;
-            min-width: 120px;
-            text-align: right;
-        }
-
-        /* Ensure table is RTL */
-        .mc-table {
-            direction: rtl;
-        }
-        .mc-table-head, .mc-row {
-            display: flex;
-            flex-direction: row; /* In RTL direction, this puts the first element on the right */
-        }
-        /* Match column widths to original design or balance them */
-        .mc-th, .mc-td {
-            flex: 1;
-            text-align: right;
-            padding: 12px 15px;
-        }
-        /* Fix modal height and button overlap (OVERRIDING style.css) */
-        body[data-page="medical-centers"] .mc-modal {
-            height: auto !important;
-            min-height: 480px !important;
-            padding-bottom: 40px !important;
-            display: flex !important;
-            flex-direction: column !important;
-        }
-        body[data-page="medical-centers"] .mc-modal-inner {
-            height: auto !important;
-            position: relative !important;
-            display: flex !important;
-            flex-direction: column !important;
-            flex: 1 !important;
-        }
-        body[data-page="medical-centers"] .mc-modal-actions {
-            position: relative !important;
-            bottom: auto !important;
-            left: auto !important;
-            transform: none !important;
-            margin: 30px auto 0 !important;
-            display: flex !important;
-            justify-content: center !important;
-            width: 100% !important;
-        }
-        body[data-page="medical-centers"] #v-address {
-            height: auto !important;
-            min-height: 30px !important;
-        }
-    </style>
+    <link href="{{ asset('css/manager/patients.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -138,7 +50,7 @@
                     <div class="mc-td">{{ $lastDispense ? $lastDispense->created_at->format('Y/m/d') : '---' }}</div>
                     <div class="mc-td mc-actions">
                         <button type="button" class="mc-edit-action" title="عرض التفاصيل" 
-                                onclick="showPatientInfo('{{ $patient->full_name }}', '{{ $patient->national_id }}', '{{ $patient->phone }}', '{{ $patient->address }}', '{{ $patient->date_of_birth ? \Carbon\Carbon::parse($patient->date_of_birth)->format('Y/m/d') : '---' }}')">
+                                onclick="showPatientInfo('{{ $patient->full_name }}', '{{ $patient->national_id }}', '{{ $patient->phone }}', '{{ $patient->address }}', '{{ $patient->date_of_birth ? \Carbon\Carbon::parse($patient->date_of_birth)->format('Y/m/d') : '---' }}', '{{ implode('، ', $patient->visited_centers_list ?? []) }}')">
                             <img alt="عرض" src="{{ asset('assets/manager/icons/eye.svg') }}" width="20" height="20"/>
                         </button>
                     </div>
@@ -183,6 +95,10 @@
                     <input class="patient-view-input" id="v-address" type="text" readonly />
                     <label class="patient-view-label">العنوان</label>
                 </div>
+                <div class="patient-view-field">
+                    <input class="patient-view-input" id="v-centers" type="text" readonly />
+                    <label class="patient-view-label">المراكز التي زارها</label>
+                </div>
             </div>
             <div class="mc-modal-actions" style="margin-top: 10px;">
                 <button class="mc-modal-btn mc-modal-btn-primary btn-drug-primary" onclick="hidePatientInfo()" type="button" style="width: 100%; max-width: 150px; margin: 0 auto; display: block;">إغلاق</button>
@@ -193,25 +109,6 @@
 @endsection
 
 @push('scripts')
-    <script>
-        function showPatientInfo(name, id, phone, address, dob) {
-            document.getElementById('v-name').value = name;
-            document.getElementById('v-national-id').value = id;
-            document.getElementById('v-phone').value = phone;
-            document.getElementById('v-address').value = address || '---';
-            document.getElementById('v-dob').value = dob || '---';
-            document.getElementById('patientViewModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function hidePatientInfo() {
-            document.getElementById('patientViewModal').style.display = 'none';
-            document.body.style.overflow = '';
-        }
-
-        // Close on overlay click
-        document.getElementById('patientViewModal').addEventListener('click', function(e) {
-            if (e.target === this) hidePatientInfo();
-        });
-    </script>
+    <script src="{{ asset('js/manager/medical-centers-modals.js') }}"></script>
+    <script src="{{ asset('js/manager/patients.js') }}"></script>
 @endpush

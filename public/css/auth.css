@@ -322,3 +322,21 @@ input[type="checkbox"]:checked+.remember-box {
         height: 804px;
     }
 }
+
+.auth-no-account {
+    position: absolute;
+    top: 570px;
+    left: 579.36px;
+    width: 420px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: #4B5563;
+    direction: rtl;
+    z-index: 4;
+}
+
+.auth-no-account .highlight {
+    color: #0C6BB8;
+    font-weight: 600;
+}

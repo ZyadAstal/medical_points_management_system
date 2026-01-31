@@ -15,17 +15,25 @@ class DispensingController extends Controller
     {
         $centerId = Auth::user()->medical_center_id;
 
-        $query = Dispense::where('medical_center_id', $centerId)
-            ->with(['prescriptionItem.prescription.patient', 'prescriptionItem.medicine', 'pharmacist']);
+        $query = Dispense::where('dispenses.medical_center_id', $centerId)
+            ->join('prescription_items', 'dispenses.prescription_item_id', '=', 'prescription_items.id')
+            ->join('prescriptions', 'prescription_items.prescription_id', '=', 'prescriptions.id')
+            ->select('dispenses.*')
+            ->with(['prescriptionItem.medicine', 'pharmacist', 'prescriptionItem.prescription.patient']);
 
         // Date Filter
         if ($request->filled('date')) {
-            $query->whereDate('created_at', $request->date);
+            $query->whereDate('dispenses.created_at', $request->date);
         }
 
         // Pharmacist Filter
         if ($request->filled('pharmacist_id')) {
-            $query->where('pharmacist_id', $request->pharmacist_id);
+            $query->where('dispenses.pharmacist_id', $request->pharmacist_id);
+        }
+
+        // Patient Filter
+        if ($request->filled('patient_id')) {
+            $query->where('prescriptions.patient_id', $request->patient_id);
         }
 
         // Search Filter (Patient Name or Medicine Name)
@@ -40,7 +48,7 @@ class DispensingController extends Controller
             });
         }
 
-        $dispenses = $query->latest()->paginate(10);
+        $dispenses = $query->latest('dispenses.created_at')->paginate(10);
         
         // Get Pharmacists for filter dropdown
         $pharmacists = User::where('medical_center_id', $centerId)
@@ -48,6 +56,13 @@ class DispensingController extends Controller
                 $q->where('name', 'Pharmacist');
             })->get();
 
-        return view('manager.morphology', compact('dispenses', 'pharmacists'));
+        // Get Patients for filter dropdown
+        $patients = Patient::whereHas('user', function($q) use ($centerId) {
+            $q->where('medical_center_id', $centerId);
+        })->orWhereHas('visits', function($q) use ($centerId) {
+            $q->where('medical_center_id', $centerId);
+        })->get();
+
+        return view('manager.morphology', compact('dispenses', 'pharmacists', 'patients'));
     }
 }

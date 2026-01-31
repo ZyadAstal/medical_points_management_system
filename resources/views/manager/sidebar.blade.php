@@ -31,7 +31,7 @@
 
         <a class="sidebar-link nav-link {{ Request::routeIs('manager.reports.*') ? 'active' : '' }}" href="{{ route('manager.reports.index') }}">
             <img class="sidebar-icon" src="{{ asset('assets/manager/icons/reports.svg') }}" alt="" aria-hidden="true" />
-            <span class="sidebar-link-text">الالتقارير</span>
+            <span class="sidebar-link-text">التقارير</span>
         </a>
 
         <a class="sidebar-link nav-link {{ Request::routeIs('profile.show') ? 'active' : '' }}" href="{{ route('profile.show') }}">

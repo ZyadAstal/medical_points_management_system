@@ -12,22 +12,25 @@
     <h1 class="medical-centers-title">عمليات الصرف </h1>
     <p class="medical-centers-desc">متابعة و توثيق عمليات صرف الادوية داخل المركز</p>
 
-    <div class="filters">
-        <input type="date">
-        <select>
+    <form action="{{ route('manager.dispensing.index') }}" method="GET" class="filters">
+        <input type="date" name="date" value="{{ request('date') }}" onchange="this.form.submit()">
+        
+        <select name="pharmacist_id" onchange="this.form.submit()">
             <option value="">اختر الصيدلي</option>
-            <option>أحمد يوسف</option>
-            <option>سارة خالد</option>
-            <option>محمود ناصر</option>
+            @foreach($pharmacists as $p)
+                <option value="{{ $p->id }}" {{ request('pharmacist_id') == $p->id ? 'selected' : '' }}>{{ $p->name }}</option>
+            @endforeach
         </select>
-        <select>
+
+        <select name="patient_id" onchange="this.form.submit()">
             <option value="">اختر المريض</option>
-            <option>أحمد يوسف حسن</option>
-            <option>سارة خالد إبراهيم</option>
-            <option>محمود عبد الله ناصر</option>
+            @foreach($patients as $patient)
+                <option value="{{ $patient->id }}" {{ request('patient_id') == $patient->id ? 'selected' : '' }}>{{ $patient->full_name }}</option>
+            @endforeach
         </select>
-        <input type="text" placeholder="ابحث عن اسم المريض أو الدواء">
-    </div>
+
+        <input type="text" name="search" placeholder="ابحث عن اسم المريض أو الدواء" value="{{ request('search') }}" onkeyup="if(event.keyCode == 13) this.form.submit()">
+    </form>
 </div>
 
 <div class="mc-table-wrap" style="margin-top: 2rem;">

@@ -88,6 +88,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':CenterManager'])->prefix('m
 
     // Reports
     Route::get('/reports', [\App\Http\Controllers\CenterManager\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/pdf', [\App\Http\Controllers\CenterManager\ReportController::class, 'downloadPdf'])->name('reports.pdf');
 });
 
 // --- Reception Routes ---

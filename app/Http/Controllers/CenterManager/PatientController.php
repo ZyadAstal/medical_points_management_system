@@ -15,10 +15,20 @@ class PatientController extends Controller
     {
         $centerId = Auth::user()->medical_center_id;
 
-        // Optimized query to get patients who visited this center
-        // We also want to include points and last dispense date
-        $query = Patient::whereHas('visits', function($q) use ($centerId) {
-            $q->where('medical_center_id', $centerId);
+        // Hybrid Filter: Patients who belong to this center OR had interactions (visits/dispenses)
+        $query = Patient::where(function($q) use ($centerId) {
+            // 1. Registered at this center
+            $q->whereHas('user', function($u) use ($centerId) {
+                $u->where('medical_center_id', $centerId);
+            })
+            // 2. OR Visited this center
+            ->orWhereHas('visits', function($v) use ($centerId) {
+                $v->where('medical_center_id', $centerId);
+            })
+            // 3. OR Dispensed from this center
+            ->orWhereHas('prescriptions.items.dispenses', function($ds) use ($centerId) {
+                $ds->where('medical_center_id', $centerId);
+            });
         });
 
         // Search Filter (Full Name or National ID)
@@ -30,9 +40,21 @@ class PatientController extends Controller
             });
         }
 
-        $patients = $query->with(['prescriptions.dispenses' => function($q) use ($centerId) {
-            $q->where('medical_center_id', $centerId)->latest();
-        }])->latest()->paginate(10);
+        // Include visited centers labels for the view modal
+        $patients = $query->with([
+            'user.medicalCenter',
+            'visits.medicalCenter',
+            'prescriptions.dispenses' => function($q) use ($centerId) {
+                $q->where('medical_center_id', $centerId)->latest();
+            }
+        ])->latest()->paginate(10);
+
+        // Map centers for easy display
+        $patients->getCollection()->each(function($patient) {
+            $visitCenters = $patient->visits->map(fn($v) => optional($v->medicalCenter)->name)->filter()->unique()->values()->all();
+            $regCenter = optional($patient->user->medicalCenter)->name;
+            $patient->visited_centers_list = array_unique(array_merge([$regCenter], $visitCenters));
+        });
 
         return view('manager.patients', compact('patients'));
     }
@@ -41,14 +63,22 @@ class PatientController extends Controller
     {
         $centerId = Auth::user()->medical_center_id;
         
-        // Ensure patient has visited this center
-        $hasVisited = Visit::where('patient_id', $patient->id)
-            ->where('medical_center_id', $centerId)
-            ->exists();
+        // Ensure patient is registered in this center OR has interacted with it
+        $isRegistered = $patient->user->medical_center_id == $centerId;
+        $hasInteracted = Visit::where('patient_id', $patient->id)->where('medical_center_id', $centerId)->exists() || 
+                        Dispense::where('medical_center_id', $centerId)
+                            ->whereHas('prescriptionItem.prescription', function($q) use ($patient) {
+                                $q->where('patient_id', $patient->id);
+                            })->exists();
 
-        if (!$hasVisited) {
+        if (!$isRegistered && !$hasInteracted) {
             abort(403, 'Unauthorized access to patient data.');
         }
+
+        // Add visited centers for display
+        $visitCenters = $patient->visits->map(fn($v) => optional($v->medicalCenter)->name)->filter()->unique()->values()->all();
+        $regCenter = optional($patient->user->medicalCenter)->name;
+        $patient->visited_centers_list = array_unique(array_merge([$regCenter], $visitCenters));
 
         return view('manager.patients.show', compact('patient'));
     }

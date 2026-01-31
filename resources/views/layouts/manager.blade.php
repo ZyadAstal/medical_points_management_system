@@ -19,37 +19,7 @@
     </div>
 
     <script src="{{ asset('js/manager/main.js') }}"></script>
-    <script>
-        (function () {
-            const notifBtn = document.getElementById('notifBtn');
-            const userMenuBtn = document.getElementById('userMenuBtn');
-            const userDropdown = document.getElementById('userDropdown');
-            const notifMenu = document.getElementById('notifMenu');
-            const notifDot = document.getElementById('notifDot');
-
-            function closeAll() {
-                notifMenu?.classList.remove('open');
-                notifMenu?.setAttribute('aria-hidden', 'true');
-                userDropdown?.classList.remove('open');
-                userDropdown?.setAttribute('aria-hidden', 'true');
-            }
-
-            userMenuBtn?.addEventListener('click', (e) => {
-                e.stopPropagation();
-                closeAll();
-                const open = userDropdown.classList.toggle('open');
-                userDropdown.setAttribute('aria-hidden', open ? 'false' : 'true');
-            });
-
-            notifBtn?.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const open = notifMenu.classList.toggle('open');
-                notifMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
-            });
-
-            document.addEventListener('click', () => closeAll());
-        })();
-    </script>
+    <script src="{{ asset('js/manager/layout.js') }}"></script>
     @stack('scripts')
 </body>
 </html>

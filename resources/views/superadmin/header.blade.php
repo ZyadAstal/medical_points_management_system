@@ -22,7 +22,7 @@
                     <div class="user-dd__roleValue">مدير النظام</div>
                     <span class="user-dd__line user-dd__line--1" aria-hidden="true"></span>
                     <div class="user-dd__emailLabel">البريد الالكتروني</div>
-                    <div class="user-dd__emailValue" id="dropdownAdminEmail">{{ Auth::user()->username }}</div>
+                    <div class="user-dd__emailValue" id="dropdownAdminEmail">{{ Auth::user()->email }}</div>
                     <span class="user-dd__line user-dd__line--2" aria-hidden="true"></span>
                     <form action="{{ route('logout') }}" method="POST" id="logout-form" style="display: none;">
                         @csrf

@@ -11,7 +11,7 @@
             <div class="header-v2__avatar" id="adminAvatar">{{ $initials }}</div>
             <div class="header-v2__meta">
                 <div class="header-v2__name" id="adminNameText">{{ $managerName }}</div>
-                <div class="header-v2__role">{{ $user->medicalCenter->name }}</div>
+                <div class="header-v2__role">مدير المركز</div>
             </div>
             <div class="header-v2__menuWrap">
                 <button class="header-v2__arrow" id="userMenuBtn" type="button" aria-label="قائمة المستخدم">
@@ -22,7 +22,7 @@
                     <div class="user-dd__roleValue">مدير مركز</div>
                     <span class="user-dd__line user-dd__line--1" aria-hidden="true"></span>
                     <div class="user-dd__emailLabel">البريد الالكتروني</div>
-                    <div class="user-dd__emailValue">{{ $user->username }}</div>
+                    <div class="user-dd__emailValue">{{ $user->email }}</div>
                     <span class="user-dd__line user-dd__line--2" aria-hidden="true"></span>
                     <form action="{{ route('logout') }}" method="POST" id="logout-form" style="display: none;">
                         @csrf

@@ -1,0 +1,100 @@
+/* Specific fixes to maintain original look while centering search */
+.mc-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.mc-search {
+    flex: 0 0 auto;
+    margin: 0 !important;
+}
+
+.mc-search-box {
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Modal Style Refinement to match user image */
+.patient-view-field {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.patient-view-input {
+    width: 280px;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    text-align: right;
+    background: #f9fafb;
+    color: #374151;
+    font-family: 'Cairo', sans-serif;
+    pointer-events: none;
+}
+
+.patient-view-label {
+    font-weight: 600;
+    color: #0c3e66;
+    min-width: 120px;
+    text-align: right;
+}
+
+/* Ensure table is RTL */
+.mc-table {
+    direction: rtl;
+}
+
+.mc-table-head,
+.mc-row {
+    display: flex;
+    flex-direction: row;
+    /* In RTL direction, this puts the first element on the right */
+}
+
+/* Match column widths to original design or balance them */
+.mc-th,
+.mc-td {
+    flex: 1;
+    text-align: right;
+    padding: 12px 15px;
+}
+
+/* Fix modal height and button overlap (OVERRIDING style.css) */
+body[data-page="medical-centers"] .mc-modal {
+    height: auto !important;
+    min-height: 480px !important;
+    padding-bottom: 40px !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+body[data-page="medical-centers"] .mc-modal-inner {
+    height: auto !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+}
+
+body[data-page="medical-centers"] .mc-modal-actions {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 30px auto 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+body[data-page="medical-centers"] #v-address {
+    height: auto !important;
+    min-height: 30px !important;
+}

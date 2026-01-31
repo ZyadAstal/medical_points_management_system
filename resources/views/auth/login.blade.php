@@ -88,6 +88,10 @@
 
                 <button class="auth-submit" type="submit">تسجيل الدخول</button>
             </form>
+            
+            <div class="auth-no-account">
+                ليس لديك حساب؟ <span class="highlight">يرجى مراجعة الإدارة</span>
+            </div>
 
             {{-- Registration Link Removed per User Request --}}
 

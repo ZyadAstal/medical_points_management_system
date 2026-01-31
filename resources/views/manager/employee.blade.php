@@ -141,14 +141,4 @@
 
 @push('scripts')
     <script src="{{ asset('js/manager/employee.js') }}"></script>
-    <script>
-        // Debounce search input
-        let searchTimeout;
-        document.getElementById('staffSearchInput').addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                this.form.submit();
-            }, 700);
-        });
-    </script>
 @endpush

@@ -32,13 +32,6 @@
                 </div>
             </div>
         </div>
-        <button class="header-v2__notifBtn" id="notifBtn" type="button" aria-label="الإشعارات">
-            <img src="{{ asset('assets/admin/icons/notfacation.svg') }}" alt="" />
-            <span class="header-v2__notifDot" id="notifDot" aria-hidden="true"></span>
-        </button>
-        <div class="header-v2__notifMenu" id="notifMenu" aria-hidden="true">
-            <div class="header-v2__notifTitle">الإشعارات</div>
-            <div class="header-v2__notifEmpty" id="notifEmpty">لا توجد إشعارات جديدة</div>
-        </div>
+
     </div>
 </header>

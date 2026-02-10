@@ -1,7 +1,7 @@
 @php
     $user = Auth::user();
-    $managerName = $user->name;
-    $initials = mb_substr($managerName, 0, 1) . mb_substr($managerName, mb_strpos($managerName, ' ') + 1, 1);
+    $doctorName = $user->name;
+    $initials = mb_substr($doctorName, 0, 1) . mb_substr($doctorName, mb_strpos($doctorName, ' ') + 1, 1);
 @endphp
 
 <header class="header header-v2" aria-label="Header">
@@ -10,25 +10,25 @@
             <span class="header-v2__divider" aria-hidden="true"></span>
             <div class="header-v2__avatar" id="adminAvatar">{{ $initials }}</div>
             <div class="header-v2__meta">
-                <div class="header-v2__name" id="adminNameText">{{ $managerName }}</div>
-                <div class="header-v2__role">مدير المركز</div>
+                <div class="header-v2__name" id="adminNameText">{{ $doctorName }}</div>
+                <div class="header-v2__role">طبيب</div>
             </div>
             <div class="header-v2__menuWrap">
                 <button class="header-v2__arrow" id="userMenuBtn" type="button" aria-label="قائمة المستخدم">
-                    <img src="{{ asset('assets/manager/icons/arrow.svg') }}" alt="" />
+                    <img src="{{ asset('assets/doctor/icons/arrow.svg') }}" alt="" />
                 </button>
                 <div class="header-v2__userDropdown" id="userDropdown" aria-hidden="true">
                     <div class="user-dd__roleLabel">الدور</div>
-                    <div class="user-dd__roleValue">مدير مركز</div>
+                    <div class="user-dd__roleValue">طبيب</div>
                     <span class="user-dd__line user-dd__line--1" aria-hidden="true"></span>
                     <div class="user-dd__emailLabel">البريد الالكتروني</div>
-                    <div class="user-dd__emailValue">{{ $user->email }}</div>
+                    <div class="user-dd__emailValue" id="dropdownAdminEmail">{{ Auth::user()->email }}</div>
                     <span class="user-dd__line user-dd__line--2" aria-hidden="true"></span>
                     <form action="{{ route('logout') }}" method="POST" id="logout-form" style="display: none;">
                         @csrf
                     </form>
                     <div class="user-dd__logoutText" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">تسجيل خروج</div>
-                    <img class="user-dd__logoutIcon" src="{{ asset('assets/manager/icons/exit.svg') }}" alt="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" />
+                    <img class="user-dd__logoutIcon" src="{{ asset('assets/doctor/icons/exit.svg') }}" alt="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" />
                 </div>
             </div>
         </div>

@@ -50,7 +50,7 @@
                 <div class="mc-td">{{ $dispense->prescriptionItem->medicine->name }}</div>
                 <div class="mc-td">{{ $dispense->quantity }}</div>
                 <div class="mc-td">{{ number_format($dispense->points_used) }}</div>
-                <div class="mc-td">{{ $dispense->pharmacist->name }}</div>
+                <div class="mc-td">{{ $dispense->pharmacist?->name ?? 'غير محدد' }}</div>
                 <div class="mc-td">{{ $dispense->created_at->format('Y/m/d') }}</div>
             </div>
             @endforeach

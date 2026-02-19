@@ -3285,386 +3285,189 @@ body[data-page="reports"] .reports-section2 {
   top: 983px;
   left: 32px;
   width: 1080px;
-  height: 950px;
+  min-height: 950px;
+  height: auto;
   background: #ffffff;
   border-radius: 10px;
   box-sizing: border-box;
+  padding-bottom: 40px;
 }
 
-
 body[data-page="reports"] .reports-section2-title {
-  position: absolute;
-  top: 28px;
-  right: 22px;
-  margin: 0;
+  position: relative;
+  display: block;
+  margin: 30px 40px 10px auto;
   color: #000000;
   font-size: 18px;
   font-weight: 600;
-  text-align: center;
+  text-align: right;
+  direction: rtl;
 }
 
-
 body[data-page="reports"] .reports-section2-table-wrap {
-  position: absolute;
-  top: 55px;
-  left: 0;
-  width: 1080px;
-  height: 386px;
+  position: relative;
+  width: calc(100% - 80px);
+  margin: 10px 40px;
+  height: auto;
+  min-height: 200px;
+  max-height: 386px;
   border: 1px solid #053052;
   border-radius: 5px;
-  overflow: hidden;
+  overflow-y: auto;
   box-sizing: border-box;
   background: #fff;
 }
 
-
-body[data-page="reports"] .reports-table-2 thead th {
-  height: 55px;
-  background: #053052;
-  color: #fff;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 17px;
-}
-
-body[data-page="reports"] .reports-table-2 tbody td {
-  text-align: center;
-  vertical-align: middle;
-  font-size: 16px;
-  padding: 14px 10px;
-  border-left: 1px solid #053052;
-  border-top: none;
-}
-
-
-body[data-page="reports"] .reports-table-2 thead th:last-child,
-body[data-page="reports"] .reports-table-2 tbody td:last-child {
-  border-left: none;
-}
-
-
 body[data-page="reports"] .reports-chart-title {
-  position: absolute;
-  width: 221px;
-  height: 24px;
-  top: 517px;
-  left: 836px;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight: 500;
-  font-style: normal;
+  margin: 0;
+  color: #000000;
   font-size: 20px;
-  line-height: 100%;
-  letter-spacing: 0;
-  text-align: center;
-  color: #000000;
-  white-space: nowrap;
-}
-
-body[data-page="reports"] .reports-chart-area {
-  position: absolute;
-
-  top: 552px;
-  left: 0;
-  width: 1080px;
-  height: 360px;
-  background: transparent;
-  overflow: visible;
-}
-
-
-body[data-page="reports"] .reports-chart-axis {
-  position: absolute;
-  height: 0;
-  border-top: 1px solid #053052;
-  box-sizing: border-box;
-  z-index: 1;
-}
-
-
-body[data-page="reports"] .reports-axis-y {
-  width: 279px;
-  top: 0;
-  left: 117px;
-  transform: rotate(90deg);
-  transform-origin: left top;
-}
-
-
-body[data-page="reports"] .reports-axis-x {
-  width: 901px;
-  top: 279px;
-  left: 117px;
-}
-
-
-body[data-page="reports"] .reports-chart-bars {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 2;
-}
-
-body[data-page="reports"] .reports-bar {
-  position: absolute;
-  width: 55px;
-  border-radius: 0;
-  z-index: 3;
-}
-
-
-body[data-page="reports"] .reports-bar.r190,
-body[data-page="reports"] .reports-bar.r188,
-body[data-page="reports"] .reports-bar.r184,
-body[data-page="reports"] .reports-bar.r186,
-body[data-page="reports"] .reports-bar.r182 {
-  z-index: 4;
-}
-
-
-body[data-page="reports"] .reports-bar.r191 {
-  height: 128px;
-  top: 150px;
-  left: 924px;
-  background: #0B6CB8;
-}
-
-body[data-page="reports"] .reports-bar.r190 {
-  height: 13px;
-  top: 265px;
-  left: 862px;
-  background: #929292;
-}
-
-body[data-page="reports"] .reports-bar.r189 {
-  height: 150px;
-  top: 128px;
-  left: 765px;
-  background: #0B6CB8;
-}
-
-body[data-page="reports"] .reports-bar.r188 {
-  height: 21px;
-  top: 257px;
-  left: 703px;
-  background: #929292;
-}
-
-body[data-page="reports"] .reports-bar.r187 {
-  height: 175px;
-  top: 103px;
-  left: 599px;
-  background: #0B6CB8;
-}
-
-
-body[data-page="reports"] .reports-bar.r186 {
-  height: 24px;
-  top: 254px;
-  left: 537px;
-  background: #929292;
-}
-
-body[data-page="reports"] .reports-bar.r185 {
-  height: 195px;
-  top: 83px;
-  left: 411px;
-  background: #0B6CB8;
-}
-
-body[data-page="reports"] .reports-bar.r184 {
-  height: 37px;
-  top: 241px;
-  left: 349px;
-  background: #929292;
-}
-
-body[data-page="reports"] .reports-bar.r183 {
-  height: 216px;
-  top: 62px;
-  left: 240px;
-  background: #0B6CB8;
-}
-
-
-body[data-page="reports"] .reports-bar.r182 {
-  height: 43px;
-  top: 235px;
-  left: 178px;
-  background: #929292;
-}
-
-
-body[data-page="reports"] .reports-chart-ylabel {
-  position: absolute;
-  height: 22px;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 100%;
-  letter-spacing: 0;
-  text-align: center;
-  color: #000000;
-  white-space: nowrap;
-}
-
-
-body[data-page="reports"] .reports-chart-ylabel.y140 {
-  width: 20px;
-  top: 32px;
-  left: 84px;
-}
-
-body[data-page="reports"] .reports-chart-ylabel.y105 {
-  width: 21px;
-  top: 94px;
-  left: 83px;
-}
-
-body[data-page="reports"] .reports-chart-ylabel.y70 {
-  width: 16px;
-  top: 151px;
-  left: 85px;
-}
-
-body[data-page="reports"] .reports-chart-ylabel.y35 {
-  width: 21px;
-  top: 203px;
-  left: 83px;
-}
-
-body[data-page="reports"] .reports-chart-ylabel.y0 {
-  width: 6px;
-  top: 247px;
-  left: 88px;
-}
-
-
-body[data-page="reports"] .reports-chart-xlabel {
-  position: relative;
-  height: 29px;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 100%;
-  letter-spacing: 0;
-  text-align: center;
-  color: #000000;
-  white-space: nowrap;
-}
-
-
-body[data-page="reports"] .reports-chart-xlabels {
-  position: absolute;
-  top: 292px;
-  left: 0;
-  width: 1080px;
-  height: 29px;
+  font-weight: 600;
   direction: rtl;
-  pointer-events: none;
 }
 
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel {
-  position: absolute;
-  top: 0;
-}
-
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(1) {
-  width: 212px;
-}
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(2) {
-  width: 225px;
-}
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(3) {
-  width: 189px;
-  height: 28px;
-}
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(4) {
-  width: 143px;
-}
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(5) {
-  width: 179px;
-}
-
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(1) {
-  left: 815px;
-}
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(2) {
-  left: 649px;
-}
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(3) {
-  left: 532px;
-}
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(4) {
-  left: 336px;
-}
-
-body[data-page="reports"] .reports-chart-xlabels .reports-chart-xlabel:nth-child(5) {
-  left: 178px;
-}
-
-
-body[data-page="reports"] .reports-chart-legend {
-  position: absolute;
-  top: 346px;
-  left: 0;
-  width: 1080px;
-  height: 20px;
-  pointer-events: none;
+body[data-page="reports"] .reports-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 0 20px;
+  padding: 0 40px;
+  direction: rtl;
 }
 
 body[data-page="reports"] .reports-legend-square {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 0;
-  border-radius: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 body[data-page="reports"] .reports-legend-square.legend-blue {
-  left: 178px;
   background: #0B6CB8;
 }
 
 body[data-page="reports"] .reports-legend-square.legend-gray {
-  left: 367px;
   background: #929292;
 }
 
-body[data-page="reports"] .reports-legend-text {
+body[data-page="reports"] .reports-chart-legend {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+body[data-page="reports"] .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body[data-page="reports"] .reports-chart-container {
+  width: 100%;
+  padding: 20px 80px 80px 40px; /* More padding on the right for Y labels */
+  box-sizing: border-box;
+}
+
+body[data-page="reports"] .reports-chart-area-dynamic {
+  height: 300px;
+  border-bottom: 2px solid #053052;
+  border-right: 2px solid #053052;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 10px;
+  direction: rtl;
+}
+
+body[data-page="reports"] .reports-chart-yaxis {
   position: absolute;
-  width: 148px;
-  height: 18px;
   top: 0;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 18px;
-  line-height: 100%;
-  letter-spacing: 0;
-  text-align: center;
-  color: #545454;
+  right: -55px; /* Positioned to the right of the Y axis */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+}
+
+body[data-page="reports"] .y-label {
+  color: #053052;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
   white-space: nowrap;
 }
 
-body[data-page="reports"] .reports-legend-text.legend-points {
-  left: 182px;
+body[data-page="reports"] .y-label:first-child {
+  transform: translateY(-50%);
 }
 
-body[data-page="reports"] .reports-legend-text.legend-ops {
-  left: 371px;
+body[data-page="reports"] .y-label:last-child {
+  transform: translateY(50%);
+}
+
+body[data-page="reports"] .chart-bars-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+body[data-page="reports"] .chart-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+  position: relative;
+}
+
+body[data-page="reports"] .bar-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+body[data-page="reports"] .bar {
+  width: 25px;
+  min-height: 2px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+body[data-page="reports"] .bar:hover {
+  filter: brightness(1.2);
+  transform: scaleY(1.05);
+  transform-origin: bottom;
+}
+
+body[data-page="reports"] .bar-blue {
+  background: #0B6CB8;
+}
+
+body[data-page="reports"] .bar-gray {
+  background: #929292;
+}
+
+body[data-page="reports"] .bar-label {
+  position: absolute;
+  top: 100%;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #053052;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  transform: rotate(-30deg);
+  transform-origin: top right;
+  width: 150px;
 }
 
 
@@ -8369,16 +8172,14 @@ body.sidebar-body {
 
 body[data-page="medicines"] .medicines-page-wrapper {
   position: relative;
-  margin-top: 8px;
   background: #ffffff;
   min-height: 100vh;
-  display: flex;
-  justify-content: flex-start;
+  padding: 24px;
+  box-sizing: border-box;
 }
 
 body[data-page="medicines"] .medicines-page-header {
-  margin-top: 19px;
-  margin-right: 69px;
+  margin-bottom: 30px;
   text-align: right;
 }
 
@@ -8407,9 +8208,9 @@ body[data-page="medicines"] .medicines-desc {
 
 
 body[data-page="medicines"] .medicines-search-input {
-  width: 349px;
+  width: 100%;
+  max-width: 349px;
   height: 39px;
-  border: 1px solid #053052;
   border-radius: 5px;
   background: #ffffff;
   box-sizing: border-box;
@@ -8440,10 +8241,12 @@ body[data-page="medicines"] .medicines-page-wrapper {
 }
 
 body[data-page="medicines"] .medicines-search {
-  position: absolute;
-  top: 154px;
-  right: 69px;
-  margin: 0;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 
@@ -8457,35 +8260,23 @@ body[data-page="medicines"] .medicines-table tbody {
 
 
 body[data-page="medicines"] .medicines-table-wrap {
-  position: absolute;
-  top: 211px;
-  right: 69px;
-  width: 968px;
+  width: 100%;
   min-height: 377px;
   border: 1px solid #053052;
   border-radius: 5px;
   background: #ffffff;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: auto;
+  margin-top: 20px;
 }
 
 
-body[data-page="medicines"] .medicines-table-wrap::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(#053052, #053052) right 341px top / 1px 100% no-repeat,
-    linear-gradient(#053052, #053052) right 578px top / 1px 100% no-repeat,
-    linear-gradient(#053052, #053052) right 845px top / 1px 100% no-repeat;
-}
+/* Removed fake borders gradient */
 
 
 body[data-page="medicines"] .medicines-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
 }
 
 body[data-page="medicines"] .medicines-table thead {
@@ -8504,7 +8295,7 @@ body[data-page="medicines"] .medicines-table th {
   font-size: 16px;
   line-height: 100%;
   text-align: center;
-  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
   background: transparent;
 }
 
@@ -8515,7 +8306,8 @@ body[data-page="medicines"] .medicines-table tbody tr {
 
 body[data-page="medicines"] .medicines-table td {
   height: 64px;
-  border: none;
+  border-left: 1px solid #053052;
+  border-bottom: 1px solid #053052;
 }
 
 body[data-page="medicines"] .col-drug-cell {
@@ -8776,9 +8568,6 @@ body[data-page="medicines"] .modal-input-expiry {
 
 
 body[data-page="medicines"] .medicines-add-btn {
-  position: absolute;
-  top: 140px;
-  left: calc(100% - 69px - 968px);
   width: 205px;
   height: 46px;
   border-radius: 5px;
@@ -8892,52 +8681,73 @@ body[data-page="medicines"] .medicines-add-plus {
 
 
 body[data-page="medicines"] .medicines-pagination {
-  position: absolute;
-  right: 69px;
-  width: 968px;
+  margin: 30px auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  direction: rtl;
+  direction: ltr; /* Pagination numbers usually stay LTR even in RTL */
+}
+
+/* Base style for Laravel's Bootstrap 4 pagination */
+.pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.25rem;
+  gap: 8px;
+  direction: ltr;
+}
+
+.page-item {
+  display: list-item;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: 8px 16px;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #053052;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  text-decoration: none;
   font-family: Inter, sans-serif;
   font-weight: 500;
-  font-size: 12px;
-  line-height: 100%;
-  color: #000000;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-body[data-page="medicines"] .medicines-pagination button {
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
+.page-link:hover {
+  z-index: 2;
+  color: #fff;
+  background-color: #053052;
+  border-color: #053052;
 }
 
-body[data-page="medicines"] .medicines-pagination .pg-pages {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #053052;
+  border-color: #053052;
 }
 
-body[data-page="medicines"] .medicines-pagination .pg-page {
-  color: #7A7A7A;
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: auto;
+  background-color: #fff;
+  border-color: #dee2e6;
+  opacity: 0.6;
 }
 
-body[data-page="medicines"] .medicines-pagination .pg-page.is-active {
-  color: #000000;
-}
-
-body[data-page="medicines"] .medicines-pagination .pg-prev,
-body[data-page="medicines"] .medicines-pagination .pg-next {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+/* Arrows styling */
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+  font-weight: 700;
+  background-color: #f8f9fa;
 }
 
 
@@ -9626,4 +9436,62 @@ body[data-page="reports"] .reports-cards .card__value--single {
 
 .medicine-table col.col-expiry {
   width: 30%;
+}
+/* ===== SHARED PAGINATION STYLES ===== */
+.custom-pagination-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.custom-pagination {
+  display: flex !important;
+  flex-direction: row !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 6px;
+  align-items: center;
+}
+
+.custom-pagination .page-item {
+  list-style: none !important;
+}
+
+.custom-pagination .page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1.5px solid #d0dce8;
+  background: #fff;
+  color: #053052;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.custom-pagination .page-link:hover {
+  background: #053052;
+  color: #fff;
+  border-color: #053052;
+}
+
+.custom-pagination .page-item.active .page-link {
+  background: #053052;
+  color: #fff;
+  border-color: #053052;
+  box-shadow: 0 2px 8px rgba(5,48,82,0.3);
+}
+
+.custom-pagination .page-item.disabled .page-link {
+  background: #f4f7fa;
+  color: #aab8c8;
+  border-color: #e2eaf2;
+  cursor: not-allowed;
 }

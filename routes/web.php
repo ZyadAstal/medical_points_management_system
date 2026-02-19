@@ -49,13 +49,26 @@ Route::middleware(['auth', RoleMiddleware::class . ':SuperAdmin'])->prefix('supe
 Route::middleware(['auth', RoleMiddleware::class . ':Doctor'])->prefix('doctor')->name('doctor.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Doctor\DashboardController::class, 'index'])->name('dashboard');
     
+    // Today's patients
+    Route::get('/today-patients', [\App\Http\Controllers\Doctor\PatientController::class, 'index'])->name('patients.index');
+    
+    // Search patients
     Route::get('/patients/search', [\App\Http\Controllers\Doctor\PatientController::class, 'search'])->name('patients.search');
-    Route::resource('patients', \App\Http\Controllers\Doctor\PatientController::class)->only(['index', 'show']);
+    Route::get('/patients/{patient}', [\App\Http\Controllers\Doctor\PatientController::class, 'show'])->name('patients.show');
+    
+    // Prescriptions / Recipes Record
+    Route::get('/prescriptions', [\App\Http\Controllers\Doctor\PrescriptionController::class, 'index'])->name('prescriptions.index');
+    Route::get('/prescriptions/{patient}', [\App\Http\Controllers\Doctor\PrescriptionController::class, 'show'])->name('prescriptions.show');
+    
+    // Doctor Profile
+    Route::get('/profile', [\App\Http\Controllers\Doctor\ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile/personal', [\App\Http\Controllers\Doctor\ProfileController::class, 'updatePersonal'])->name('profile.update.personal');
+    Route::put('/profile/security', [\App\Http\Controllers\Doctor\ProfileController::class, 'updateSecurity'])->name('profile.update.security');
     
     // Visit Actions
     Route::post('/visits/{visit}/complete', function(\App\Models\Visit $visit) {
         $visit->update(['status' => 'completed']);
-        return redirect()->route('doctor.patients.show', $visit->patient_id);
+        return redirect()->route('doctor.patients.index');
     })->name('visits.complete');
 });
 

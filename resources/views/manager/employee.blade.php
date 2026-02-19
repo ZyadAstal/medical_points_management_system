@@ -131,7 +131,7 @@
     </div>
 
     <div aria-label="ترقيم الصفحات" class="users-pagination">
-        {{ $staff->links() }}
+        {{ $staff->links('pagination::bootstrap-4') }}
     </div>
 </div>
 

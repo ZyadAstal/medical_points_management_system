@@ -98,7 +98,7 @@
     </div>
 
     <div style="margin-top: 20px; display: flex; justify-content: center;">
-        {{ $inventories->links() }}
+        {{ $inventories->links('pagination::bootstrap-4') }}
     </div>
 </div>
 @endsection

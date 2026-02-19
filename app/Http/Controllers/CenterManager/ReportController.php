@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use Barryvdh\DomPDF\Facade\Pdf;
-use Arphp\Glyphs;
+use ArPHP\I18N\Arabic;
 use App\Models\Medicine;
 use App\Models\MedicalCenter;
 
@@ -104,7 +104,7 @@ class ReportController extends Controller
         $scName = Auth::user()->medicalCenter->name;
         $smName = $medicineId ? Medicine::find($medicineId)?->name : 'كل الأدوية';
 
-        $arabic = new Glyphs();
+        $arabic = new Arabic();
 
         // Formatting for Ar-PHP
         $totalPointsUsedFormatted = $arabic->utf8Glyphs(number_format($totalPointsUsed), 100) . ' ' . $arabic->utf8Glyphs('نقطة', 100) . ' :' . $arabic->utf8Glyphs('إجمالي النقاط المصروفة', 100);

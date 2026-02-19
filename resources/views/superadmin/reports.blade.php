@@ -120,61 +120,48 @@
                 </table>
             </div>
 
-            <div class="reports-chart-title" aria-hidden="true">رسم بياني - مقارنة المرضى</div>
-            <div class="reports-chart-area" aria-label="رسم بياني - مقارنة المرضى">
-                <div class="reports-chart-axis reports-axis-y" aria-hidden="true"></div>
-                <div class="reports-chart-axis reports-axis-x" aria-hidden="true"></div>
-                <div class="reports-chart-bars" aria-hidden="true">
+            <div class="reports-chart-header">
+                <h3 class="reports-chart-title">رسم بياني - مقارنة المراكز الطبية</h3>
+                <div class="reports-chart-legend">
+                    <div class="legend-item">
+                        <div class="reports-legend-square legend-blue"></div>
+                        <span class="reports-legend-text">النقاط المستخدمة</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="reports-legend-square legend-gray"></div>
+                        <span class="reports-legend-text">عدد العمليات</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reports-chart-container">
+                <div class="reports-chart-area-dynamic">
                     @php
-                        $baseY = 279;
-                        $pointScale = 247 / 140; // Based on 140 units = 247px height
-                        $xPositions = [
-                            ['blue' => 924, 'gray' => 862],
-                            ['blue' => 765, 'gray' => 703],
-                            ['blue' => 599, 'gray' => 537],
-                            ['blue' => 411, 'gray' => 349],
-                            ['blue' => 240, 'gray' => 178],
-                        ];
+                        $maxPoints = $centersActivityChart->max('total_points') ?: 1;
+                        $maxOps = $centersActivityChart->max('total_ops') ?: 1;
+                        $scaleMax = ceil($maxPoints / 100) * 100; // Round up to nearest 100
+                        if ($scaleMax == 0) $scaleMax = 1000;
                     @endphp
 
-                    @foreach($patientsActivityChart as $index => $patient)
-                        @if(isset($xPositions[$index]))
-                            @php
-                                $pointsHeight = min(260, $patient->total_points * $pointScale);
-                                $pointsTop = $baseY - $pointsHeight;
-                                
-                                // Operations might need a different scale to be visible, or use the same if values are large.
-                                // In the mockup, ops were smaller but visible. Let's use a 5x multiplier for ops to make them legible if they are small.
-                                $opsHeight = min(260, $patient->total_ops * $pointScale * 5); 
-                                $opsTop = $baseY - $opsHeight;
-                            @endphp
-                            <div class="reports-bar" style="height: {{ $pointsHeight }}px; top: {{ $pointsTop }}px; left: {{ $xPositions[$index]['blue'] }}px; background: #0B6CB8;" title="{{ $patient->full_name }}: {{ number_format($patient->total_points) }} نقطة"></div>
-                            <div class="reports-bar" style="height: {{ $opsHeight }}px; top: {{ $opsTop }}px; left: {{ $xPositions[$index]['gray'] }}px; background: #929292;" title="{{ $patient->full_name }}: {{ $patient->total_ops }} عملية"></div>
-                        @endif
-                    @endforeach
-                </div>
-                <div class="reports-chart-ylabels" aria-hidden="true">
-                    <div class="reports-chart-ylabel y140">١٤٠</div>
-                    <div class="reports-chart-ylabel y105">١٠٥</div>
-                    <div class="reports-chart-ylabel y70">٧٠</div>
-                    <div class="reports-chart-ylabel y35">٣٥</div>
-                    <div class="reports-chart-ylabel y0">٠</div>
-                </div>
-                <div class="reports-chart-xlabels" aria-hidden="true">
-                    @php
-                        $labelPositions = [920.5, 761.5, 595.5, 407.5, 236.5];
-                    @endphp
-                    @foreach($patientsActivityChart as $index => $patient)
-                        @if(isset($labelPositions[$index]))
-                            <div class="reports-chart-xlabel" style="left: {{ $labelPositions[$index] }}px; transform: translateX(-50%); position: absolute; top: 0;">{{ $patient->full_name }}</div>
-                        @endif
-                    @endforeach
-                </div>
-                <div class="reports-chart-legend" aria-hidden="true">
-                    <div class="reports-legend-square legend-blue"></div>
-                    <div class="reports-legend-text legend-points">النقاط ( / ١٠٠ )</div>
-                    <div class="reports-legend-square legend-gray"></div>
-                    <div class="reports-legend-text legend-ops">عدد العمليات</div>
+                    <div class="reports-chart-yaxis">
+                        <div class="y-label"><span>{{ number_format($scaleMax) }}</span></div>
+                        <div class="y-label"><span>{{ number_format($scaleMax * 0.75) }}</span></div>
+                        <div class="y-label"><span>{{ number_format($scaleMax * 0.5) }}</span></div>
+                        <div class="y-label"><span>{{ number_format($scaleMax * 0.25) }}</span></div>
+                        <div class="y-label"><span>0</span></div>
+                    </div>
+
+                    <div class="chart-bars-container">
+                        @foreach($centersActivityChart as $center)
+                            <div class="chart-column">
+                                <div class="bar-group">
+                                    <div class="bar bar-blue" style="height: {{ ($center->total_points / $scaleMax) * 100 }}%" title="{{ $center->name }}: {{ number_format($center->total_points) }} نقطة"></div>
+                                    <div class="bar bar-gray" style="height: {{ ($center->total_ops / $scaleMax) * 500 }}%" title="{{ $center->name }}: {{ $center->total_ops }} عملية"></div>
+                                </div>
+                                <div class="bar-label">{{ $center->name }}</div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </section>

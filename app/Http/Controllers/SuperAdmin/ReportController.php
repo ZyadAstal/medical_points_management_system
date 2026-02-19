@@ -9,7 +9,7 @@ use App\Models\Medicine;
 use App\Models\MedicalCenter;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Arphp\Glyphs;
+use ArPHP\I18N\Arabic;
 
 class ReportController extends Controller
 {
@@ -78,25 +78,31 @@ class ReportController extends Controller
             ->take(20)
             ->get();
 
-        $patientChartQuery = DB::table('dispenses')
-            ->join('prescription_items', 'dispenses.prescription_item_id', '=', 'prescription_items.id')
-            ->join('prescriptions', 'prescription_items.prescription_id', '=', 'prescriptions.id')
-            ->join('patients', 'prescriptions.patient_id', '=', 'patients.id');
+        $centersActivityChart = MedicalCenter::leftJoin('dispenses', 'medical_centers.id', '=', 'dispenses.medical_center_id')
+            ->select('medical_centers.id', 'medical_centers.name', DB::raw('count(dispenses.id) as total_ops'), DB::raw('sum(dispenses.points_used) as total_points'));
 
-        if ($centerId) $patientChartQuery->where('dispenses.medical_center_id', $centerId);
-        if ($medicineId) $patientChartQuery->where('prescription_items.medicine_id', $medicineId);
-        if ($fromDate) $patientChartQuery->where('dispenses.created_at', '>=', $fromDate);
-        if ($toDate) $patientChartQuery->where('dispenses.created_at', '<=', $toDate . ' 23:59:59');
+        if ($medicineId) $centersActivityChart->whereExists(function ($query) use ($medicineId) {
+            $query->select(DB::raw(1))
+                  ->from('prescription_items')
+                  ->whereColumn('prescription_items.id', 'dispenses.prescription_item_id')
+                  ->where('prescription_items.medicine_id', $medicineId);
+        });
+        
+        if ($fromDate) $centersActivityChart->where(function($q) use ($fromDate) {
+            $q->where('dispenses.created_at', '>=', $fromDate)->orWhereNull('dispenses.created_at');
+        });
+        if ($toDate) $centersActivityChart->where(function($q) use ($toDate) {
+            $q->where('dispenses.created_at', '<=', $toDate . ' 23:59:59')->orWhereNull('dispenses.created_at');
+        });
 
-        $patientsActivityChart = $patientChartQuery->select('patients.id', 'patients.full_name', DB::raw('count(dispenses.id) as total_ops'), DB::raw('sum(dispenses.points_used) as total_points'))
-            ->groupBy('patients.id', 'patients.full_name')
+        $centersActivityChart = $centersActivityChart->groupBy('medical_centers.id', 'medical_centers.name')
             ->orderBy('total_points', 'desc')
             ->take(5)
             ->get();
 
         $centers = MedicalCenter::all();
         $medicines = Medicine::all();
-        return view('superadmin.reports', compact('totalPointsUsed', 'centersActivity', 'topMedicines', 'centers', 'medicines', 'detailedDispenses', 'patientsActivityChart'));
+        return view('superadmin.reports', compact('totalPointsUsed', 'centersActivity', 'topMedicines', 'centers', 'medicines', 'detailedDispenses', 'centersActivityChart'));
     }
 
     public function downloadPdf(Request $request)
@@ -154,7 +160,7 @@ class ReportController extends Controller
         $smName = $medicineId ? Medicine::find($medicineId)?->name : 'كل الأدوية';
 
         // Using Ar-PHP to shape Arabic text for DomPDF
-        $arabic = new Glyphs();
+        $arabic = new Arabic();
 
         // Concatenate Value then Label so Label appears on the right in LTR container
         $totalPointsUsedFormatted = $arabic->utf8Glyphs(number_format($totalPointsUsed), 100) . ' ' . $arabic->utf8Glyphs('نقطة', 100) . ' :' . $arabic->utf8Glyphs('عدد النقاط المصروفة', 100);

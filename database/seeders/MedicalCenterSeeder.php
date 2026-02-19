@@ -9,16 +9,34 @@ class MedicalCenterSeeder extends Seeder
 {
     public function run(): void
     {
-        MedicalCenter::create([
-            'name'     => 'Main Medical Center',
-            'location' => 'Gaza - City Center',
-            'phone'    => '0599000000',
-        ]);
+        $centers = [
+            [
+                'name'     => 'مستشفى غزة الأوروبي',
+                'location' => 'خان يونس - شارع مصر المركزي',
+                'phone'    => '082071555',
+            ],
+            [
+                'name'     => 'مستشفى الشفاء',
+                'location' => 'غزة - حي الرمال',
+                'phone'    => '082863020',
+            ],
+            [
+                'name'     => 'مستشفى ناصر',
+                'location' => 'خان يونس - وسط المدينة',
+                'phone'    => '082055777',
+            ],
+            [
+                'name'     => 'مستشفى الأقصى',
+                'location' => 'دير البلح - المنطقة الوسطى',
+                'phone'    => '082539790',
+            ],
+        ];
 
-        MedicalCenter::create([
-            'name'     => 'Branch Medical Center',
-            'location' => 'Gaza - North',
-            'phone'    => '0599111111',
-        ]);
+        foreach ($centers as $center) {
+            MedicalCenter::firstOrCreate(
+                ['name' => $center['name']],
+                $center
+            );
+        }
     }
 }

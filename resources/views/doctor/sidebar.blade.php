@@ -19,12 +19,20 @@
         <span class="sidebar-link-text">البحث عن مريض</span>
       </a>
 
+<<<<<<< HEAD
       <a class="sidebar-link nav-link" href="#" data-page="recipes-record">
+=======
+      <a class="sidebar-link nav-link @if(request()->routeIs('doctor.prescriptions.*')) active @endif" href="{{ route('doctor.prescriptions.index') }}" data-page="recipes-record">
+>>>>>>> 2f112b3 (upload doctor views and update some pages)
         <img class="sidebar-icon" src="{{ asset('assets/doctor/icons/recipes.svg') }}" alt="" aria-hidden="true" />
         <span class="sidebar-link-text">سجل الوصفات</span>
       </a>
 
+<<<<<<< HEAD
       <a class="sidebar-link nav-link @if(request()->routeIs('profile.show')) active @endif" href="{{ route('profile.show') }}" data-page="profile">
+=======
+      <a class="sidebar-link nav-link @if(request()->routeIs('doctor.profile*')) active @endif" href="{{ route('doctor.profile') }}" data-page="profile">
+>>>>>>> 2f112b3 (upload doctor views and update some pages)
         <img class="sidebar-icon" src="{{ asset('assets/doctor/icons/profile-icon.svg') }}" alt="" aria-hidden="true" />
         <span class="sidebar-link-text">الملف الشخصي</span>
       </a>

@@ -65,7 +65,7 @@
 </div>
 
 <div class="mc-pagination">
-    {{ $patients->links() }}
+    {{ $patients->links('pagination::bootstrap-4') }}
 </div>
 
 <!-- Read-Only View Modal -->

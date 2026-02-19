@@ -1,0 +1,319 @@
+
+
+
+body[data-page="recipes-record"] .search-patient-page-header{
+  margin-right: 77px !important;
+  margin-left: 0 !important;
+  direction: rtl;
+  text-align: right;
+}
+
+body[data-page="recipes-record"] .search-patient-title,
+body[data-page="recipes-record"] .search-patient-subtitle{
+  text-align: right !important;
+}
+
+
+body[data-page="recipes-record"] .recipes-rectangles{
+  display: flex;
+  gap: 21px;
+  margin-top: 20px;
+
+  margin-right: 77px;
+  direction: rtl;
+}
+
+body[data-page="recipes-record"] .recipes-rectangles .recipes-rect{
+  border-radius: 10px;
+  border: 0.5px solid #4394D7;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+body[data-page="recipes-record"] .recipes-rectangles .rect-small{
+  width: 317px;
+  height: 278px;
+  margin-top: 4px;
+}
+
+body[data-page="recipes-record"] .recipes-rectangles .rect-large{
+  width: 666px;
+  height: 278px;
+}
+
+
+
+body[data-page="recipes-record"] .rect-small{
+  padding-top: 22px;
+}
+
+body[data-page="recipes-record"] .patients-title{
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1;
+  color: #000000;
+  margin: 0;
+  padding-right: 34px;
+  text-align: right;
+}
+
+body[data-page="recipes-record"] .patients-search{
+  width: 262px;
+  height: 29px;
+  border-radius: 5px;
+  border: 1px solid #D4D4D4;
+  background: #FFFFFF;
+  margin: 20px auto 0 auto;
+  display: block;
+  padding: 0 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #000;
+  outline: none;
+}
+
+body[data-page="recipes-record"] .patients-search::placeholder{
+  color: #9A9A9A;
+}
+
+body[data-page="recipes-record"] .patients-divider{
+  width: 318px;
+  height: 0;
+  border-top: 1px solid #D4D4D4;
+  margin: 14px auto 0 auto;
+}
+
+body[data-page="recipes-record"] .patients-list{
+
+  margin-top: 9.5px;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+
+  padding-right: 31px;
+  padding-left: 0;
+  align-items: stretch;
+}
+
+body[data-page="recipes-record"] .patient-btn{
+  direction: rtl;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  color: #6B6B6B;
+  cursor: pointer;
+
+  text-align: right;
+  display: inline-block;
+  width: auto;
+  align-self: flex-start;
+}
+
+body[data-page="recipes-record"] .patient-btn + .patient-btn{margin-top:17px;}
+
+body[data-page="recipes-record"] .patient-btn:focus{
+  outline: 2px solid #4394D7;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+body[data-page="recipes-record"] .patient-btn:hover{
+  color: #4F4F4F;
+}
+
+body[data-page="recipes-record"] .recipes-rectangles .rect-large{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body[data-page="recipes-record"] .recipes-empty{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+body[data-page="recipes-record"] .recipes-empty-icon{
+  width: 48px;
+  height: 48px;
+  opacity: 0.5;
+}
+
+body[data-page="recipes-record"] .recipes-empty-text{
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #7F7F7F;
+  text-align: center;
+}
+
+
+
+body[data-page="recipes-record"] .is-hidden{
+  display: none !important;
+}
+
+
+body[data-page="recipes-record"] .recipes-left-area{
+  width: 666px;
+}
+
+
+body[data-page="recipes-record"] .recipes-list{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+body[data-page="recipes-record"] .recipes-card{
+  width: 666px;
+  height: 159px;
+  position: relative;
+}
+
+
+body[data-page="recipes-record"] .recipe-status{
+  position: absolute;
+  top: 25px;
+  left: 31px;
+  width: 85px;
+  height: 34px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  text-align: center;
+}
+
+body[data-page="recipes-record"] .recipe-status--paid{
+  background: #C2FBDC;
+  color: #116104;
+}
+
+body[data-page="recipes-record"] .recipe-status--partial{
+  background: #FBF3C2;
+  color: #613D04;
+}
+
+
+body[data-page="recipes-record"] .recipe-docbox{
+  width: 30px;
+  height: 33px;
+  border-radius: 10px;
+  background: #DEECF7;
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body[data-page="recipes-record"] .recipe-docbox img{
+  width: 24px;
+  height: 24px;
+}
+
+
+body[data-page="recipes-record"] .recipe-open-btn{
+  width: 607px;
+  height: 33px;
+  border-radius: 10px;
+  background: #DEECF7;
+  border: none;
+  position: absolute;
+  top: 105px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  color: #053052;
+  cursor: pointer;
+}
+
+body[data-page="recipes-record"] .recipe-open-btn:focus{
+  outline: 2px solid #4394D7;
+  outline-offset: 2px;
+}
+
+
+body[data-page="recipes-record"] .recipes-empty-rect{
+  width: 666px;
+  height: 278px;
+}
+
+
+body[data-page="recipes-record"] .patient-btn.is-active{
+  text-align: right;
+  background: #DEECF7;
+  color: #296BA2;
+  width: 271px;
+  height: 33px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+
+body[data-page="recipes-record"] .recipe-date{
+  position: absolute;
+  top: 19px;
+
+  right: 69px;
+  width: 90px;
+  height: 19px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  color: #000000;
+  text-align: center;
+}
+
+body[data-page="recipes-record"] .recipe-pharmacist{
+  position: absolute;
+  top: 40px;
+  right: 69px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1;
+  color: #848484;
+  text-align: right;
+  white-space: nowrap;
+}
+
+body[data-page="recipes-record"] .recipe-hospital{
+  position: absolute;
+  top: 59px;
+  right: 69px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1;
+  color: #848484;
+  text-align: right;
+  white-space: nowrap;
+}

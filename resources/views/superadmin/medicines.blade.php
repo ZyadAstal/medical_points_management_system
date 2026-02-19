@@ -31,21 +31,15 @@
         <form action="{{ route('superadmin.medicines.index') }}" method="GET">
             <input class="medicines-search-input" name="search" value="{{ request('search') }}" type="text" placeholder="ابحث عن اسم الدواء..." />
         </form>
+        <button type="button" class="medicines-add-btn" id="openAddDrugModal">
+            <span class="medicines-add-plus">+</span>
+            <span class="medicines-add-text">اضافة دواء</span>
+        </button>
     </div>
-
-    <button type="button" class="medicines-add-btn" id="openAddDrugModal">
-        <span class="medicines-add-plus">+</span>
-        <span class="medicines-add-text">اضافة دواء</span>
-    </button>
 
     <div class="medicines-table-wrap">
         <table class="medicines-table">
-            <colgroup>
-                <col style="width:341px" />
-                <col style="width:237px" />
-                <col style="width:267px" />
-                <col style="width:123px" />
-            </colgroup>
+
             <thead>
                 <tr>
                     <th class="col-drug">اسم الدواء</th>
@@ -81,7 +75,7 @@
         </table>
     </div>
 
-    <div class="medicines-pagination" aria-label="pagination">
+    <div class="medicines-pagination">
         {{ $medicines->links('pagination::bootstrap-4') }}
     </div>
 </div>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>سجل الوصفات - Medicare</title>
+<link href="../css/style.css" rel="stylesheet"/>
+<link href="../css/recipes-record.css" rel="stylesheet"/>
+</head>
+<body data-page="recipes-record">
+<div class="app">
+<iframe class="sidebar-frame" src="../layouts/sidebar.html" title="Sidebar"></iframe>
+<div class="main">
+<div id="headerMount"></div>
+<div class="content">
+<div class="search-patient-page-header">
+<h1 class="search-patient-title">سجل الوصفات</h1>
+<p class="search-patient-subtitle">عرض الوصفات السابقة والأدوية المصروفة</p>
+</div>
+
+<div class="recipes-rectangles">
+<div class="recipes-rect rect-small">
+<h2 class="patients-title">المرضى</h2>
+<input aria-label="بحث عن مريض" class="patients-search" placeholder="بحث..." type="text"/>
+<div aria-hidden="true" class="patients-divider"></div>
+<div class="patients-list" role="list">
+<button class="patient-btn" role="listitem" type="button">محمد أحمد سالم</button>
+<button class="patient-btn" role="listitem" type="button">فاطمة حسن علي</button>
+<button class="patient-btn" role="listitem" type="button">خالد عبد الله محمد</button>
+<button class="patient-btn" role="listitem" type="button">نورة سعيد يوسف</button>
+</div>
+</div>
+<div class="recipes-left-area">
+<div class="recipes-rect rect-large recipes-empty-rect">
+<div class="recipes-empty">
+<img alt="" aria-hidden="true" class="recipes-empty-icon" src="../assets/icons/file.svg"/>
+<p class="recipes-empty-text">اختر مريضاً لعرض سجل الوصفات</p>
+</div>
+</div>
+
+<div aria-hidden="true" class="recipes-list is-hidden">
+<div aria-hidden="true" class="recipes-rect recipes-card">
+<div class="recipe-status recipe-status--paid">تم الصرف</div>
+<div class="recipe-date">20/12/2025</div><div class="recipe-pharmacist">الصيدلي: أحمد محمود</div><div class="recipe-hospital">مستشفى غزة الأوروبي</div><div aria-hidden="true" class="recipe-docbox">
+<img alt="" aria-hidden="true" src="../assets/icons/file-navy.svg"/>
+</div>
+<button class="recipe-open-btn" type="button">فتح الوصفة</button>
+</div>
+<div aria-hidden="true" class="recipes-rect recipes-card">
+<div class="recipe-status recipe-status--partial">صرف جزئي</div>
+<div class="recipe-date">18/12/2025</div><div class="recipe-pharmacist">الصيدلي: فاطمة خالد</div><div class="recipe-hospital">مستشفى غزة الأوروبي</div><div aria-hidden="true" class="recipe-docbox">
+<img alt="" aria-hidden="true" src="../assets/icons/file-navy.svg"/>
+</div>
+<button class="recipe-open-btn" type="button">فتح الوصفة</button>
+</div>
+<div aria-hidden="true" class="recipes-rect recipes-card">
+<div class="recipe-status recipe-status--paid">تم الصرف</div>
+<div class="recipe-date">20/12/2025</div><div class="recipe-pharmacist">الصيدلي: عمر يوسف</div><div class="recipe-hospital">مستشفى غزة الأوروبي</div><div aria-hidden="true" class="recipe-docbox">
+<img alt="" aria-hidden="true" src="../assets/icons/file-navy.svg"/>
+</div>
+<button class="recipe-open-btn" type="button">فتح الوصفة</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="../js/include-header.js"></script>
+<script>
+    (function () {
+      const patientButtons = document.querySelectorAll('.patient-btn');
+      const emptyRect = document.querySelector('.recipes-empty-rect');
+      const list = document.querySelector('.recipes-list');
+      if (!patientButtons.length || !emptyRect || !list) return;
+
+      function showList() {
+        emptyRect.classList.add('is-hidden');
+        list.classList.remove('is-hidden');
+        list.removeAttribute('aria-hidden');
+      }
+
+      patientButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // active state
+          patientButtons.forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          showList();
+        });
+      });
+    })();
+  </script>
+<script src="../js/main.js"></script>
+</body>
+</html>

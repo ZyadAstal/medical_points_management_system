@@ -8482,3 +8482,65 @@ body[data-page="reports"] .reports-cards .card__value--single{
 .medicine-table col.col-expiry{
 	width: 30%;
 }
+<<<<<<< HEAD
+=======
+
+/* ===== SHARED PAGINATION STYLES ===== */
+.custom-pagination-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.custom-pagination {
+  display: flex !important;
+  flex-direction: row !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 6px;
+  align-items: center;
+}
+
+.custom-pagination .page-item {
+  list-style: none !important;
+}
+
+.custom-pagination .page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1.5px solid #d0dce8;
+  background: #fff;
+  color: #053052;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.custom-pagination .page-link:hover {
+  background: #053052;
+  color: #fff;
+  border-color: #053052;
+}
+
+.custom-pagination .page-item.active .page-link {
+  background: #053052;
+  color: #fff;
+  border-color: #053052;
+  box-shadow: 0 2px 8px rgba(5,48,82,0.3);
+}
+
+.custom-pagination .page-item.disabled .page-link {
+  background: #f4f7fa;
+  color: #aab8c8;
+  border-color: #e2eaf2;
+  cursor: not-allowed;
+}
+>>>>>>> 2f112b3 (upload doctor views and update some pages)

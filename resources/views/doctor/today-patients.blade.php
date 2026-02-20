@@ -27,46 +27,119 @@
     </div>
 </div>
 
+<style>
+    .queue-action-btn {
+        padding: 6px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+        color: white;
+        font-family: 'Inter', sans-serif;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0 2px;
+    }
+    .btn-enter { background-color: #28a745; }
+    .btn-wait { background-color: #ffc107; color: #053052; }
+    .btn-complete { background-color: #053052; }
+    .queue-action-btn:hover { opacity: 0.8; }
+    .table-section-title {
+        margin: 30px 20px 15px 0;
+        font-size: 1.2rem;
+        color: #053052;
+        font-weight: bold;
+        text-align: right;
+    }
+    .status-badge.status-gray { background-color: #f0f0f0; color: #666; border: 1px solid #ddd; }
+    .patients-td, .patients-th {
+        text-align: center !important;
+    }
+</style>
+
+<div class="table-section-title">قائمة الانتظار في الدور</div>
 <div class="patients-table">
     <div class="patients-table-header">
         <div class="patients-th">اسم المريض</div>
         <div class="patients-th">الرقم الوطني</div>
-        <div class="patients-th">الحالة</div>
+        <div class="patients-th">نوع الحالة</div>
         <div class="patients-th">الإجراء</div>
     </div>
 
-    <div class="patients-table-body" id="patientsTableBody">
-        <span aria-hidden="true" class="patients-vline v1"></span>
-        <span aria-hidden="true" class="patients-vline v2"></span>
-        <span aria-hidden="true" class="patients-vline v3"></span>
+    <div class="patients-table-body" id="queueTableBody">
 
-        @forelse($visits as $visit)
+        @forelse($queueVisits as $visit)
+            @php $patient = $visit->patient; @endphp
+            <div class="patients-tr" data-patient-id="{{ $patient->id }}">
+                <div class="patients-td">{{ $patient->name }}</div>
+                <div class="patients-td">{{ $patient->national_id }}</div>
+                <div class="patients-td">
+                    @if($visit->priority == \App\Models\Visit::PRIORITY_EMERGENCY)
+                        <span class="status-badge status-red">حالة طارئة</span>
+                    @else
+                        <span class="status-badge status-green">عادية</span>
+                    @endif
+                </div>
+                <div class="patients-td patients-action-cell" style="display: flex; gap: 5px; justify-content: center; align-items: center;">
+                    @if($visit->status === \App\Models\Visit::STATUS_WAITING)
+                        <form action="{{ route('doctor.visits.enter', $visit) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="queue-action-btn btn-enter">إدخال</button>
+                        </form>
+                        <button type="button" class="queue-action-btn btn-wait">انتظار</button>
+                    @elseif($visit->status === \App\Models\Visit::STATUS_IN_PROGRESS)
+                        <span style="font-weight: bold; color: #28a745; margin-left: 10px;">داخل العيادة</span>
+                        <form action="{{ route('doctor.visits.complete', $visit) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="queue-action-btn btn-complete">تم الفحص</button>
+                        </form>
+                    @endif
+                </div>
+            </div>
+        @empty
+            <div class="patients-tr"><div class="patients-td" style="grid-column: 1/-1; text-align:center;">لا يوجد مرضى في قائمة الانتظار</div></div>
+        @endforelse
+    </div>
+</div>
+
+<div class="table-section-title">المرضى الذين تم فحصهم</div>
+<div class="patients-table">
+    <div class="patients-table-header">
+        <div class="patients-th">اسم المريض</div>
+        <div class="patients-th">الرقم الوطني</div>
+        <div class="patients-th">حالة الصرف</div>
+        <div class="patients-th">الإجراء</div>
+    </div>
+
+    <div class="patients-table-body" id="pastTableBody">
+
+        @forelse($pastVisits as $visit)
             @php
                 $patient = $visit->patient;
-                $hasDispense = false;
-                $partialDispense = false;
-                $prescriptions = \App\Models\Prescription::where('patient_id', $patient->id)
-                    ->where('doctor_id', auth()->id())
-                    ->whereDate('created_at', now())
+                $prescriptions = $patient->prescriptions()
+                    ->whereDate('created_at', $visit->visit_date)
                     ->with('items.dispenses')
                     ->get();
 
-                if ($prescriptions->count() > 0) {
-                    $allItems = $prescriptions->flatMap->items;
-                    $dispensedItems = $allItems->filter(fn($item) => $item->dispenses->count() > 0);
-                    $hasDispense = $dispensedItems->count() === $allItems->count() && $allItems->count() > 0;
-                    $partialDispense = $dispensedItems->count() > 0 && !$hasDispense;
-                }
-
-                if ($visit->status === 'completed' || $hasDispense) {
-                    $statusClass = 'status-green';
-                    $statusText = 'تم الصرف';
-                } elseif ($partialDispense) {
-                    $statusClass = 'status-yellow';
-                    $statusText = 'صرف جزئي';
+                if ($prescriptions->isEmpty()) {
+                    $statusClass = 'status-gray';
+                    $statusText = 'معاينة فقط';
                 } else {
-                    $statusClass = 'status-red';
-                    $statusText = 'لم يصرف';
+                    $allItems = $prescriptions->flatMap->items;
+                    $dispensedCount = $allItems->where('is_dispensed', true)->count();
+                    // is_dispensed might not be updated yet, check dispenses table
+                    $dispensedCountByMeds = $allItems->filter(fn($item) => $item->dispenses->count() > 0)->count();
+
+                    if ($dispensedCountByMeds === 0) {
+                        $statusClass = 'status-red';
+                        $statusText = 'لم يتم الصرف';
+                    } elseif ($dispensedCountByMeds === $allItems->count()) {
+                        $statusClass = 'status-green';
+                        $statusText = 'تم الصرف';
+                    } else {
+                        $statusClass = 'status-yellow';
+                        $statusText = 'صرف جزئي';
+                    }
                 }
             @endphp
             <div class="patients-tr"
@@ -87,11 +160,7 @@
                 </div>
             </div>
         @empty
-            <div class="patients-tr">
-                <div class="patients-td" style="grid-column: 1/-1; text-align:center; padding:30px;">
-                    لا يوجد مرضى مسجلين لهذا اليوم
-                </div>
-            </div>
+            <div class="patients-tr"><div class="patients-td" style="grid-column: 1/-1; text-align:center;">لا يوجد مرضى مفحوصين لهذا اليوم</div></div>
         @endforelse
     </div>
 </div>
@@ -115,6 +184,10 @@
                 <div class="patient-info-item">
                     <div class="patient-info-label">رقم الهاتف</div>
                     <div class="patient-info-value" id="modalPhone">—</div>
+                </div>
+                <div class="patient-info-item">
+                    <div class="patient-info-label">النقاط المستخدمة (من 100)</div>
+                    <div class="patient-info-value" id="modalUsedPoints">—</div>
                 </div>
                 <div class="patient-info-item">
                     <div class="patient-info-label">النقاط المتبقية</div>
@@ -226,17 +299,16 @@
         });
     }
 
-    // Search filter
     const searchInput = document.getElementById('todaySearchInput');
     if (searchInput) {
         searchInput.addEventListener('input', function () {
             const q = searchInput.value.trim().toLowerCase();
             const rows = document.querySelectorAll('.patients-tr');
             rows.forEach(function (row) {
-                const name = row.querySelector('.patients-td:nth-child(1)');
-                const nid = row.querySelector('.patients-td:nth-child(2)');
-                if (!name || !nid) return;
-                const match = name.textContent.toLowerCase().includes(q) || nid.textContent.includes(q);
+                const nameTd = row.querySelector('.patients-td:nth-child(1)');
+                const nidTd = row.querySelector('.patients-td:nth-child(2)');
+                if (!nameTd || !nidTd) return;
+                const match = nameTd.textContent.toLowerCase().includes(q) || nidTd.textContent.includes(q);
                 row.style.display = match ? '' : 'none';
             });
         });
@@ -244,8 +316,7 @@
 
     // Modal
     const modalOverlay = document.getElementById('patientModalOverlay');
-    const tableBody = document.getElementById('patientsTableBody');
-    if (!modalOverlay || !tableBody) return;
+    if (!modalOverlay) return;
 
     const closeBtn = document.getElementById('patientModalCloseBtn');
 
@@ -253,7 +324,9 @@
         document.getElementById('modalPatientName').textContent = data.name || '—';
         document.getElementById('modalNationalId').textContent = data.nid || '—';
         document.getElementById('modalPhone').textContent = data.phone || '—';
-        document.getElementById('modalPoints').textContent = data.points || '0';
+        const remainingPoints = parseInt(data.points) || 0;
+        document.getElementById('modalPoints').textContent = remainingPoints;
+        document.getElementById('modalUsedPoints').textContent = 100 - remainingPoints;
 
         // Fetch patient details via AJAX
         if (data.id) {
@@ -293,7 +366,7 @@
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
 
-    tableBody.addEventListener('click', function (e) {
+    document.addEventListener('click', function (e) {
         const btn = e.target.closest('.patients-action-btn');
         if (!btn) return;
         const tr = btn.closest('.patients-tr');

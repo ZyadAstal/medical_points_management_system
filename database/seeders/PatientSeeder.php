@@ -204,7 +204,7 @@ class PatientSeeder extends Seeder
                     'national_id' => $data['national_id'],
                     'address'     => $data['address'],
                     'phone'       => $data['phone'],
-                    'points'      => $data['points'],
+                    'points'      => 100, // Initialize with max points
                     'date_of_birth' => $data['date_of_birth'],
                 ]
             );
@@ -222,8 +222,8 @@ class PatientSeeder extends Seeder
                     'patient_id'       => $patient->id,
                     'doctor_id'        => $doctor->id,
                     'medical_center_id' => $centerId,
-                    'status'           => $index < 3 ? 'completed' : 'waiting',
-                    'priority'         => $index < 3 ? 1 : 0,
+                    'status'           => $index < 3 ? Visit::STATUS_COMPLETED : Visit::STATUS_WAITING,
+                    'priority'         => $index < 3 ? Visit::PRIORITY_EMERGENCY : Visit::PRIORITY_NORMAL,
                     'visit_date'       => $today->toDateString(),
                     'notes'            => 'زيارة مراجعة دورية',
                 ]);
@@ -236,8 +236,8 @@ class PatientSeeder extends Seeder
                     'patient_id'       => $patient->id,
                     'doctor_id'        => $doctor->id,
                     'medical_center_id' => $centerId,
-                    'status'           => 'completed',
-                    'priority'         => 0,
+                    'status'           => Visit::STATUS_COMPLETED,
+                    'priority'         => Visit::PRIORITY_NORMAL,
                     'visit_date'       => $today->copy()->subDays($v * 7 + $index)->toDateString(),
                     'notes'            => 'زيارة سابقة رقم ' . $v,
                 ]);
@@ -284,15 +284,19 @@ class PatientSeeder extends Seeder
                             $pharmacistId = $pharmacistsByCenter[$centerId]->random()->id;
                         }
 
+                        $pointsUsed = $qty * $med->points_cost;
                         Dispense::create([
                             'prescription_item_id' => $item->id,
                             'medical_center_id'    => $centerId,
                             'pharmacist_id'        => $pharmacistId,
                             'quantity'             => $qty,
-                            'points_used'          => $qty * $med->points_cost,
+                            'points_used'          => $pointsUsed,
                             'created_at'           => $prescDate->copy()->addHours(rand(1, 5)),
                             'updated_at'           => $prescDate->copy()->addHours(rand(1, 5)),
                         ]);
+
+                        // Update patient points
+                        $patient->decrement('points', $pointsUsed);
                     }
                 }
             }

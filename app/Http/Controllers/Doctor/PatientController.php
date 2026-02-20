@@ -17,15 +17,53 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $doctor = Auth::user();
+        // Use selected date or today
         $date = $request->input('date', now()->toDateString());
 
-        $visits = Visit::where('doctor_id', $doctor->id)
+        // Fetch all visits for this doctor on this date
+        $allVisits = Visit::where('doctor_id', $doctor->id)
             ->whereDate('visit_date', $date)
-            ->with('patient')
+            ->with(['patient.prescriptions.items.dispenses'])
+            ->orderBy('priority', 'desc')
             ->orderBy('created_at', 'asc')
             ->get();
 
-        return view('doctor.today-patients', compact('visits', 'date'));
+        // Queue: Waiting or In Progress
+        $queueVisits = $allVisits->filter(function($visit) {
+            return in_array($visit->status, [Visit::STATUS_WAITING, Visit::STATUS_IN_PROGRESS]);
+        });
+
+        // Past: Completed
+        $pastVisits = $allVisits->filter(function($visit) {
+            return $visit->status === Visit::STATUS_COMPLETED;
+        });
+
+        return view('doctor.today-patients', [
+            'queueVisits' => $queueVisits,
+            'pastVisits' => $pastVisits,
+            'date' => $date
+        ]);
+    }
+
+    /**
+     * Start the visit (patient enters doctor)
+     */
+    public function enter(Visit $visit)
+    {
+        // Only allow entering if currently waiting
+        if ($visit->status === Visit::STATUS_WAITING) {
+            $visit->update(['status' => Visit::STATUS_IN_PROGRESS]);
+        }
+        return back();
+    }
+
+    /**
+     * Complete the visit (patient has been examined)
+     */
+    public function complete(Visit $visit)
+    {
+        $visit->update(['status' => Visit::STATUS_COMPLETED]);
+        return back();
     }
 
     /**

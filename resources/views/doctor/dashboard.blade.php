@@ -1,10 +1,5 @@
 @extends('layouts.doctor')
 
-<<<<<<< HEAD
-@section('content')
-    <!-- فارغ حسب الطلب -->
-@endsection
-=======
 @section('title', 'لوحة التحكم - Medicare')
 @section('page-id', 'dashboard')
 
@@ -109,4 +104,3 @@
 })();
 </script>
 @endpush
->>>>>>> 2f112b3 (upload doctor views and update some pages)

@@ -66,10 +66,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':Doctor'])->prefix('doctor')
     Route::put('/profile/security', [\App\Http\Controllers\Doctor\ProfileController::class, 'updateSecurity'])->name('profile.update.security');
     
     // Visit Actions
-    Route::post('/visits/{visit}/complete', function(\App\Models\Visit $visit) {
-        $visit->update(['status' => 'completed']);
-        return redirect()->route('doctor.patients.index');
-    })->name('visits.complete');
+    Route::post('/visits/{visit}/enter', [\App\Http\Controllers\Doctor\PatientController::class, 'enter'])->name('visits.enter');
+    Route::post('/visits/{visit}/complete', [\App\Http\Controllers\Doctor\PatientController::class, 'complete'])->name('visits.complete');
 });
 
 // --- Pharmacist Routes ---

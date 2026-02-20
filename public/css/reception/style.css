@@ -8482,8 +8482,6 @@ body[data-page="reports"] .reports-cards .card__value--single{
 .medicine-table col.col-expiry{
 	width: 30%;
 }
-<<<<<<< HEAD
-=======
 
 /* ===== SHARED PAGINATION STYLES ===== */
 .custom-pagination-nav {
@@ -8543,4 +8541,3 @@ body[data-page="reports"] .reports-cards .card__value--single{
   border-color: #e2eaf2;
   cursor: not-allowed;
 }
->>>>>>> 2f112b3 (upload doctor views and update some pages)

@@ -23,6 +23,8 @@ class DispenseSeeder extends Seeder
             ->groupBy('medical_center_id');
 
         foreach ($prescriptionItems as $item) {
+            if ($item->dispenses()->exists()) continue;
+
             $centerId = $item->prescription->doctor->medical_center_id ?? $item->prescription->patient->user->medical_center_id;
             
             // Find a pharmacist in this center
@@ -31,13 +33,17 @@ class DispenseSeeder extends Seeder
                 $pharmacistId = $pharmacistsByCenter[$centerId]->random()->id;
             }
 
+            $pointsUsed = $item->quantity * $item->medicine->points_cost;
             Dispense::create([
                 'prescription_item_id' => $item->id,
                 'medical_center_id'    => $centerId,
                 'pharmacist_id'        => $pharmacistId,
                 'quantity'             => $item->quantity,
-                'points_used'          => $item->quantity * $item->medicine->points_cost,
+                'points_used'          => $pointsUsed,
             ]);
+
+            // Decrement points directly from patient associated with prescription
+            $item->prescription->patient->decrement('points', $pointsUsed);
         }
     }
 }

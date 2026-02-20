@@ -62,20 +62,13 @@ body[data-page="roles"] .main{
   padding-top: 0;
 }
 
-<<<<<<< HEAD
-body[data-page="roles"] .content{
-=======
 body[data-page="roles"] .content {
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   width: 100%;
   background: #FFFFFF;
   margin-top: 7px;
   min-height: 901px;
   box-sizing: border-box;
-<<<<<<< HEAD
-=======
   position: relative;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 
 
@@ -225,11 +218,7 @@ body[data-page="roles"] .users-pagination button{
   height:1px;
   padding:0;
   margin:-1px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   clip:rect(0,0,0,0);
   white-space:nowrap;
   border:0;
@@ -266,12 +255,8 @@ button{font-family:inherit}
 
 .nav-link{
   display:flex;
-<<<<<<< HEAD
-  flex-direction:row-reverse;
-=======
   flex-direction:row;
   direction:rtl;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   align-items:center;
   gap:10px;
   padding:12px 12px;
@@ -377,12 +362,8 @@ button{font-family:inherit}
 .dropdown__item{
   margin-top:10px;
   display:flex;
-<<<<<<< HEAD
-  flex-direction:row-reverse;
-=======
   flex-direction:row;
   direction:rtl;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   align-items:center;
   gap:10px;
   padding:10px;
@@ -411,22 +392,14 @@ button{font-family:inherit}
   border-radius:14px;
   box-shadow:var(--shadow);
   border:1px solid #eef1f4;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 .card__top{height:10px;background:var(--navy)}
 .card__body{
   padding:16px;
   display:flex;
-<<<<<<< HEAD
-  flex-direction:row-reverse;
-=======
   flex-direction:row;
   direction:rtl;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   gap:14px;
   align-items:center;
 }
@@ -483,11 +456,7 @@ button{font-family:inherit}
   border-radius:14px;
   box-shadow:var(--shadow);
   border:1px solid #e8edf1;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 table{width:100%;border-collapse:collapse}
 thead th{
@@ -520,12 +489,8 @@ tbody td{
   display:flex;
   gap:10px;
   justify-content:flex-start;
-<<<<<<< HEAD
-  flex-direction:row-reverse;
-=======
   flex-direction:row;
   direction:rtl;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 .icon-btn{
   width:34px;height:34px;
@@ -591,12 +556,8 @@ tbody td{
   display:flex;
   gap:10px;
   justify-content:flex-start;
-<<<<<<< HEAD
-  flex-direction:row-reverse;
-=======
   flex-direction:row;
   direction:rtl;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   margin-top:10px;
 }
 .confirm{text-align:center}
@@ -604,24 +565,16 @@ tbody td{
 .confirm .form__actions{justify-content:center}
 
 
-<<<<<<< HEAD
-.app{display:flex; min-height:100vh; flex-direction:row-reverse;}
-=======
 .app{display:flex; min-height:100vh; flex-direction:row;
   direction:rtl;}
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 .sidebar{width:var(--sidebar-w); background:var(--navy); color:#fff;}
 .sidebar__brand{padding:22px 18px;}
 .sidebar__logo{width:140px; height:auto;}
 .sidebar__nav{padding:6px 10px 16px; display:flex; flex-direction:column; gap:10px;}
 .nav-link{
   display:flex;
-<<<<<<< HEAD
-  flex-direction:row-reverse;
-=======
   flex-direction:row;
   direction:rtl;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   align-items:center;
   justify-content:flex-start;
   gap:12px;
@@ -715,12 +668,8 @@ tbody td{
 .dropdown__item{
   margin-top:10px;
   display:flex;
-<<<<<<< HEAD
-  flex-direction:row-reverse;
-=======
   flex-direction:row;
   direction:rtl;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   align-items:center;
   gap:10px;
   padding:10px 10px;
@@ -736,11 +685,7 @@ tbody td{
 .page-desc{margin:6px 0 0; color:var(--muted);}
 
 
-<<<<<<< HEAD
-.table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border:1px solid var(--navy); border-radius:10px; background:#fff;}
-=======
 .table{width:100%; border-collapse:separate; border-spacing:0; overflow: visible; border:1px solid var(--navy); border-radius:10px; background:#fff;}
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 .table thead th{background:var(--navy); color:#fff; padding:12px 10px; font-weight:700; border-left:1px solid rgba(255,255,255,.15);}
 .table tbody td{padding:12px 10px; border-top:1px solid rgba(11,58,90,.25); border-left:1px solid rgba(11,58,90,.25); vertical-align:middle;}
 .badge-active{display:inline-block; padding:6px 12px; border-radius:8px; background:#dbeafe; color:#1d4ed8; font-weight:700; font-size:12px;}
@@ -758,11 +703,7 @@ tbody td{
   border-spacing:0;
   border:1px solid var(--navy);
   border-radius:10px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   background:#fff;
 }
 .content table thead th{
@@ -837,12 +778,8 @@ tbody td{
 .dropdown{direction:rtl;text-align:right;}
 .dropdown__item{display:flex; align-items:center; justify-content:flex-start; gap:10px;}
 
-<<<<<<< HEAD
-.dropdown__item--danger{flex-direction:row-reverse;}
-=======
 .dropdown__item--danger{flex-direction:row;
   direction:rtl;}
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 
 
 .header{
@@ -919,11 +856,7 @@ tbody td{
   width:240px !important;
   padding:0 !important;
   border-radius:10px !important;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   direction:rtl;
   text-align:right;
 }
@@ -942,12 +875,8 @@ tbody td{
 }
 .dropdown__logout{
   display:flex;
-<<<<<<< HEAD
-  flex-direction:row-reverse;
-=======
   flex-direction:row;
   direction:rtl;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   align-items:center;
   justify-content:flex-start;
   gap:10px;
@@ -1048,26 +977,6 @@ body[data-page="dashboard"] .dash-title-block{
 
 
 body[data-page="dashboard"] .dash-title-block .page-title{
-<<<<<<< HEAD
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 32px;
-  line-height: 1;
-  color: #053052;
-}
-
-body[data-page="dashboard"] .dash-title-block .page-subtitle{
-  margin: 16px 0 0;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 1;
-  color: #6184A0;
-}
-
-
-=======
   width: 283px;
   display: block;
   align-self: flex-end;
@@ -1100,7 +1009,6 @@ body[data-page="dashboard"] .dash-title-block .page-subtitle{
 
 
 
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 body[data-page="dashboard"] .dash-title-block{
   max-width:1080px;
 
@@ -1109,22 +1017,6 @@ body[data-page="dashboard"] .dash-title-block{
 }
 
 body[data-page="dashboard"] .dash-title-block .page-title{
-<<<<<<< HEAD
-  margin:0;
-  font-size:32px;
-  font-weight:600;
-  color:#053052;
-}
-
-body[data-page="dashboard"] .dash-title-block .page-subtitle{
-  margin:3px 0 0;
-  font-size:18px;
-  font-weight:600;
-  color:#6184A0;
-}
-
-
-=======
   width: 283px;
   display: block;
   align-self: flex-end;
@@ -1157,7 +1049,6 @@ body[data-page="dashboard"] .dash-title-block .page-subtitle{
 
 
 
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 .dashboard-cards .card{
   width:328px;
   height:178px;
@@ -1185,19 +1076,6 @@ body[data-page="dashboard"] .dashboard-cards{
 }
 
 .page-title{
-<<<<<<< HEAD
-  text-align: center;
-  max-width: 1040px;
-  margin: 0 auto 14px auto;
-}
-
-
-.page-title{
-  margin-bottom: 48px;
-}
-
-
-=======
   width: 283px;
   display: block;
   align-self: flex-end;
@@ -1235,7 +1113,6 @@ body[data-page="dashboard"] .dashboard-cards{
 
 
 
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 .dashboard-cards{
   column-gap: 28px;
   row-gap: 40px;
@@ -1317,11 +1194,7 @@ body[data-page="dashboard"] .dashboard-cards{
 .users-table{
   border:1px solid #cfd8e3;
   border-radius:10px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 .users-table thead th{
   background:#0b3a5b;
@@ -1368,11 +1241,7 @@ body[data-page="users"] .users-table-wrap{
   margin-right:79px;
   border:1px solid #053052;
   border-radius:5px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 body[data-page="users"] .users-table{
   height:100%;
@@ -1423,11 +1292,7 @@ body[data-page="users"] .users-table-wrap{
   margin-right:79px;
   border:1px solid #053052;
   border-radius:5px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 
 
@@ -1436,11 +1301,7 @@ body[data-page="users"] .users-table{
   height:443px;
   border:1px solid var(--navy);
   border-radius:10px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   table-layout:fixed;
   border-collapse:collapse;
 }
@@ -1473,11 +1334,7 @@ body[data-page="users"] .users-table thead{
 }
 body[data-page="users"] .users-table tbody{
   height:calc(443px - 56px);
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 body[data-page="users"] .users-table thead tr,
 body[data-page="users"] .users-table tbody tr{
@@ -1509,11 +1366,7 @@ body[data-page="users"] .users-table tbody tr{
   margin: 18px auto 0;
   border: 2px solid #083a56;
   border-radius: 10px;
-<<<<<<< HEAD
-  overflow: hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   background: #fff;
 }
 
@@ -1609,22 +1462,14 @@ body[data-page="users"] .users-table-wrap{
   margin-right:79px;
   border:1px solid #053052;
   border-radius:5px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 body[data-page="users"] .users-table-wrapper{
   width:968px;
   height:443px;
   border:1px solid var(--navy);
   border-radius:10px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   background:#fff;
   position:relative;
   background-image: none;
@@ -1637,12 +1482,8 @@ body[data-page="users"] table.users-table thead th{background:var(--navy); color
 body[data-page="users"] table.users-table tbody td{background:transparent;}
 
 
-<<<<<<< HEAD
-body[data-page="users"] .actions{display:flex; align-items:center; justify-content:center; gap:12px; flex-direction:row-reverse;}
-=======
 body[data-page="users"] .actions{display:flex; align-items:center; justify-content:center; gap:12px; flex-direction:row;
   direction:rtl;}
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 body[data-page="users"] .actions-sep{display:none;}
 
 
@@ -1695,11 +1536,7 @@ body[data-page="users"] .users-table-wrap{
   margin-right:79px;
   border:1px solid #053052;
   border-radius:5px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 
 body[data-page="users"] .users-table-wrapper{
@@ -1708,11 +1545,7 @@ body[data-page="users"] .users-table-wrapper{
   margin:0 auto;
   border:1px solid var(--navy);
   border-radius:10px;
-<<<<<<< HEAD
-  overflow:hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   background-color:#fff;
   position:relative;
   background-image: none;
@@ -2138,11 +1971,7 @@ body[data-page="roles"] .roles-table{
 body[data-page="roles"] .roles-table .table-wrap{
   border: 1.8px solid #053052;
   border-radius: 12px;
-<<<<<<< HEAD
-  overflow: hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }
 
 body[data-page="roles"] .roles-table table{
@@ -2386,11 +2215,7 @@ body[data-page="medicines"] .centers-table-wrap {
   background: #ffffff;
   border: 2px solid #0a3550;
   border-radius: 10px;
-<<<<<<< HEAD
-  overflow: hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   box-shadow: 0 12px 28px rgba(0,0,0,0.14);
 }
 
@@ -2618,11 +2443,7 @@ body[data-page="reports"] .reports-filters-grid{
   display: flex;
   flex-direction: row;
   direction: rtl;
-<<<<<<< HEAD
-  align-items: flex-start;
-=======
   align-items: center;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   gap: 18px;
 }
 
@@ -2763,11 +2584,7 @@ body[data-page="reports"] .reports-table-wrap{
   height: 416px;
   border: 1px solid #053052;
   border-radius: 5px;
-<<<<<<< HEAD
-  overflow: hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   box-sizing: border-box;
   background: #fff;
 }
@@ -2863,11 +2680,7 @@ body[data-page="reports"] .reports-section2-table-wrap{
   height: 386px;
   border: 1px solid #053052;
   border-radius: 5px;
-<<<<<<< HEAD
-  overflow: hidden;
-=======
   overflow: visible;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   box-sizing: border-box;
   background: #fff;
 }
@@ -3615,8 +3428,6 @@ body[data-page="profile"] .security-note {
   border: 0.5px solid #1D7AC3;
   background: rgba(194, 221, 231, 0.5);
 
-<<<<<<< HEAD
-=======
   overflow: visible;
 }
 
@@ -10921,7 +10732,6 @@ body[data-page="profile"] .security-note {
   border: 0.5px solid #1D7AC3;
   background: rgba(194, 221, 231, 0.5);
 
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   overflow: hidden;
 }
 
@@ -15210,22 +15020,14 @@ body[data-page="medicines"] .modal-date-divider{
   pointer-events:none;
 }
 
-<<<<<<< HEAD
-/* هذا الكود يستهدف آخر عمود في الجدول ويضمن إزالة الحد الأيمن له */
-=======
 
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 #medicines th.col-expiry,
 #medicines th.col-points,
 #medicines td.col-expiry-cell,#medicines td.col-point-cell {
   border-right: none !important;
 }
 
-<<<<<<< HEAD
-/* للتأكد من أن الجدول لا يأخذ عرض ثابت أكبر من اللازم */
-=======
 
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 #medicines {
   width: 80% !important ;
   table-layout: fixed !important;
@@ -15574,465 +15376,6 @@ body[data-page="reports"] .reports-filters-grid .filter-label{
   display: block !important;
   width: 100% !important;
   text-align: right !important;
-<<<<<<< HEAD
-}
-
-body[data-page="reports"] .reports-filters-grid .filter-control{
-  text-align: right !important;
-}
-
-
-body[data-page="reports"] .reports-filters-grid .date-input{
-  direction: ltr !important;
-  text-align: right !important;
-  padding-right: 18px !important;
-}
-
-
-body[data-page="reports"] .reports-filters-grid select.filter-control{
-  background-position: 16px 50% !important;
-  background-size: 16px 16px !important;
-  padding-left: 46px !important;
-}
-
-
-body[data-page="reports"] .reports-filters-grid .filter-control,
-body[data-page="reports"] .reports-filters-grid .filter-control option{
-  font-family: 'Inter', sans-serif !important;
-  font-size: 18px !important;
-  font-weight: 500 !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #545454 !important;
-}
-
-
-body[data-page="reports"] .reports-filters-grid .filter-label{
-  font-family: 'Inter', sans-serif !important;
-  font-size: 18px !important;
-  font-weight: 500 !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-}
-
-
-body[data-page="reports"] .reports-filters-grid select.filter-control{
-  background-position: 22px 50% !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card{
-  background: #ffffff !important;
-  border: 0.5px solid #053052 !important;
-  border-radius: 10px !important;
-  box-shadow: 0px 4px 4px rgba(0,0,0,0.25) !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card-title{
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 18px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #6A6A6A !important;
-  text-align: center !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card-value{
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 28px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #053052 !important;
-  text-align: center !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card-icon{
-  width: 51px !important;
-  height: 46px !important;
-  border-radius: 10px !important;
-  background: rgba(5,48,82,0.2) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-body[data-page="reports"] .reports-cards .card-icon img,
-body[data-page="reports"] .reports-cards .card-icon svg{
-  width: 32px !important;
-  height: 32px !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card__icon{
-  width: 51px !important;
-  height: 46px !important;
-  border-radius: 10px !important;
-  background: rgba(5,48,82,0.2) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-body[data-page="reports"] .reports-cards .card__icon img,
-body[data-page="reports"] .reports-cards .card__icon svg{
-  width: 32px !important;
-  height: 32px !important;
-}
-
-body[data-page="reports"] .reports-cards .card__label{
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 18px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #6A6A6A !important;
-  text-align: center !important;
-}
-
-body[data-page="reports"] .reports-cards .card__value{
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 28px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #053052 !important;
-  text-align: center !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card__value--single{
-  white-space: nowrap !important;
-  font-size: 24px !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card__top{
-  display: none !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card__body{
-  padding: 16px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 10px !important;
-  text-align: center !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card__icon{
-  width: 51px !important;
-  height: 46px !important;
-  border-radius: 10px !important;
-  background: rgba(5,48,82,0.2) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 !important;
-}
-body[data-page="reports"] .reports-cards .card__icon img,
-body[data-page="reports"] .reports-cards .card__icon svg{
-  width: 32px !important;
-  height: 32px !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card__label{
-  margin: 0 !important;
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 18px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #6A6A6A !important;
-}
-body[data-page="reports"] .reports-cards .card__value{
-  margin: 0 !important;
-  margin-top: -1px !important;
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 28px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #053052 !important;
-}
-
-
-body[data-page="reports"] .reports-cards .card__value--single{
-  white-space: nowrap !important;
-  font-size: 24px !important;
-}
-
-
-.header.header-v2 .header-v2__menuLabel{
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 400 !important;
-  font-size: 9px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #747474 !important;
-  margin: 0 !important;
-}
-
-
-.header.header-v2 .header-v2__menuValue{
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 10px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #000000 !important;
-  margin: 6px 0 0 0 !important;
-}
-.header.header-v2 .header-v2__menuValue--email{ opacity: 0.9 !important; }
-
-
-.header.header-v2 .header-v2__logout{
-  flex-direction: row-reverse !important;
-  gap: 8px !important;
-  text-decoration: none !important;
-  color: #C01414 !important;
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 10px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-}
-.header.header-v2 .header-v2__logout:hover{ background:#ffffff !important; }
-.header.header-v2 .header-v2__logout img{ width: 12px !important; height: 12px !important; }
-
-
-.header.header-v2 .header-v2__user{ position: relative !important; }
-
-.header.header-v2 .header-v2__menu{
-  position: absolute !important;
-  top: calc(100% + 6px) !important;
-  right: 0 !important;
-  width: 420px !important;
-  height: 300px !important;
-  background: #ffffff !important;
-  opacity: 1 !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  box-shadow: none !important;
-  overflow: hidden !important;
-  display: none !important;
-  flex-direction: column !important;
-  z-index: 9999 !important;
-}
-
-.header.header-v2 .header-v2__menu.is-open,
-.header.header-v2 .header-v2__menu[aria-hidden="false"]{
-  display: flex !important;
-}
-
-
-.header.header-v2 .header-v2__menu > .header-v2__menuRow,
-.header.header-v2 .header-v2__menu > .header-v2__logout{
-  flex: 1 1 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-end !important;
-  justify-content: center !important;
-  text-align: right !important;
-  padding-right: 18px !important;
-  padding-left: 18px !important;
-  margin: 0 !important;
-  background: #ffffff !important;
-}
-
-
-.header.header-v2 .header-v2__menu > .header-v2__menuRow + .header-v2__menuRow,
-.header.header-v2 .header-v2__menu > .header-v2__logout{
-  border-top: 1px solid #B8B8B8 !important;
-}
-
-
-.header.header-v2 .header-v2__menuLabel{
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 400 !important;
-  font-size: 18px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #747474 !important;
-  margin: 0 !important;
-}
-
-
-.header.header-v2 .header-v2__menuValue{
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 28px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-  color: #000000 !important;
-  margin: 10px 0 0 0 !important;
-}
-.header.header-v2 .header-v2__menuValue--email{ opacity: 0.9 !important; }
-
-
-.header.header-v2 .header-v2__logout{
-  flex-direction: row-reverse !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  gap: 12px !important;
-  color: #C01414 !important;
-  text-decoration: none !important;
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 32px !important;
-  line-height: 100% !important;
-  letter-spacing: 0 !important;
-}
-.header.header-v2 .header-v2__logout:hover{ background:#ffffff !important; }
-.header.header-v2 .header-v2__logout img{ width: 32px !important; height: 32px !important; }
-
-
-.header-v2__menuWrap{
-  position:relative;
-  display:flex;
-  align-items:center;
-}
-
-.header-v2__userDropdown{
-  position:absolute;
-  top:100%;
-  left:50%;
-  transform:translateX(-50%);
-  width:153px;
-  height:118px;
-  background:#ffffff;
-  border:none;
-  border-radius:0;
-  box-shadow:var(--shadow);
-  padding:0;
-  display:none;
-  z-index:1000;
-  margin-top:0;
-}
-
-.header-v2__userDropdown.open{display:block;}
-
-
-#userDropdown.header-v2__userDropdown{
-  border: none !important;
-  border-radius: 0 !important;
-}
-
-
-#userDropdown .user-dd__line{
-  position:absolute;
-  left:0;
-  width:153px;
-  height:0;
-  border-top:0.4px solid #B8B8B8;
-}
-#userDropdown .user-dd__line--1{ top:40px; }
-#userDropdown .user-dd__line--2{ top:80px; }
-
-
-#userDropdown .user-dd__roleLabel{
-  position:absolute;
-  top:5px;
-  left:112px;
-  width:33px;
-  height:14px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight:400;
-  font-size:9px;
-  line-height:1;
-  letter-spacing:0;
-  text-align:center;
-  color:#747474;
-}
-#userDropdown .user-dd__roleValue{
-  position:absolute;
-  top:19px;
-  left:56px;
-  width:120px;
-  height:25px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight:500;
-  font-size:10px;
-  line-height:1;
-  letter-spacing:0;
-  text-align:center;
-  color:#000000;
-}
-
-
-#userDropdown .user-dd__emailLabel{
-  position:absolute;
-  top:45px;
-  right:8px;
-  left:auto;
-  width:auto;
-  height:14px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight:400;
-  font-size:9px;
-  line-height:1;
-  letter-spacing:0;
-  text-align:right;
-  direction:rtl;
-  color:#747474;
-}
-#userDropdown .user-dd__emailValue{
-  position:absolute;
-  top:59px;
-  right:8px;
-  left:auto;
-  width:calc(153px - 16px);
-  height:25px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight:500;
-  font-size:10px;
-  line-height:1;
-  letter-spacing:0;
-  text-align:right;
-  direction:ltr;
-  color:#000000;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-
-#userDropdown .user-dd__logoutText{
-  position:absolute;
-  top:84px;
-  left:41px;
-  width:120px;
-  height:25px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight:500;
-  font-size:10px;
-  line-height:1;
-  letter-spacing:0;
-  text-align:center;
-  color:#C01414;
-}
-#userDropdown .user-dd__logoutIcon{
-  position:absolute;
-  top:84px;
-  left:130px;
-  width:12px;
-  height:12px;
-}
-
-
-#userDropdown #logoutBtn,
-#userDropdown #logoutIconBtn{
-=======
 
 
 
@@ -16223,31 +15566,10 @@ body[data-page="profile"] .profile-password-btn{
   line-height: 100%;
   letter-spacing: 0;
   color: #FFFFFF;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
   cursor: pointer;
 }
 
 
-<<<<<<< HEAD
-.user-change-pass-modal .change-pass-actions{direction:rtl; justify-content:space-between; padding: 0 35px; gap: 0;}
-.medicine-table-wrap{
-	width: 100%;
-	overflow: auto;
-}.medicine-table{
-	width: 100%;
-	border-collapse: collapse;
-	table-layout: fixed;
-
-}
-.medicine-table col.col-drug{
-	width: 40%;
-}
-.medicine-table col.col-points{
-	width: 30%;
-}
-.medicine-table col.col-expiry{
-	width: 30%;
-=======
 body[data-page="profile"] .profile-frame-security {
 
   position: relative;
@@ -21152,5 +20474,4 @@ body[data-page="reports"] .reports-filters-grid .filter-label{
   color: #aab8c8;
   border-color: #e2eaf2;
   cursor: not-allowed;
->>>>>>> 2f112b3 (upload doctor views and update some pages)
 }

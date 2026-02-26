@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sidebar</title>
+
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body class="sidebar-body">
+  <aside class="sidebar-new">
+    <div class="sidebar-brand">
+      <img class="sidebar-logo" src="../assets/logos/white-logo.svg" alt="Medicare" />
+    </div>
+
+    <nav class="sidebar-nav" aria-label="القائمة الجانبية">
+      <a class="sidebar-link nav-link" href="../layouts/dashboard .html" data-page="dashboard">
+        <img class="sidebar-icon" src="../assets/icons/dashboard.svg" alt="" aria-hidden="true" />
+        <span class="sidebar-link-text">لوحة التحكم</span>
+      </a>
+
+      <a class="sidebar-link nav-link" href="../layouts/عملية صرف جديدة.html" data-page="employee">
+        
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="23" height="23" rx="4.5" stroke="white"/>
+<path d="M10.8516 6.10795V17.6307H13.1442V6.10795H10.8516ZM6.24077 10.7273V13.0199H17.7635V10.7273H6.24077Z" fill="white"/>
+</svg>
+
+        <span class="sidebar-link-text"> عملية صرف جديدة</span>
+      </a>
+
+      <a class="sidebar-link nav-link" href="../layouts/البحث عن وصفة.html" data-page="roles">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="24" height="24" fill="url(#pattern0_1071_247)"/>
+<defs>
+<pattern id="pattern0_1071_247" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_1071_247" transform="scale(0.0333333)"/>
+</pattern>
+<image id="image0_1071_247" width="30" height="30" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABdUlEQVR4nO2WwUpCQRiFL5lusnYJvYL1DtneRUb5CmJYWk8RvoZZjxJEmyxISdu31kWtvvjtXJiVMjMXCfLAgOCc882d+e8/N0nW+isCCkAduAOGwEzDfvf1XyFr6AkwYbnGQC0L4AbQdYKfgUugDGxp7ANtYODMuzFvDLiroC+gsShMi2xq7hwes70o6NDDV3HgxyGFNJG5EbDoc3nfgbyPse6cqfdZATngRRmnPsZ7mS58oU5GRxm3PqaRTOUIsFW7aehjmspUjABvK2O6avBOCHiUwVYfpJXtY+rL1I4AXyujF/I6DSJep1dlnPk2kLGMzQBwS94PYNPXXJPZ2l/Fw3cEfMtb9V30XLplUri1wVyyeHtbDvQT2E1CxO+Nk8JRG+yoORQ1rHqvnDNNoen8UhDcZLeMGv4y2ZlW7UmdXh0Nz1vDt94LvKnJzLSgnlWvW0gGywzuKz15+mVii91L/gu85Gz748rADvwJeFgpeK1E+gHiePXNoZbl0QAAAABJRU5ErkJggg=="/>
+</defs>
+</svg>
+        <span class="sidebar-link-text"> البحث عن وصفة</span>
+      </a>
+
+      <a class="sidebar-link nav-link" href="../layouts/سجل العمليات.html" data-page="medical-centers">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="24" height="24" fill="url(#pattern0_1071_297)"/>
+<defs>
+<pattern id="pattern0_1071_297" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_1071_297" transform="scale(0.02)"/>
+</pattern>
+<image id="image0_1071_297" width="50" height="50" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADsUlEQVR4nO2ayY9NQRjFy9hDRKPF0NiRNHb+A8QYUyd2hsSQEKy6g1VjZYGtjeGfIISYWZhFTN1mQQzRsaFjzk8+fW6Udt/t++6r9/p2OMlNbrqqTtXpqlv1faeec/8CgHPAVdfXgZCy7nBgMbAHOAo8AN4DX4Evem8HjqjOEmBELoQAVcAy4BjwneLxAzgBrARqKi4EqAaagZfeoD4DZ4Bt+m83apYG6bH3ySprBU4Bn7z2b4AtQG1FhADzgIfeAG4C62ygGfiHAquASx7fM1uiZROiWdjrdXgbmA/0C9TXDOCyx38w2Ox4pKOAK94S2gwMDNLJn/31B9YDH7zZbghBHCFaSo+BaUFGndxvo2bc8BSYVCqhj1vAuKwcGdoN0Y5meAFMKJbjr0GkwIXQQgy2JetQjpZZTbmFnO+JI9MA3K/2w4A7otnvegulCjHo/PkoqoWurwoxABtE9STVEtOBN8blT8gAC2BF15Lm4+oAOoHxpXYeUogBmCW6V3ZAu0IA1qriRRcIIYUYvNN/uSsE4HSPlXpfyBpRHk/a5r7qqcuxkDqFSZY2DIursFR9ngzVaTmEGJQuEBslAztVuMPlX8g20e6OK7T01NDUB4Q0ifZwXOF9FU7uA0KmiLY9rvCtCkcH7HBmJMTeA/KOFOe7uELbCQxVATu0/CXCo4C8VeL8HFdolo1hcKDOxmgrj/A8BG8aIRaaGOpdGBFt4vtmIoC5pfKmXVoPQnzs3US0hQxAIwBTkz52cwANi1xG2EbhJUHtQYyD5O33UFyh2ZiGVpfTmYgAbFc/u5JUnszrTEQAzhZcPWYoKxAzG3Ooy+FMeMFt4aBRlSL7ZXVshfg2myololvOdMwVglxxw6WCleLbbayECIPneCYmVtVKIw3TXc4AzNHYXvdoQABbVdkS/f4uJ6DLF47S3OY0DWpl7RvWuZyA39/i49SOo67QkCveWPZRpjvJOzWmBcU2tvsJ5IoHy+Ezbrd3NZZ9WQhqZRyjA6h8d3zJPtt5jeFGKSZ2g+4nDBdDRMZFzsQ5zyYdWyrhJE/MndCpcEIqe88TMTEUcYO3zD7KUA6+NdPl727yPuwbJc9EgfV6gN+4Zl5sQP7ZwHWPf1+5794XarojXJGNWZfxO1jrhR3ROVHcFlvi7LR44Uz3Hww0ae+vNw9AT73+1qQ6Zz3DA3E198buGMVmK8xQzvgTju/6+cfyxGuCSkLLxCKCXeYAKqzvkDvzRe9tKrM6i3rzoP0PV2b8BLokuGCBK+JKAAAAAElFTkSuQmCC"/>
+</defs>
+</svg>
+        <span class="sidebar-link-text">سجل العمليات </span>
+      </a>
+
+      <a class="sidebar-link nav-link" href="../layouts/المخزون 2.html" data-page="medicines">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="24" height="24" fill="url(#pattern0_948_597)" fill-opacity="0.9"/>
+<defs>
+<pattern id="pattern0_948_597" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_948_597" transform="scale(0.0416667)"/>
+</pattern>
+<image id="image0_948_597" width="24" height="24" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAr0lEQVR4nO3SPw4BQRiH4YlaoVSIA9ByEJdwBa1W6RLuwRkkKkcQ0So8MjISibXWIkt4ky+ZSX5/vkkmhJ8CtTjvCK5jiBXWGKHxiuAmxti4Zocp2mWCe5hhfxG4wCBNPJ/ZJ22/SHAX8wxz74ElOnkFyyTcYoJWgaVaSRs9kWWe+JBE9bvPzf4IkUOe6EQoiXv+ygrc4PsKwoO66gsU5PMLQsl7dQXPEior+BMyOAKs1d9eU4Jy3QAAAABJRU5ErkJggg=="/>
+</defs>
+</svg>
+        <span class="sidebar-link-text">المخزون</span>
+      </a>
+
+      
+
+      <a class="sidebar-link nav-link" href="../layouts/الملف الشخصي.html" data-page="profile">
+        <img class="sidebar-icon" src="../assets/icons/profile.svg" alt="" aria-hidden="true" />
+        <span class="sidebar-link-text">الملف الشخصي</span>
+      </a>
+    </nav>
+  </aside>
+
+  <script src="../js/sidebar.js"></script>
+</body>
+
+</html>

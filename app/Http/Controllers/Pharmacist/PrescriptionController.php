@@ -10,27 +10,63 @@ use Illuminate\Support\Facades\DB;
 
 class PrescriptionController extends Controller
 {
-    public function search(Request $request)
+    public function index(Request $request)
     {
-        $prescriptions = collect();
-        $patient = null;
+        $center_id = auth()->user()->medical_center_id;
+        $query = Prescription::whereHas('doctor', function($q) use ($center_id) {
+            $q->where('medical_center_id', $center_id);
+        })->with(['patient', 'doctor', 'items.medicine']);
 
-        if ($request->has('national_id')) {
-            $nid = $request->input('national_id');
-            
-            // البحث عن المريض
-            $patient = \App\Models\Patient::where('national_id', $nid)->first();
-
-            if ($patient) {
-                // جلب وصفات هذا المريض
-                $prescriptions = Prescription::where('patient_id', $patient->id)
-                    ->with(['doctor', 'items.medicine'])
-                    ->latest()
-                    ->get();
-            }
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('patient', function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('national_id', 'like', "%{$search}%");
+            });
         }
 
-        return view('pharmacist.prescriptions.search', compact('prescriptions', 'patient'));
+        if ($request->filled('filter')) {
+            $filter = $request->filter;
+            if ($filter == 'today') {
+                $query->whereDate('created_at', now()->toDateString());
+            } elseif ($filter == 'week') {
+                $query->where('created_at', '>=', now()->subDays(7));
+            }
+            // 'patients' or 'all' defaults to no date filter (already handled by base query)
+        } else {
+            // Default filter to today if no filter is provided
+            $query->whereDate('created_at', now()->toDateString());
+        }
+
+        $prescriptions = $query->latest()->paginate(15);
+        return view('pharmacist.prescriptions.index', compact('prescriptions'));
+    }
+
+    public function search(Request $request)
+    {
+        // AJAX search for patient (used in wizard)
+        if ($request->ajax()) {
+            $nid = $request->input('national_id');
+            $patient = \App\Models\Patient::where('national_id', $nid)->first();
+            
+            if ($patient) {
+                return response()->json([
+                    'success' => true,
+                    'patient' => $patient,
+                    'prescriptions' => Prescription::where('patient_id', $patient->id)
+                        ->whereHas('items', function($q) {
+                            $q->where('is_dispensed', false);
+                        })
+                        ->with(['doctor', 'items.medicine'])
+                        ->latest()
+                        ->get()
+                ]);
+            }
+            return response()->json(['success' => false, 'message' => 'المريض غير موجود']);
+        }
+
+        // Fallback for non-ajax
+        return redirect()->route('pharmacist.prescriptions.index');
     }
 
     public function show(Prescription $prescription)
@@ -41,11 +77,17 @@ class PrescriptionController extends Controller
 
     public function create()
     {
-        $doctors = User::whereHas('role', function($query) {
-            $query->where('name', 'Doctor');
-        })->get();
+        $centerId = auth()->user()->medical_center_id;
+        $doctors = User::where('medical_center_id', $centerId)
+            ->whereHas('role', function($query) {
+                $query->where('name', 'Doctor');
+            })->get();
         
-        $medicines = \App\Models\Medicine::all();
+        $medicines = \App\Models\Medicine::whereHas('inventories', function($query) use ($centerId) {
+            $query->where('medical_center_id', $centerId);
+        })->with(['inventories' => function($query) use ($centerId) {
+            $query->where('medical_center_id', $centerId);
+        }])->get();
 
         return view('pharmacist.prescriptions.create', compact('doctors', 'medicines'));
     }
@@ -69,7 +111,6 @@ class PrescriptionController extends Controller
                 'patient_id' => $patient->id,
                 'doctor_id' => $request->doctor_id,
                 'notes' => $request->notes,
-                'status' => 'new',
             ]);
 
             foreach ($request->medicines as $item) {

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>الملف الشخصي - Medicare</title>
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body data-page="profile">
+<div class="app">
+
+  <iframe class="sidebar-frame" src="./sidebar - 2.html" title="Sidebar"></iframe>
+
+  <div class="main">
+
+    <div id="headerMount">
+    </div>
+
+
+<div class="content profile-content">
+  <div class="profile-container">
+    <div class="profile-header">
+      <h1 class="profile-title">الملف الشخصي</h1>
+      <p class="profile-desc">إدارة البيانات الشخصية وإعدادات الأمان</p>
+    </div>
+
+
+        <div class="profile-frame">
+
+          <img class="profile-personal-icon" src="../assets/icons/dark-profile.svg" alt="" />
+          <div class="profile-personal-title">المعلومات الشخصية</div>
+
+
+          <div class="profile-name-label">الاسم</div>
+          <input class="profile-name-input" type="text" value="سمير عدنان رجب " />
+
+
+            <div class="profile-email-label">البريد الإلكتروني</div>
+            <input class="profile-email-input" type="email" value="samerrajab@gmail.com" />
+
+
+            <button class="profile-save-btn" type="button">حفظ التعديلات</button>
+
+        </div>
+
+
+        <div class="profile-frame profile-frame-security" aria-label="Security settings">
+
+          <img class="security-icon" src="../assets/icons/safety.svg" alt="" />
+          <div class="security-title">الأمان</div>
+
+
+          <label class="security-label security-label-current" for="currentPassword">كلمة المرور الحالية</label>
+          <div class="security-field security-field-current">
+            <input
+              id="currentPassword"
+              class="security-input"
+              type="password"
+              placeholder="أدخل كلمة المرور الحالية"
+                data-password-target="security-current"
+              autocomplete="current-password"
+            />
+            <button class="security-eye-btn" type="button" aria-label="إظهار/إخفاء كلمة المرور" aria-pressed="false" data-toggle-target="currentPassword">
+              <img src="../assets/icons/eye.svg" alt="" />
+            </button>
+          </div>
+
+
+          <label class="security-label security-label-new" for="newPassword">كلمة المرور الجديدة</label>
+          <div class="security-field security-field-new">
+            <input
+              id="newPassword"
+              class="security-input"
+              type="password"
+              placeholder="أدخل كلمة المرور الجديدة"
+              data-password-target="security-new"
+              autocomplete="new-password"
+            />
+            <button class="security-eye-btn" type="button" aria-label="إظهار/إخفاء كلمة المرور" aria-pressed="false" data-toggle-target="newPassword">
+              <img src="../assets/icons/eye.svg" alt="" />
+            </button>
+          </div>
+
+
+          <label class="security-label security-label-confirm" for="confirmPassword">تأكيد كلمة المرور</label>
+          <div class="security-field security-field-confirm">
+            <input
+              id="confirmPassword"
+              class="security-input"
+              type="password"
+              placeholder="أعد إدخال كلمة المرور الجديدة"
+              data-password-target="security-confirm"
+              autocomplete="new-password"
+            />
+            <button class="security-eye-btn" type="button" aria-label="إظهار/إخفاء كلمة المرور" aria-pressed="false" data-toggle-target="confirmPassword">
+              <img src="../assets/icons/eye.svg" alt="" />
+            </button>
+          </div>
+
+
+          <div class="security-note">
+            <div class="security-note-icon">💡</div>
+            <div class="security-note-text">تأكد من أن كلمة المرور تحتوي على 8 أحرف على الأقل وتتضمن أحرف كبيرة وصغيرة وأرقام</div>
+          </div>
+
+
+          <button class="security-change-btn" id="changePasswordBtn" type="button">تغيير كلمة المرور</button>
+          
+
+
+        </div>
+  </div>
+</div>
+
+<script src="../js/password.js"></script>
+<script src="../js/include-header.js"></script>
+</body>
+</html>

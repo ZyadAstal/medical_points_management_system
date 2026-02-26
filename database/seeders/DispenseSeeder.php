@@ -22,28 +22,49 @@ class DispenseSeeder extends Seeder
             ->get()
             ->groupBy('medical_center_id');
 
-        foreach ($prescriptionItems as $item) {
-            if ($item->dispenses()->exists()) continue;
+        $prescriptions = \App\Models\Prescription::all();
 
-            $centerId = $item->prescription->doctor->medical_center_id ?? $item->prescription->patient->user->medical_center_id;
-            
-            // Find a pharmacist in this center
-            $pharmacistId = null;
-            if (isset($pharmacistsByCenter[$centerId]) && $pharmacistsByCenter[$centerId]->count() > 0) {
-                $pharmacistId = $pharmacistsByCenter[$centerId]->random()->id;
+        foreach ($prescriptions as $prescription) {
+            $items = $prescription->items;
+            $dispenseType = rand(1, 4); // 1: Full, 2: Partial, 3,4: None (to keep some pending)
+
+            if ($dispenseType >= 3) continue; 
+
+            $itemsToDispense = ($dispenseType == 1 ? $items : $items->random(rand(1, count($items) - 1)))
+                                ->where('is_dispensed', false);
+
+            foreach ($itemsToDispense as $item) {
+                // Determine Medical Center
+                $centerId = $prescription->medical_center_id ?? 
+                           ($prescription->doctor->medical_center_id ?? 
+                            $prescription->patient->user->medical_center_id);
+                
+                // Find a pharmacist in this center
+                $pharmacistId = null;
+                if (isset($pharmacistsByCenter[$centerId]) && $pharmacistsByCenter[$centerId]->count() > 0) {
+                    $pharmacistId = $pharmacistsByCenter[$centerId]->random()->id;
+                }
+
+                $pointsUsed = $item->quantity * $item->medicine->points_cost;
+
+                // CRITICAL: Check Patient Balance before seeding a dispense
+                if ($prescription->patient->points >= $pointsUsed) {
+                    Dispense::create([
+                        'prescription_item_id' => $item->id,
+                        'medical_center_id'    => $centerId,
+                        'pharmacist_id'        => $pharmacistId,
+                        'quantity'             => $item->quantity,
+                        'points_used'          => $pointsUsed,
+                        'created_at'           => $prescription->created_at->addHours(rand(1, 24)),
+                    ]);
+
+                    // Update is_dispensed flag
+                    $item->update(['is_dispensed' => true]);
+
+                    // Decrement points directly from patient
+                    $prescription->patient->decrement('points', $pointsUsed);
+                }
             }
-
-            $pointsUsed = $item->quantity * $item->medicine->points_cost;
-            Dispense::create([
-                'prescription_item_id' => $item->id,
-                'medical_center_id'    => $centerId,
-                'pharmacist_id'        => $pharmacistId,
-                'quantity'             => $item->quantity,
-                'points_used'          => $pointsUsed,
-            ]);
-
-            // Decrement points directly from patient associated with prescription
-            $item->prescription->patient->decrement('points', $pointsUsed);
         }
     }
 }

@@ -33,7 +33,7 @@ class ProfileController extends Controller
             default => 'layouts.app'
         };
 
-        return view($view, compact('user', 'layout'));
+        return view($view, compact('user', 'layout', 'role'));
     }
 
     public function updatePersonal(Request $request)

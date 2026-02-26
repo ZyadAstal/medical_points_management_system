@@ -17,7 +17,10 @@ class DatabaseSeeder extends Seeder
             PharmacistSeeder::class,
             ReceptionSeeder::class,
             MedicineSeeder::class,
+            InventorySeeder::class,
             PatientSeeder::class,
+            PrescriptionSeeder::class,
+            PrescriptionItemSeeder::class,
             DispenseSeeder::class,
         ]);
     }

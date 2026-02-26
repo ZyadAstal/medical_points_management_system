@@ -11,6 +11,8 @@ class Patient extends Model
 {
     use HasFactory;
 
+    protected $appends = ['name'];
+
     protected $fillable = [
         'user_id',
         'name', // Add name to fillable or map it

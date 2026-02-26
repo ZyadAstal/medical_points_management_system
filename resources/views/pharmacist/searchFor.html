@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>البحث عن وصفة</title>
+<link href="../css/style.css" rel="stylesheet"/>
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+<style>
+
+/* ===== Content ===== */
+.container{
+  padding:20px;
+}
+
+.title{
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.subtitle{
+  font-size:14px;
+  color:#6b7280;
+  margin-bottom:20px;
+}
+
+/* ===== Filters ===== */
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.filter-btn.active {
+  background: #1d4ed8;
+  color: #fff;
+  border-color: #1d4ed8;
+}
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  padding: 6px 35px 6px 12px; /* مساحة للأيقونة */
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  width: 400px;
+  font-size: 15px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px; /* لأن الاتجاه RTL */
+  top: 45%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #cbd5e1; /* light gray */
+  pointer-events: none;
+}
+
+/* ===== Table ===== */
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+table{
+
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+
+thead{
+  background:#f9fafb;
+}
+
+th,td{
+  padding:12px 8px;
+  border-bottom:1px solid #eee;
+}
+
+th{
+  font-weight:600;
+  color:#6b7280;
+}
+
+.points{
+  color:#2563eb;
+  font-weight:600;
+}
+
+/* ===== Status Badges ===== */
+.badge{
+  padding:4px 10px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:600;
+  display:inline-block;
+  
+}
+
+.badge.full{
+  background:#d1fae5;
+  color:#065f46;
+
+}
+
+.badge.partial{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.show-more{
+  text-align:center;
+  padding:12px;
+  font-size:13px;
+  color:#6b7280;
+  cursor:pointer;
+}
+
+.show-more:hover{
+  color:#2563eb;
+}
+</style>
+</head>
+<body data-page="profile">
+<div class="app">
+ 
+
+  <iframe class="sidebar-frame" src="sidebar - 2.html" title="Sidebar"></iframe>
+
+  <div class="main">
+
+    <div id="headerMount">
+    </div>
+
+
+<!-- Main Content -->
+<div class="container">
+
+  <div class="title" style="color:  #053052; margin-right: 30px;font-size: 32px;">البحث عن الوصفات والمراجعات</div>
+  <div class="subtitle" style="color:  #6184A0;margin-right: 30px;font-size: 18px;">البحث عن الوصفات الطبية والاطلاع على سجل المراجعات</div>
+
+ 
+  <div class="filters">
+    <div class="search-box">
+  <span class="search-icon"><svg width="16" height="16" fill="none" stroke="#cbd5e1" stroke-width="2"
+viewBox="0 0 24 24">
+<circle cx="11" cy="11" r="8"></circle>
+<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+</svg></span>
+  <input type="text" id="searchInput" placeholder="ابحث باسم المريض أو رقم الهوية..." />
+</div>
+    <div class="filter-buttons">
+      <button class="filter-btn active" >اليوم</button>
+      <button class="filter-btn">الأسبوع</button>
+    <button class="filter-btn">المرضى</button>
+
+    </div>
+
+    
+  </div>
+
+  <!-- Table -->
+  <div class="card">
+    <table>
+      <thead >
+        <tr>
+          <th style="   background: #F8F8F8;color: #7F7676;text-align: center;">التاريخ والوقت</th>
+          <th style="   background: #F8F8F8;color: #7F7676;text-align: center;">المريض</th>
+          <th style="   background: #F8F8F8;color: #7F7676;text-align: center;">الأدوية المصروفة</th>
+          <th style="   background: #F8F8F8;color: #7F7676;text-align: center;">النقاط</th>
+          <th style="   background: #F8F8F8;color: #7F7676;text-align: center;">الحالة</th>
+        </tr>
+      </thead>
+
+      <tbody id="tableBody">
+        <tr >
+          <td style="text-align: center;">2026/02/04<br>09:30 ص</td>
+          <td style="text-align: center;">
+            فاطمة حسن علي<br>
+            <small style="color:#6b7280;">ID:408237524</small>
+          </td>
+          <td style="text-align: center;">بنادول، أوجمنتين</td>
+          <td style="text-align: center;" class="points">15 نقطة</td>
+          <td style="text-align: center;"><span class="badge full">صرف كامل</span></td>
+        </tr>
+
+        <tr>
+          <td style="text-align: center;">2026/02/08<br>10:42 ص</td>
+          <td style="text-align: center;">
+            عدنان جبر سمير<br>
+            <small style="color:#6b7280;">ID:408652324</small>
+          </td>
+          <td style="text-align: center;">بنادول، أوجمنتين</td>
+          <td style="text-align: center;" class="points">30 نقطة</td>
+          <td style="text-align: center;"><span class="badge partial">صرف جزئي</span></td>
+        </tr>
+
+        <tr>
+          <td style="text-align: center;">2026/02/10<br>11:30 ص</td>
+          <td style="text-align: center;">
+            سهي محمد فياض<br>
+            <small style="color:#6b7280;">ID:408278945</small>
+          </td>
+          <td style="text-align: center;">بنادول، أوجمنتين</td>
+          <td style="text-align: center;" class="points">45 نقطة</td>
+          <td style="text-align: center;"><span class="badge full">صرف كامل</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="show-more">عرض باقي السجلات</div>
+  </div>
+
+</div>
+
+<script>
+// تبديل الأزرار
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// البحث
+document.getElementById("searchInput").addEventListener("keyup",function(){
+  let value=this.value.toLowerCase();
+  let rows=document.querySelectorAll("#tableBody tr");
+
+  rows.forEach(row=>{
+    row.style.display=row.innerText.toLowerCase().includes(value) ? "" : "none";
+  });
+});
+</script>
+<script src="../js/include-header.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

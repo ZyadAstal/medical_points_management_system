@@ -11,33 +11,51 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $center_id = auth()->user()->medical_center_id;
         $today = \Carbon\Carbon::today();
 
-        // 1. Dispensed count today
-        $dispensed_count = Dispense::where('pharmacist_id', auth()->id())
+        // 1. Total Dispensed Today (Records in this center)
+        $dispensed_count = Dispense::where('medical_center_id', $center_id)
             ->whereDate('created_at', $today)
             ->count();
 
-        // 2. Points dispensed today
-        $points_dispensed = Dispense::where('pharmacist_id', auth()->id())
+        // 2. Points Dispensed Today (Sum in this center)
+        $points_dispensed = Dispense::where('medical_center_id', $center_id)
             ->whereDate('created_at', $today)
             ->sum('points_used');
 
-        // 3. Patients served today (Unique patients)
-        $patients_served_count = Dispense::where('dispenses.pharmacist_id', auth()->id())
-            ->whereDate('dispenses.created_at', $today)
-            ->join('prescription_items', 'dispenses.prescription_item_id', '=', 'prescription_items.id')
-            ->join('prescriptions', 'prescription_items.prescription_id', '=', 'prescriptions.id')
-            ->distinct('prescriptions.patient_id')
-            ->count('prescriptions.patient_id');
+        // 3. Patients Today (All visits in this center today)
+        $patients_served_count = \App\Models\Visit::where('medical_center_id', $center_id)
+            ->whereDate('visit_date', $today)
+            ->distinct('patient_id')
+            ->count('patient_id');
 
-        // 4. Recent 5 dispenses
-        $recent_dispenses = Dispense::where('pharmacist_id', auth()->id())
+        // 4. Waiting for Doctor (Visits with status 'waiting' in this center today)
+        $waiting_for_doctor_count = \App\Models\Visit::where('medical_center_id', $center_id)
+            ->where('status', \App\Models\Visit::STATUS_WAITING)
+            ->whereDate('visit_date', $today)
+            ->count();
+
+        // 5. Recent 5 dispenses in this center
+        $recent_dispenses = Dispense::where('medical_center_id', $center_id)
             ->with(['prescriptionItem.medicine', 'prescriptionItem.prescription.patient'])
             ->latest()
             ->take(5)
             ->get();
 
-        return view('pharmacist.dashboard', compact('dispensed_count', 'points_dispensed', 'patients_served_count', 'recent_dispenses'));
+        // 6. Stock alerts (Medicines with low quantity in this center)
+        $stock_alerts = \App\Models\Inventory::where('medical_center_id', $center_id)
+            ->where('quantity', '<', 10)
+            ->with('medicine')
+            ->get();
+
+        return view('pharmacist.dashboard', compact(
+            'dispensed_count', 
+            'points_dispensed', 
+            'patients_served_count', 
+            'waiting_for_doctor_count',
+            'recent_dispenses',
+            'stock_alerts'
+        ));
     }
 }

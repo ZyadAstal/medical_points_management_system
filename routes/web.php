@@ -75,9 +75,15 @@ Route::middleware(['auth', RoleMiddleware::class . ':Pharmacist'])->prefix('phar
     Route::get('/dashboard', [\App\Http\Controllers\Pharmacist\DashboardController::class, 'index'])->name('dashboard');
     
     Route::get('/prescriptions/search', [\App\Http\Controllers\Pharmacist\PrescriptionController::class, 'search'])->name('prescriptions.search');
-    Route::resource('prescriptions', \App\Http\Controllers\Pharmacist\PrescriptionController::class)->only(['create', 'store', 'show']);
+    Route::resource('prescriptions', \App\Http\Controllers\Pharmacist\PrescriptionController::class)->only(['index', 'create', 'store', 'show']);
     
     Route::post('/dispense', [\App\Http\Controllers\Pharmacist\DispenseController::class, 'store'])->name('dispense.store');
+    Route::post('/dispense/manual', [\App\Http\Controllers\Pharmacist\DispenseController::class, 'manualStore'])->name('dispense.manual');
+    
+    // New Routes
+    Route::get('/inventory', [\App\Http\Controllers\Pharmacist\InventoryController::class, 'index'])->name('inventory.index');
+    Route::get('/dispensing', [\App\Http\Controllers\Pharmacist\DispenseController::class, 'history'])->name('dispensing.history');
+    Route::get('/profile', [\App\Http\Controllers\Shared\ProfileController::class, 'show'])->name('profile');
 });
 
 // --- Center Manager Routes ---

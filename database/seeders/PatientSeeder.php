@@ -171,14 +171,9 @@ class PatientSeeder extends Seeder
             ],
         ];
 
-        // Get pharmacists grouped by medical_center_id
-        $pharmacistRoleId = Role::where('name', 'Pharmacist')->first()?->id ?? 4;
-        $pharmacistsByCenter = User::where('role_id', $pharmacistRoleId)->get()->groupBy('medical_center_id');
-        
-        // Get all doctors and medicines
+        // Get all doctors
         $doctorRoleId = Role::where('name', 'Doctor')->first()?->id ?? 3;
         $doctors = User::where('role_id', $doctorRoleId)->get();
-        $medicines = Medicine::all();
         $today = Carbon::today();
 
         foreach ($patientsData as $index => $data) {
@@ -204,12 +199,12 @@ class PatientSeeder extends Seeder
                     'national_id' => $data['national_id'],
                     'address'     => $data['address'],
                     'phone'       => $data['phone'],
-                    'points'      => 100, // Initialize with max points
+                    'points'      => 100, // Always start with 100 points
                     'date_of_birth' => $data['date_of_birth'],
                 ]
             );
 
-            if ($doctors->isEmpty() || $medicines->isEmpty()) continue;
+            if ($doctors->isEmpty()) continue;
 
             $doctor = $doctors[$index % $doctors->count()];
             $centerId = $doctor->medical_center_id;
@@ -241,64 +236,6 @@ class PatientSeeder extends Seeder
                     'visit_date'       => $today->copy()->subDays($v * 7 + $index)->toDateString(),
                     'notes'            => 'زيارة سابقة رقم ' . $v,
                 ]);
-            }
-
-            // --- Create Prescriptions ---
-            $prescriptionCount = ($index % 3) + 2;
-            $prescriptionNotes = [
-                'وصفة لعلاج التهاب الحلق',
-                'وصفة لعلاج ارتفاع ضغط الدم',
-                'وصفة لعلاج آلام المفاصل',
-                'وصفة متابعة بعد الجراحة',
-                'وصفة لعلاج نزلة برد حادة',
-                'وصفة لعلاج التهاب المعدة',
-            ];
-
-            for ($p = 0; $p < $prescriptionCount; $p++) {
-                $prescDate = $today->copy()->subDays($p * 10 + $index);
-
-                $prescription = Prescription::create([
-                    'patient_id' => $patient->id,
-                    'doctor_id'  => $doctor->id,
-                    'notes'      => $prescriptionNotes[($index + $p) % count($prescriptionNotes)],
-                    'created_at' => $prescDate,
-                    'updated_at' => $prescDate,
-                ]);
-
-                // Add medicines
-                $medCount = ($p % 3) + 2;
-                $selectedMeds = $medicines->shuffle()->take($medCount);
-
-                foreach ($selectedMeds as $med) {
-                    $qty = rand(1, 3);
-                    $item = PrescriptionItem::create([
-                        'prescription_id' => $prescription->id,
-                        'medicine_id'     => $med->id,
-                        'quantity'        => $qty,
-                    ]);
-
-                    // Dispense records
-                    if ($p === 0 || ($p === 1 && $med->id % 2 === 0)) {
-                        $pharmacistId = null;
-                        if (isset($pharmacistsByCenter[$centerId]) && $pharmacistsByCenter[$centerId]->count() > 0) {
-                            $pharmacistId = $pharmacistsByCenter[$centerId]->random()->id;
-                        }
-
-                        $pointsUsed = $qty * $med->points_cost;
-                        Dispense::create([
-                            'prescription_item_id' => $item->id,
-                            'medical_center_id'    => $centerId,
-                            'pharmacist_id'        => $pharmacistId,
-                            'quantity'             => $qty,
-                            'points_used'          => $pointsUsed,
-                            'created_at'           => $prescDate->copy()->addHours(rand(1, 5)),
-                            'updated_at'           => $prescDate->copy()->addHours(rand(1, 5)),
-                        ]);
-
-                        // Update patient points
-                        $patient->decrement('points', $pointsUsed);
-                    }
-                }
             }
         }
     }

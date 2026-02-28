@@ -17,7 +17,7 @@
         <img class="sidebar-icon" src="{{ asset('assets/patient/icons/exchanges.svg') }}" alt="" aria-hidden="true" />
         <span class="sidebar-link-text">صرفاتي الطبية</span>
       </a>
-      <a class="sidebar-link nav-link @if(request()->routeIs('profile.show')) active @endif" href="{{ route('profile.show') }}" data-page="profile">
+      <a class="sidebar-link nav-link @if(request()->routeIs('patient.profile')) active @endif" href="{{ route('patient.profile') }}" data-page="profile">
         <img class="sidebar-icon" src="{{ asset('assets/patient/icons/profile-icon.svg') }}" alt="" aria-hidden="true" />
         <span class="sidebar-link-text">الملف الشخصي</span>
       </a>

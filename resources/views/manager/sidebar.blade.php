@@ -34,7 +34,7 @@
             <span class="sidebar-link-text">التقارير</span>
         </a>
 
-        <a class="sidebar-link nav-link {{ Request::routeIs('profile.show') ? 'active' : '' }}" href="{{ route('profile.show') }}">
+        <a class="sidebar-link nav-link {{ Request::routeIs('manager.profile') ? 'active' : '' }}" href="{{ route('manager.profile') }}">
             <img class="sidebar-icon" src="{{ asset('assets/manager/icons/profile.svg') }}" alt="" aria-hidden="true" />
             <span class="sidebar-link-text">الملف الشخصي</span>
         </a>

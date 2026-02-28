@@ -15,11 +15,7 @@
         <p class="page-subtitle">عرض وتحديث كميات الأدوية المتاحة في المركز</p>
     </div>
 
-    @if(session('success'))
-        <div style="background: #D1FAE5; color: #065F46; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: right; font-weight: 700;">
-            {{ session('success') }}
-        </div>
-    @endif
+
 
     <!-- Update Section -->
     <div class="update-card">

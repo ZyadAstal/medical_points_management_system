@@ -21,7 +21,7 @@
         <img class="sidebar-icon" src="{{ asset('assets/reception/icons/search-patient.svg') }}" alt="" aria-hidden="true" />
         <span class="sidebar-link-text">البحث عن مريض</span>
       </a>
-      <a class="sidebar-link nav-link @if(request()->routeIs('profile.show')) active @endif" href="{{ route('profile.show') }}" data-page="profile">
+      <a class="sidebar-link nav-link @if(request()->routeIs('reception.profile')) active @endif" href="{{ route('reception.profile') }}" data-page="profile">
         <img class="sidebar-icon" src="{{ asset('assets/reception/icons/profile-icon.svg') }}" alt="" aria-hidden="true" />
         <span class="sidebar-link-text">الملف الشخصي</span>
       </a>

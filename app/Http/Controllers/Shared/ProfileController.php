@@ -19,6 +19,10 @@ class ProfileController extends Controller
         $view = match($role) {
             'SuperAdmin' => 'superadmin.profile',
             'CenterManager' => 'manager.profile',
+            'Doctor' => 'doctor.profile',
+            'Pharmacist' => 'pharmacist.profile',
+            'Reception' => 'reception.profile',
+            'Patient' => 'patient.profile',
             default => 'shared.profile'
         };
 

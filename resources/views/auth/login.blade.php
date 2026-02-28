@@ -9,18 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}" />
-    <style>
-        .error-msg {
-            position: absolute;
-            top: 265px;
-            left: 579px;
-            width: 420px;
-            color: #ff4d4d;
-            font-size: 12px;
-            text-align: right;
-            z-index: 5;
-        }
-    </style>
+
 </head>
 <body>
 
@@ -39,13 +28,9 @@
             <h2 class="auth-welcome">مرحبًا بعودتك</h2>
             <p class="auth-welcome-sub">قم بتسجيل الدخول لإدارة النظام الصحي</p>
 
-            @if ($errors->any())
-                <div class="error-msg">
-                    @foreach ($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
-                </div>
-            @endif
+            <div style="position: absolute; top: 80px; left: 579.36px; width: 420px; z-index: 10;">
+                @include('partials.flash-messages')
+            </div>
 
             <form class="auth-form" method="POST" action="{{ route('login') }}" autocomplete="off">
                 @csrf

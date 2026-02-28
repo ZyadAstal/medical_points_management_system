@@ -41,6 +41,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':SuperAdmin'])->prefix('supe
     Route::resource('medicines', MedicineController::class)->except(['show']);
     Route::resource('roles', App\Http\Controllers\SuperAdmin\RoleController::class)->only(['index', 'update']);
     
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.update.personal');
+    Route::put('/profile/security', [ProfileController::class, 'updateSecurity'])->name('profile.update.security');
+    
     Route::get('/reports', [App\Http\Controllers\SuperAdmin\ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/pdf', [App\Http\Controllers\SuperAdmin\ReportController::class, 'downloadPdf'])->name('reports.pdf');
 });
@@ -106,6 +111,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':CenterManager'])->prefix('m
     // Reports
     Route::get('/reports', [\App\Http\Controllers\CenterManager\ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/pdf', [\App\Http\Controllers\CenterManager\ReportController::class, 'downloadPdf'])->name('reports.pdf');
+
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.update.personal');
+    Route::put('/profile/security', [ProfileController::class, 'updateSecurity'])->name('profile.update.security');
 });
 
 // --- Reception Routes ---
@@ -116,6 +126,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':Reception'])->prefix('recep
     // Visit management
     Route::get('/patients/{patient}/visits/create', [\App\Http\Controllers\Reception\VisitController::class, 'create'])->name('visits.create');
     Route::post('/patients/{patient}/visits', [\App\Http\Controllers\Reception\VisitController::class, 'store'])->name('visits.store');
+
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.update.personal');
+    Route::put('/profile/security', [ProfileController::class, 'updateSecurity'])->name('profile.update.security');
 });
 
 // --- Patient Routes ---
@@ -125,5 +140,5 @@ Route::middleware(['auth', RoleMiddleware::class . ':Patient'])->prefix('patient
     Route::get('/medicines/search', [\App\Http\Controllers\Patient\MedicineController::class, 'search'])->name('medicines.search');
     Route::get('/prescriptions', [\App\Http\Controllers\Patient\PrescriptionController::class, 'index'])->name('prescriptions.index');
     Route::get('/dispense', [\App\Http\Controllers\Patient\DispenseController::class, 'index'])->name('dispense.index');
-    Route::get('/profile', [\App\Http\Controllers\Patient\ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile', [\App\Http\Controllers\Shared\ProfileController::class, 'show'])->name('profile');
 });

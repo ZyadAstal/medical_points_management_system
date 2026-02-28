@@ -9,21 +9,7 @@
     <p class="medical-centers-desc">عرض ومتابعة جميع المراكز الطبية المعتمدة</p>
 </div>
 
-@if(session('success'))
-    <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
-        {{ session('success') }}
-    </div>
-@endif
 
-@if($errors->any())
-    <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
-        <ul style="margin: 0;">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 <div aria-label="فلترة وبحث المراكز الطبية" class="mc-controls">
     <div class="mc-filter">
         <div class="mc-filter-label">المركز الطبي</div>

@@ -15,33 +15,7 @@
         <p class="profile-desc">إدارة البيانات الشخصية وإعدادات الأمان</p>
     </div>
 
-    @if(session('success'))
-        <div class="profile-alert profile-alert--success">
-            <div class="alert-body">
-                <div class="alert-title">النجاح</div>
-                <div class="alert-message">{{ session('success') }}</div>
-            </div>
-            <div class="alert-icon-wrap">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-        </div>
-    @endif
 
-    @if($errors->any())
-        <div class="profile-alert profile-alert--error">
-            <div class="alert-body">
-                <div class="alert-title">خطأ</div>
-                <ul class="alert-message-list">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            <div class="alert-icon-wrap">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </div>
-        </div>
-    @endif
 
     <div class="profile-frame">
         <img class="profile-personal-icon" src="{{ asset('assets/manager/icons/dark-profile.svg') }}" alt="" />

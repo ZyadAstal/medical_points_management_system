@@ -14,6 +14,7 @@
         <div class="main">
             @include('doctor.header')
             <div class="content @yield('content-class')">
+                @include('partials.flash-messages')
                 @yield('content')
             </div>
         </div>
@@ -22,5 +23,6 @@
     <script src="{{ asset('js/doctor/main.js') }}"></script>
     <script src="{{ asset('js/doctor/layout.js') }}"></script>
     @stack('scripts')
+    @include('components.delete-modal')
 </body>
 </html>

@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
 
             $table->string('name');
-            $table->integer('points_cost');
+            $table->integer('points_cost')->default(0);
 
             $table->date('expiry_date');
 

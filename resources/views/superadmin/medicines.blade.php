@@ -10,22 +10,7 @@
         <p class="medicines-desc">إدارة مخزون الأدوية وتتبع الصرف وتواريخ الانتهاء</p>
     </div>
 
-    @if(session('success'))
-        <div class="medicines-alert medicines-alert--success">
-            <span class="alert-icon">✓</span>
-            {{ session('success') }}
-        </div>
-    @endif
 
-    @if($errors->any())
-        <div class="medicines-alert medicines-alert--error">
-            <ul class="alert-list">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <div class="medicines-search">
         <form action="{{ route('superadmin.medicines.index') }}" method="GET">

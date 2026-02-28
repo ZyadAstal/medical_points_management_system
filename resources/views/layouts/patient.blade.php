@@ -14,6 +14,7 @@
         <div class="main">
             @include('patient.header')
             <div class="content @yield('content-class')">
+                @include('partials.flash-messages')
                 @yield('content')
             </div>
         </div>
@@ -22,5 +23,6 @@
     <script src="{{ asset('js/patient/main.js') }}"></script>
     <script src="{{ asset('js/patient/layout.js') }}"></script>
     @stack('scripts')
+    @include('components.delete-modal')
 </body>
 </html>

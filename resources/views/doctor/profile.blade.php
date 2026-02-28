@@ -11,21 +11,7 @@
         <p class="profile-desc">إدارة البيانات الشخصية وإعدادات الأمان</p>
     </div>
 
-    @if(session('success'))
-    <div style="background:#d4edda; color:#155724; padding:12px 20px; border-radius:8px; margin-bottom:16px; font-size:14px;">
-        {{ session('success') }}
-    </div>
-    @endif
 
-    @if($errors->any())
-    <div style="background:#f8d7da; color:#721c24; padding:12px 20px; border-radius:8px; margin-bottom:16px; font-size:14px;">
-        <ul style="margin:0; padding-right:20px;">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
 
     <form method="POST" action="{{ route('doctor.profile.update.personal') }}">
         @csrf

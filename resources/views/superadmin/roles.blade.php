@@ -9,11 +9,7 @@
     <p>عرض وإدارة أدوار مستخدمي النظام</p>
 </div>
 
-@if(session('success'))
-    <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin: 20px; border: 1px solid #c3e6cb;">
-        {{ session('success') }}
-    </div>
-@endif
+
 
 <div class="controls controls--roles">
     <div class="controls__wrap roles-controls">

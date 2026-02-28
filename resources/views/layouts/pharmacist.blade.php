@@ -21,25 +21,14 @@
             @include('pharmacist.header')
             
             <div class="content @yield('content-class')">
-                @if(session('success'))
-                    <div class="alert-success" style="padding: 15px; background: #d4edda; color: #155724; border-radius: 8px; margin-bottom: 20px;">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                @if(session('error'))
-                    <div class="alert-error" style="padding: 15px; background: #f8d7da; color: #721c24; border-radius: 8px; margin-bottom: 20px;">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
+                @include('partials.flash-messages')
                 @yield('content')
             </div>
         </div>
     </div>
 
-    <!-- JS Links -->
     <script src="{{ asset('js/pharmacist/main.js') }}"></script>
     @yield('scripts')
+    @include('components.delete-modal')
 </body>
 </html>

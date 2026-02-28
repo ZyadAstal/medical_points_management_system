@@ -199,7 +199,7 @@ class PatientSeeder extends Seeder
                     'national_id' => $data['national_id'],
                     'address'     => $data['address'],
                     'phone'       => $data['phone'],
-                    'points'      => 100, // Always start with 100 points
+                    'points'      => min($data['points'] ?? 100, 100), // Max 100 points as requested
                     'date_of_birth' => $data['date_of_birth'],
                 ]
             );

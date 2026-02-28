@@ -59,21 +59,7 @@
         <p class="profile-desc" style="color: #6184A0; font-family: 'Inter', sans-serif;">إدارة البيانات الشخصية وإعدادات الأمان</p>
     </div>
 
-    @if(session('success'))
-        <div style="background: #d4edda; color: #155724; padding: 10px 20px; border-radius: 8px; margin-bottom: 20px; direction: rtl; width: 1080px;">
-            {{ session('success') }}
-        </div>
-    @endif
 
-    @if($errors->any())
-        <div style="background: #f8d7da; color: #721c24; padding: 10px 20px; border-radius: 8px; margin-bottom: 20px; direction: rtl; width: 1080px;">
-            <ul style="margin: 0;">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     @php
         $assetPrefix = 'assets/' . strtolower($role) . '/icons/';

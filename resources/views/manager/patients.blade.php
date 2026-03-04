@@ -16,12 +16,14 @@
 
 <div aria-label="فلترة وبحث الموظفين" class="mc-controls">
     <div class="mc-filter"></div>
-    <div class="mc-search">
-        <form action="{{ route('manager.patients.index') }}" method="GET" class="mc-search-box">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0c3e66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;" onclick="this.closest('form').submit()"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input name="search" class="mc-search-input" placeholder="ابحث عن اسم المريض، أو رقم الهوية..." type="text" value="{{ request('search') }}" />
+        <form action="{{ route('manager.patients.index') }}" method="GET" style="display:flex; align-items:center; gap:10px;">
+            <div class="mc-search-box">
+                <input name="search" class="mc-search-input" placeholder="ابحث عن اسم المريض، أو رقم الهوية..." type="text" value="{{ request('search') }}" />
+            </div>
+            <button type="submit" class="search-submit-btn" aria-label="بحث" title="بحث">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
         </form>
-    </div>
 </div>
 
 <div class="mc-table-wrap">

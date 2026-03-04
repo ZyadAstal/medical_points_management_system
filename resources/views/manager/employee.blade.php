@@ -50,7 +50,12 @@
                     @endforeach
                 </div>
             </div>
-            <input name="search" id="staffSearchInput" class="users-search" placeholder="ابحث عن اسم المستخدم..." type="text" value="{{ request('search') }}" style="margin-top: 1.5rem;" />
+            <div style="display:flex; align-items:center; gap:8px; margin-top: 1.5rem;">
+                <input name="search" id="staffSearchInput" class="users-search" placeholder="ابحث عن اسم المستخدم..." type="text" value="{{ request('search') }}" />
+                <button type="submit" class="search-submit-btn" aria-label="بحث" title="بحث">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </button>
+            </div>
         </form>
     </div>
     <div class="users-table-wrap">

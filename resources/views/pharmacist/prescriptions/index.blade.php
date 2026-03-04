@@ -165,17 +165,16 @@ tbody td {
 
     <div class="filters">
         <div class="search-box">
-            <form action="{{ route('pharmacist.prescriptions.index') }}" method="GET">
+            <form action="{{ route('pharmacist.prescriptions.index') }}" method="GET" style="display:flex; align-items:center; gap:10px;">
                 @if(request('filter'))
                     <input type="hidden" name="filter" value="{{ request('filter') }}">
                 @endif
-                <span class="search-icon">
-                    <svg width="16" height="16" fill="none" stroke="#cbd5e1" stroke-width="2" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </span>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="ابحث باسم المريض أو رقم الهوية..." />
+                <div style="position:relative;">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="ابحث باسم المريض أو رقم الهوية..." style="padding-right: 12px;" />
+                </div>
+                <button type="submit" class="search-submit-btn" aria-label="بحث" title="بحث">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </button>
             </form>
         </div>
 

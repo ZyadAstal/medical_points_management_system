@@ -15376,6 +15376,7 @@ body[data-page="reports"] .reports-filters-grid .filter-label{
   display: block !important;
   width: 100% !important;
   text-align: right !important;
+}
 
 
 
@@ -20475,3 +20476,36 @@ body[data-page="reports"] .reports-filters-grid .filter-label{
   border-color: #e2eaf2;
   cursor: not-allowed;
 }
+
+/* === Unified Search Button === */
+.search-submit-btn {
+    background: #053052;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 42px;
+    height: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.search-submit-btn:hover {
+    background: #074271;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.search-submit-btn:active {
+    transform: translateY(0);
+}
+
+.search-submit-btn svg {
+    stroke: white;
+    stroke-width: 2.5px;
+}
+

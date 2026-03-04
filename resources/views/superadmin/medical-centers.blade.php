@@ -23,11 +23,13 @@
             <img alt="" class="mc-filter-arrow" src="{{ asset('assets/admin/icons/arrow.svg') }}"/>
         </div>
     </div>
-    <form action="{{ route('superadmin.centers.index') }}" method="GET" class="mc-search">
+    <form action="{{ route('superadmin.centers.index') }}" method="GET" class="mc-search" style="display:flex; align-items:center; gap:10px;">
         <div class="mc-search-box">
             <input class="mc-search-input" name="search" value="{{ request('search') }}" placeholder="ابحث عن اسم المركز الطبي..." type="text"/>
-            <button type="submit" style="display:none;"></button>
         </div>
+        <button type="submit" class="search-submit-btn" aria-label="بحث" title="بحث">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
     </form>
     <div class="mc-add-btn" id="mcAddCenterBtn" role="button" tabindex="0">
         <span class="mc-add-plus">+</span>

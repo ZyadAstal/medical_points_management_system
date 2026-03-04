@@ -13,6 +13,42 @@
   --icon-navy: brightness(0) saturate(100%) invert(16%) sepia(27%) saturate(2315%) hue-rotate(170deg) brightness(92%) contrast(95%);
 }
 
+/* ===== Unified Search Button ===== */
+.search-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #053052, #0B6CB8);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(5, 48, 82, 0.25);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.search-submit-btn:hover {
+  background: linear-gradient(135deg, #0B6CB8, #053052);
+  box-shadow: 0 4px 12px rgba(5, 48, 82, 0.35);
+  transform: translateY(-1px);
+}
+
+.search-submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(5, 48, 82, 0.2);
+}
+
+.search-submit-btn svg {
+  stroke: #ffffff;
+  pointer-events: none;
+}
+/* ================================= */
+
+
 
 .header-frame{
   position: fixed;

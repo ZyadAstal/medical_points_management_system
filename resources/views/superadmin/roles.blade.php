@@ -25,11 +25,7 @@
                     </select>
                 </div>
             </div>
-            <div class="roles-filters__left">
-                <div class="filter-block filter-block--search">
-                    <input aria-label="بحث عن اسم الدور" name="search" value="{{ request('search') }}" class="input input--search roles-search" placeholder="ابحث عن اسم الدور..." type="text"/>
-                </div>
-            </div>
+            
         </form>
         <div class="table-card roles-table">
             <div class="roles-table-wrap">

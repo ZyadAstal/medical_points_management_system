@@ -21,9 +21,12 @@
         </div>
     </div>
 
-    <div class="today-search" style="width:280px;height:39px;">
+    <div class="today-search" style="display:flex; align-items:center; gap:10px;">
         <input class="today-search-input" type="text" id="todaySearchInput" placeholder="ابحث باسم المريض أو رقم الهوية..."
             style="width:280px;height:39px;border:1px solid #053052;border-radius:5px;box-sizing:border-box;background:#FFFFFF;font-family:Inter, sans-serif;font-weight:400;font-size:14px;line-height:39px;text-align:center;color:#053052;outline:none;" />
+        <button type="button" class="search-submit-btn" aria-label="بحث" title="بحث" id="todaySearchBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
     </div>
 </div>
 

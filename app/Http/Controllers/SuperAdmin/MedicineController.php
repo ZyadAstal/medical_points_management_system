@@ -13,8 +13,7 @@ class MedicineController extends Controller
         $query = Medicine::query();
 
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where('name', 'like', "%{$search}%");
+            $query->searchArabic('name', $request->search);
         }
 
         $medicines = $query->paginate(10)->withQueryString();

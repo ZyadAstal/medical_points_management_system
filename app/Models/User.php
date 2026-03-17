@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Traits\SearchableArabic;
+
 class User extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, SearchableArabic;
 
     protected $fillable = [
         'name',

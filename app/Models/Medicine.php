@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\SearchableArabic;
+
 class Medicine extends Model
 {
-    use HasFactory;
+    use HasFactory, SearchableArabic;
 
     protected $fillable = ['name', 'points_cost', 'expiry_date'];
 

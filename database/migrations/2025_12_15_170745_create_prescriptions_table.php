@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id();
 
             $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
-
             $table->foreignId('doctor_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('visit_id')->nullable()->constrained()->cascadeOnDelete();
 
             $table->text('notes')->nullable();
             $table->timestamp('issued_at')->useCurrent();

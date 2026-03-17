@@ -28,9 +28,9 @@ class PatientController extends Controller
             ->orderBy('created_at', 'asc')
             ->get();
 
-        // Queue: Waiting or In Progress
+        // Queue: Registered, Waiting or In Progress
         $queueVisits = $allVisits->filter(function($visit) {
-            return in_array($visit->status, [Visit::STATUS_WAITING, Visit::STATUS_IN_PROGRESS]);
+            return in_array($visit->status, [Visit::STATUS_REGISTERED, Visit::STATUS_WAITING, Visit::STATUS_IN_PROGRESS]);
         });
 
         // Past: Completed
@@ -81,19 +81,7 @@ class PatientController extends Controller
             $query = Patient::query();
 
             if ($name) {
-                // Split name into words and match each word individually
-                $words = preg_split('/\s+/', trim($name));
-                foreach ($words as $word) {
-                    if ($word) {
-                        // Normalize the search word (PHP side)
-                        $normalizedWord = $this->normalizeArabic($word);
-                        // Normalize the database column (SQL side) and compare
-                        $query->whereRaw(
-                            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(full_name, 'أ', 'ا'), 'إ', 'ا'), 'آ', 'ا'), 'ة', 'ه'), 'ى', 'ي') LIKE ?",
-                            ["%{$normalizedWord}%"]
-                        );
-                    }
-                }
+                $query->searchArabic('full_name', $name);
             }
             if ($nationalId) {
                 $query->where('national_id', 'LIKE', "%{$nationalId}%");
@@ -106,23 +94,6 @@ class PatientController extends Controller
         }
 
         return view('doctor.search-patient', compact('patients'));
-    }
-
-    /**
-     * Normalize Arabic text for search comparison
-     * Converts all alef variants to plain alef, taa marbuta to haa, alef maksura to yaa
-     */
-    private function normalizeArabic(string $text): string
-    {
-        // Replace all alef variants (أ إ آ) with plain alef (ا)
-        $text = str_replace(['أ', 'إ', 'آ'], 'ا', $text);
-        // Replace taa marbuta with haa
-        $text = str_replace('ة', 'ه', $text);
-        // Replace alef maksura with yaa
-        $text = str_replace('ى', 'ي', $text);
-        // Remove diacritics (tashkeel)
-        $text = preg_replace('/[\x{064B}-\x{065F}\x{0670}]/u', '', $text);
-        return $text;
     }
 
     /**

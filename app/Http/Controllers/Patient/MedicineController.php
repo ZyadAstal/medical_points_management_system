@@ -14,8 +14,7 @@ class MedicineController extends Controller
         $medicines = collect([]);
         
         if ($request->has('query')) {
-            $query = $request->input('query');
-            $medicines = Medicine::where('name', 'like', "%{$query}%")
+            $medicines = Medicine::searchArabic('name', $query)
                 ->with(['inventories.medicalCenter']) // لجلب المراكز التي يتوفى فيها الدواء
                 ->get();
         }

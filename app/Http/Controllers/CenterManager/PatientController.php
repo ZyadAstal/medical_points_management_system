@@ -33,11 +33,7 @@ class PatientController extends Controller
 
         // Search Filter (Full Name or National ID)
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('full_name', 'like', "%{$search}%")
-                  ->orWhere('national_id', 'like', "%{$search}%");
-            });
+            $query->searchArabic(['full_name', 'national_id'], $request->search);
         }
 
         // Include visited centers labels for the view modal

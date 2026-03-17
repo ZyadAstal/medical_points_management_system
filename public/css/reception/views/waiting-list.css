@@ -1,0 +1,26 @@
+.waiting-stats-bin {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Inter', sans-serif;
+    border: 1px solid #ccc;
+}
+
+.waiting-stats-bin--registered {
+    background: #f9f9f9;
+    border-color: #ddd;
+}
+
+.waiting-stats-bin--waiting {
+    background: #fff8e8;
+    border-color: #f0d080;
+}
+
+.waiting-stats-bin--in-progress {
+    background: #e8f5ee;
+    border-color: #6dbe8e;
+}
+
+.waiting-stats-bin--completed {
+    background: #f5f5f5;
+    border-color: #ccc;
+}

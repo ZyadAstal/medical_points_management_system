@@ -9,6 +9,7 @@ class Visit extends Model
 {
     use HasFactory;
 
+    const STATUS_REGISTERED = 'registered';
     const STATUS_WAITING = 'waiting';
     const STATUS_IN_PROGRESS = 'in_progress';
     const STATUS_COMPLETED = 'completed';
@@ -40,5 +41,13 @@ class Visit extends Model
     public function medicalCenter()
     {
         return $this->belongsTo(MedicalCenter::class);
+    }
+
+    public function prescriptions()
+    {
+        return $this->hasMany(Prescription::class, 'patient_id', 'patient_id')
+            ->where('doctor_id', function($q) {
+                $q->select('doctor_id')->from('visits')->where('id', $this->id);
+            });
     }
 }

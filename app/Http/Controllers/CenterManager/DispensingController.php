@@ -41,9 +41,9 @@ class DispensingController extends Controller
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->whereHas('prescriptionItem.prescription.patient', function($pq) use ($search) {
-                    $pq->where('full_name', 'like', "%{$search}%");
+                    $pq->searchArabic('full_name', $search);
                 })->orWhereHas('prescriptionItem.medicine', function($mq) use ($search) {
-                    $mq->where('name', 'like', "%{$search}%");
+                    $mq->searchArabic('name', $search);
                 });
             });
         }
@@ -56,10 +56,8 @@ class DispensingController extends Controller
                 $q->where('name', 'Pharmacist');
             })->get();
 
-        // Get Patients for filter dropdown
-        $patients = Patient::whereHas('user', function($q) use ($centerId) {
-            $q->where('medical_center_id', $centerId);
-        })->orWhereHas('visits', function($q) use ($centerId) {
+        // Get Patients for filter dropdown who have at least one dispense record in this medical center
+        $patients = Patient::whereHas('prescriptions.dispenses', function($q) use ($centerId) {
             $q->where('medical_center_id', $centerId);
         })->get();
 

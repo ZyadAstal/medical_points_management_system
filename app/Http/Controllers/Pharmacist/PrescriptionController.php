@@ -20,8 +20,7 @@ class PrescriptionController extends Controller
         if ($request->filled('search')) {
             $search = $request->search;
             $query->whereHas('patient', function($q) use ($search) {
-                $q->where('full_name', 'like', "%{$search}%")
-                  ->orWhere('national_id', 'like', "%{$search}%");
+                $q->searchArabic(['full_name', 'national_id'], $search);
             });
         }
 

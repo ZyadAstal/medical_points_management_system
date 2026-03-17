@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 
+use App\Traits\SearchableArabic;
+
 class Patient extends Model
 {
-    use HasFactory;
+    use HasFactory, SearchableArabic;
 
     protected $appends = ['name'];
 

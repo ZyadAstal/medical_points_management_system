@@ -13,12 +13,7 @@ class MedicalCenterController extends Controller
         $query = MedicalCenter::withCount(['users', 'dispenses']);
 
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('location', 'like', "%{$search}%")
-                  ->orWhere('phone', 'like', "%{$search}%");
-            });
+            $query->searchArabic(['name', 'location', 'phone'], $request->search);
         }
 
         $centers = $query->paginate(10)->withQueryString();

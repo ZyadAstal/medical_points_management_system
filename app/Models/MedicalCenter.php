@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\SearchableArabic;
+
 class MedicalCenter extends Model
 {
-    use HasFactory;
+    use HasFactory, SearchableArabic;
 
     protected $fillable = ['name', 'location', 'phone'];
 

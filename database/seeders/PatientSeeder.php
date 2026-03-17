@@ -217,7 +217,7 @@ class PatientSeeder extends Seeder
                     'patient_id'       => $patient->id,
                     'doctor_id'        => $doctor->id,
                     'medical_center_id' => $centerId,
-                    'status'           => $index < 3 ? Visit::STATUS_COMPLETED : Visit::STATUS_WAITING,
+                    'status'           => $index < 3 ? Visit::STATUS_COMPLETED : Visit::STATUS_REGISTERED,
                     'priority'         => $index < 3 ? Visit::PRIORITY_EMERGENCY : Visit::PRIORITY_NORMAL,
                     'visit_date'       => $today->toDateString(),
                     'notes'            => 'زيارة مراجعة دورية',

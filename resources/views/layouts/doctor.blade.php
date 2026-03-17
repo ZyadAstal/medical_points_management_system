@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>@yield('title', 'Medicare - Doctor')</title>
-    <link href="{{ asset('css/doctor/style.css') }}" rel="stylesheet">/>
+    <link href="{{ asset('css/doctor/style.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     @stack('styles')
 </head>

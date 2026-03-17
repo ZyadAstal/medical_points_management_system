@@ -8,7 +8,7 @@
     
     <!-- CSS Links -->
     <link href="{{ asset('css/pharmacist/style.css') }}" rel="stylesheet">
-    @yield('styles')
+    @stack('styles')
     
     <!-- Fonts (if needed) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
     </div>
 
     <script src="{{ asset('js/pharmacist/main.js') }}"></script>
-    @yield('scripts')
+    @stack('scripts')
     @include('components.delete-modal')
 </body>
 </html>

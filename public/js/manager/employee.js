@@ -89,15 +89,5 @@ document.addEventListener('DOMContentLoaded', function () {
             closeAllOverlays();
         }
     });
-    // Debounce search input
-    const searchInput = document.getElementById('staffSearchInput');
-    if (searchInput) {
-        let searchTimeout;
-        searchInput.addEventListener('input', function () {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                this.form.submit();
-            }, 800);
-        });
-    }
+
 });

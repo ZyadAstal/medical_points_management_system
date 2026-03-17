@@ -21,12 +21,7 @@ class UsersController extends Controller
 
         // Search Filter
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('username', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
-            });
+            $query->searchArabic(['name', 'username', 'email'], $request->search);
         }
 
         // Role Filter

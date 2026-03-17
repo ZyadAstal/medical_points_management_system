@@ -9,11 +9,11 @@
         <img class="sidebar-icon" src="{{ asset('assets/reception/icons/dashboard-icon.svg') }}" alt="" aria-hidden="true" />
         <span class="sidebar-link-text">لوحة التحكم</span>
       </a>
-      <a class="sidebar-link nav-link @if(request()->routeIs('reception.patients.create')) active @endif" href="{{ route('reception.patients.create') }}" data-page="patient-registration">
+      <a class="sidebar-link nav-link @if(request()->routeIs('reception.patients.create') || request()->routeIs('reception.patients.store')) active @endif" href="{{ route('reception.patients.create') }}" data-page="patient-registration">
         <img class="sidebar-icon" src="{{ asset('assets/reception/icons/register-patient.svg') }}" alt="" aria-hidden="true" />
         <span class="sidebar-link-text">تسجيل المريض</span>
       </a>
-      <a class="sidebar-link nav-link" href="#" data-page="today-waiting-list">
+      <a class="sidebar-link nav-link @if(request()->routeIs('reception.visits.waiting')) active @endif" href="{{ route('reception.visits.waiting') }}" data-page="today-waiting-list">
         <img class="sidebar-icon" src="{{ asset('assets/reception/icons/waiting-list.svg') }}" alt="" aria-hidden="true" />
         <span class="sidebar-link-text">قائمة الانتظار اليوم</span>
       </a>

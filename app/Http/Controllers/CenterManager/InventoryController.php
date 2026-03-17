@@ -24,7 +24,7 @@ class InventoryController extends Controller
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->whereHas('medicine', function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
+                $q->searchArabic('name', $search);
             });
         }
 

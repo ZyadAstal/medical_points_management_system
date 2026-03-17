@@ -1,0 +1,143 @@
+/* 
+   Modular CSS for Visit Creation View (Reception)
+   Path: public/css/reception/views/visit-create.css
+*/
+
+.visit-create-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.vc-page-header {
+    margin-bottom: 30px;
+}
+
+.vc-title {
+    font-size: 28px;
+    color: #053052;
+    margin: 0 0 10px 0;
+}
+
+.vc-subtitle {
+    color: #6184A0;
+    font-size: 16px;
+}
+
+.vc-panel {
+    background: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    padding: 30px;
+}
+
+.vc-patient-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px dashed #E0E0E0;
+}
+
+.vc-patient-icon {
+    width: 50px;
+    height: 50px;
+    background: #F0F7FF;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0B6CB8;
+}
+
+.vc-patient-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    display: block;
+}
+
+.vc-patient-id {
+    font-size: 14px;
+    color: #929292;
+}
+
+.vc-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.vc-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.vc-field--full {
+    grid-column: span 2;
+}
+
+.vc-field label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #333;
+}
+
+.vc-field input, 
+.vc-field select, 
+.vc-field textarea {
+    width: 100%;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #FDFDFD;
+}
+
+.vc-field input:focus, 
+.vc-field select:focus, 
+.vc-field textarea:focus {
+    border-color: #0B6CB8;
+}
+
+.vc-submit-row {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+}
+
+.vc-btn {
+    height: 48px;
+    padding: 0 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.vc-btn--primary {
+    background: linear-gradient(90deg, #0B6CB8 0%, #0B395D 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(11, 108, 184, 0.2);
+    flex: 1;
+}
+
+.vc-btn--secondary {
+    background: #F5F5F5;
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.vc-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}

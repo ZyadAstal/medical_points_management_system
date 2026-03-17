@@ -23,12 +23,7 @@ class StaffController extends Controller
 
         // Search Filter (by name, email, or username)
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('username', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
-            });
+            $query->searchArabic(['name', 'username', 'email'], $request->search);
         }
 
         // Role Filter

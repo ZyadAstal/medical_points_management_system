@@ -11,15 +11,17 @@ class PrescriptionSeeder extends Seeder
 {
     public function run(): void
     {
-        $doctors = User::whereHas('role', function($q) { $q->where('name', 'Doctor'); })->get();
-        $patients = Patient::all();
+        // Get all completed visits
+        $visits = \App\Models\Visit::where('status', \App\Models\Visit::STATUS_COMPLETED)->get();
         $notes = ['زيارة دورية', 'متابعة حالة', 'مراجعة نتائج تحاليل', 'فحص عام'];
 
-        foreach ($patients as $patient) {
-            if (rand(0, 1)) { // Create a prescription for half of the patients
+        foreach ($visits as $visit) {
+            // Give 70% of completed visits a prescription
+            if (rand(1, 100) <= 70) {
                 Prescription::create([
-                    'patient_id' => $patient->id,
-                    'doctor_id'  => $doctors->random()->id,
+                    'patient_id' => $visit->patient_id,
+                    'doctor_id'  => $visit->doctor_id,
+                    'visit_id'   => $visit->id,
                     'notes'      => $notes[array_rand($notes)],
                 ]);
             }

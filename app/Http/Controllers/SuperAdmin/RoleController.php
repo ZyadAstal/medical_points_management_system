@@ -15,7 +15,7 @@ class RoleController extends Controller
         $query = Role::withCount('users');
 
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->searchArabic('name', $request->search);
         }
 
         if ($request->filled('role')) {

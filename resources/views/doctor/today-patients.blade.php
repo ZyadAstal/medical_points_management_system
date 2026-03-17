@@ -3,7 +3,12 @@
 @section('title', 'مرضى اليوم - Medicare')
 @section('page-id', 'today-patients')
 
+@push('styles')
+    <link href="{{ asset('css/doctor/views/today-patients.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
+<div class="today-patients-wrapper" data-index-url="{{ route('doctor.patients.index') }}" data-patient-base-url="{{ url('doctor/patients') }}">
 <div class="today-page-header">
     <h1 class="today-page-title">مرضى اليوم</h1>
     <p class="today-page-subtitle">قائمة المرضى المسجلين لليوم</p>
@@ -21,44 +26,13 @@
         </div>
     </div>
 
-    <div class="today-search" style="display:flex; align-items:center; gap:10px;">
-        <input class="today-search-input" type="text" id="todaySearchInput" placeholder="ابحث باسم المريض أو رقم الهوية..."
-            style="width:280px;height:39px;border:1px solid #053052;border-radius:5px;box-sizing:border-box;background:#FFFFFF;font-family:Inter, sans-serif;font-weight:400;font-size:14px;line-height:39px;text-align:center;color:#053052;outline:none;" />
+    <div class="today-search">
+        <input class="today-search-input" type="text" id="todaySearchInput" placeholder="ابحث باسم المريض أو رقم الهوية..." />
         <button type="button" class="search-submit-btn" aria-label="بحث" title="بحث" id="todaySearchBtn">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
     </div>
 </div>
-
-<style>
-    .queue-action-btn {
-        padding: 6px 15px;
-        border-radius: 5px;
-        font-size: 14px;
-        cursor: pointer;
-        border: none;
-        color: white;
-        font-family: 'Inter', sans-serif;
-        text-decoration: none;
-        display: inline-block;
-        margin: 0 2px;
-    }
-    .btn-enter { background-color: #28a745; }
-    .btn-wait { background-color: #ffc107; color: #053052; }
-    .btn-complete { background-color: #053052; }
-    .queue-action-btn:hover { opacity: 0.8; }
-    .table-section-title {
-        margin: 30px 20px 15px 0;
-        font-size: 1.2rem;
-        color: #053052;
-        font-weight: bold;
-        text-align: right;
-    }
-    .status-badge.status-gray { background-color: #f0f0f0; color: #666; border: 1px solid #ddd; }
-    .patients-td, .patients-th {
-        text-align: center !important;
-    }
-</style>
 
 <div class="table-section-title">قائمة الانتظار في الدور</div>
 <div class="patients-table">
@@ -70,6 +44,9 @@
     </div>
 
     <div class="patients-table-body" id="queueTableBody">
+        <div class="patients-vline v1"></div>
+        <div class="patients-vline v2"></div>
+        <div class="patients-vline v3"></div>
 
         @forelse($queueVisits as $visit)
             @php $patient = $visit->patient; @endphp
@@ -83,24 +60,27 @@
                         <span class="status-badge status-green">عادية</span>
                     @endif
                 </div>
-                <div class="patients-td patients-action-cell" style="display: flex; gap: 5px; justify-content: center; align-items: center;">
-                    @if($visit->status === \App\Models\Visit::STATUS_WAITING)
+                <div class="patients-td patients-action-cell">
+                    @if($visit->status === \App\Models\Visit::STATUS_REGISTERED)
+                        <button type="button" class="queue-action-btn btn-disabled-queue" disabled>
+                            بانتظار الاستقبال
+                        </button>
+                    @elseif($visit->status === \App\Models\Visit::STATUS_WAITING)
                         <form action="{{ route('doctor.visits.enter', $visit) }}" method="POST" style="display:inline;">
                             @csrf
-                            <button type="submit" class="queue-action-btn btn-enter">إدخال</button>
+                            <button type="submit" class="queue-action-btn btn-enter">بدء الكشف</button>
                         </form>
-                        <button type="button" class="queue-action-btn btn-wait">انتظار</button>
                     @elseif($visit->status === \App\Models\Visit::STATUS_IN_PROGRESS)
-                        <span style="font-weight: bold; color: #28a745; margin-left: 10px;">داخل العيادة</span>
+                        <span style="font-weight: bold; color: #28a745; margin-left: 10px;">يتم الفحص</span>
                         <form action="{{ route('doctor.visits.complete', $visit) }}" method="POST" style="display:inline;">
                             @csrf
-                            <button type="submit" class="queue-action-btn btn-complete">تم الفحص</button>
+                            <button type="submit" class="queue-action-btn btn-complete">إنهاء الكشف</button>
                         </form>
                     @endif
                 </div>
             </div>
         @empty
-            <div class="patients-tr"><div class="patients-td" style="grid-column: 1/-1; text-align:center;">لا يوجد مرضى في قائمة الانتظار</div></div>
+            <div class="patients-tr"><div class="patients-td" style="grid-column: 1/-1;">لا يوجد مرضى في قائمة الانتظار</div></div>
         @endforelse
     </div>
 </div>
@@ -115,6 +95,9 @@
     </div>
 
     <div class="patients-table-body" id="pastTableBody">
+        <div class="patients-vline v1"></div>
+        <div class="patients-vline v2"></div>
+        <div class="patients-vline v3"></div>
 
         @forelse($pastVisits as $visit)
             @php
@@ -163,7 +146,7 @@
                 </div>
             </div>
         @empty
-            <div class="patients-tr"><div class="patients-td" style="grid-column: 1/-1; text-align:center;">لا يوجد مرضى مفحوصين لهذا اليوم</div></div>
+            <div class="patients-tr"><div class="patients-td" style="grid-column: 1/-1;">لا يوجد مرضى مفحوصين لهذا اليوم</div></div>
         @endforelse
     </div>
 </div>
@@ -254,7 +237,7 @@
                             </thead>
                             <tbody id="historyTableBody">
                                 <tr>
-                                    <td colspan="5" style="text-align:center;">اختر مريضاً لعرض السجل</td>
+                                    <td colspan="5">اختر مريضاً لعرض السجل</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -268,142 +251,9 @@
         </div>
     </div>
 </div>
+</div>
 @endsection
 
 @push('scripts')
-<script>
-(function () {
-    // Date picker icon
-    const input = document.getElementById('todayDate');
-    const icon = document.getElementById('todayDateIcon');
-    if (input && icon) {
-        function openPicker() {
-            if (typeof input.showPicker === 'function') {
-                input.showPicker();
-            } else {
-                input.focus();
-                input.click();
-            }
-        }
-        icon.addEventListener('click', openPicker);
-        icon.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openPicker();
-            }
-        });
-
-        // Reload page with selected date
-        input.addEventListener('change', function () {
-            const date = input.value;
-            if (date) {
-                window.location.href = '{{ route("doctor.patients.index") }}?date=' + date;
-            }
-        });
-    }
-
-    const searchInput = document.getElementById('todaySearchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', function () {
-            const q = searchInput.value.trim().toLowerCase();
-            const rows = document.querySelectorAll('.patients-tr');
-            rows.forEach(function (row) {
-                const nameTd = row.querySelector('.patients-td:nth-child(1)');
-                const nidTd = row.querySelector('.patients-td:nth-child(2)');
-                if (!nameTd || !nidTd) return;
-                const match = nameTd.textContent.toLowerCase().includes(q) || nidTd.textContent.includes(q);
-                row.style.display = match ? '' : 'none';
-            });
-        });
-    }
-
-    // Modal
-    const modalOverlay = document.getElementById('patientModalOverlay');
-    if (!modalOverlay) return;
-
-    const closeBtn = document.getElementById('patientModalCloseBtn');
-
-    function openModal(data) {
-        document.getElementById('modalPatientName').textContent = data.name || '—';
-        document.getElementById('modalNationalId').textContent = data.nid || '—';
-        document.getElementById('modalPhone').textContent = data.phone || '—';
-        const remainingPoints = parseInt(data.points) || 0;
-        document.getElementById('modalPoints').textContent = remainingPoints;
-        document.getElementById('modalUsedPoints').textContent = 100 - remainingPoints;
-
-        // Fetch patient details via AJAX
-        if (data.id) {
-            fetch('{{ url("doctor/patients") }}/' + data.id + '?json=1')
-                .then(r => r.json())
-                .then(info => {
-                    document.getElementById('modalTotalPrescriptions').textContent = info.total_prescriptions || '0';
-                    document.getElementById('modalTotalMeds').textContent = info.total_meds || '0';
-                    document.getElementById('modalTotalPoints').textContent = info.total_points || '0';
-                    document.getElementById('modalLastDate').textContent = info.last_visit_date || '—';
-                    document.getElementById('modalLastCenter').textContent = info.last_visit_center || '—';
-                    document.getElementById('modalLastDoctor').textContent = info.last_visit_doctor || '—';
-
-                    // Fill history table
-                    const tbody = document.getElementById('historyTableBody');
-                    if (info.dispense_history && info.dispense_history.length > 0) {
-                        tbody.innerHTML = info.dispense_history.map(h =>
-                            `<tr><td class="drug">${h.medicine}</td><td>${h.quantity}</td><td>${h.points}</td><td>${h.date}</td><td class="pharm">${h.pharmacist}</td></tr>`
-                        ).join('');
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا يوجد سجل صرف</td></tr>';
-                    }
-                })
-                .catch(() => {});
-        }
-
-        modalOverlay.classList.add('is-open');
-        modalOverlay.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        modalOverlay.classList.remove('is-open');
-        modalOverlay.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-    }
-
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
-    document.addEventListener('click', function (e) {
-        const btn = e.target.closest('.patients-action-btn');
-        if (!btn) return;
-        const tr = btn.closest('.patients-tr');
-        if (!tr) return;
-        openModal({
-            id: tr.dataset.patientId,
-            name: tr.dataset.patientName,
-            nid: tr.dataset.patientNid,
-            phone: tr.dataset.patientPhone,
-            points: tr.dataset.patientPoints
-        });
-    });
-
-    modalOverlay.addEventListener('click', function (e) {
-        if (e.target === modalOverlay) closeModal();
-    });
-
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modalOverlay.classList.contains('is-open')) closeModal();
-    });
-
-    // Modal tabs
-    const tabs = Array.from(modalOverlay.querySelectorAll('.patient-modal-tab'));
-    const panes = Array.from(modalOverlay.querySelectorAll('.patient-modal-tabpane'));
-    tabs.forEach(t => {
-        t.addEventListener('click', () => {
-            const tabName = t.getAttribute('data-tab');
-            tabs.forEach(tb => {
-                tb.classList.toggle('is-active', tb.getAttribute('data-tab') === tabName);
-                tb.setAttribute('aria-selected', tb.getAttribute('data-tab') === tabName ? 'true' : 'false');
-            });
-            panes.forEach(p => p.classList.toggle('is-active', p.getAttribute('data-pane') === tabName));
-        });
-    });
-})();
-</script>
+    <script src="{{ asset('js/doctor/views/today-patients.js') }}"></script>
 @endpush

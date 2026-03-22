@@ -4,7 +4,7 @@
 @section('page-id', 'profile')
 @section('content-class', 'profile-content')
 
-@section('styles')
+@push('styles')
 <style>
     /* 
        Reset some shared.profile defaults to allow the rigid absolute 
@@ -50,7 +50,7 @@
         overflow-x: hidden;
     }
 </style>
-@endsection
+@endpush
 
 @section('content')
 <div class="profile-container">
@@ -62,7 +62,9 @@
 
 
     @php
-        $assetPrefix = 'assets/' . strtolower($role) . '/icons/';
+        $folder = strtolower($role);
+        if ($role === 'SuperAdmin') $folder = 'admin';
+        $assetPrefix = 'assets/' . $folder . '/icons/';
     @endphp
 
     <!-- Personal Info Frame -->
@@ -74,7 +76,7 @@
             <div class="profile-personal-title">المعلومات الشخصية</div>
 
             <div class="profile-name-label">الاسم</div>
-            <input class="profile-name-input" name="name" type="text" value="{{ old('name', $user->name) }}" required />
+            <input class="profile-name-input" name="name" type="text" value="{{ old('name', $user->name) }}" required @if($role == 'Patient') readonly style="background-color: #f1f5f9; cursor: not-allowed;" @endif />
 
             <div class="profile-email-label">البريد الإلكتروني</div>
             <input class="profile-email-input" name="email" type="email" value="{{ old('email', $user->email) }}" required />

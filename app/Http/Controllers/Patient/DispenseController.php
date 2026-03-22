@@ -18,13 +18,13 @@ class DispenseController extends Controller
             return view('patient.dispenses.index', ['dispenses' => collect([])]);
         }
 
-        // جلب الصرفيات المرتبطة بعناصر الوصفات الخاصة بالمريض
+        // جلب الصرفيات المرتبطة بعناصر الوصفات الخاصة بالمريض 
         $dispenses = Dispense::whereHas('prescriptionItem.prescription', function ($q) use ($patient) {
             $q->where('patient_id', $patient->id);
         })
         ->with(['prescriptionItem.medicine', 'medicalCenter'])
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(10);
 
         return view('patient.dispenses.index', compact('dispenses'));
     }

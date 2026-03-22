@@ -33,6 +33,9 @@
                 <div style="text-align:center; padding:20px; color:#999;">لا يوجد مرضى</div>
             @endforelse
         </div>
+        <div class="mc-pagination" style="padding: 10px; display: flex; justify-content: center; transform: scale(0.85);">
+            {{ $patients->appends(['patient_page' => $patients->currentPage()])->links('pagination::simple-bootstrap-4') }}
+        </div>
     </div>
 
     <div class="recipes-left-area">
@@ -45,19 +48,29 @@
         </div>
         @else
         <div class="recipes-list">
-            @forelse($prescriptions as $prescription)
+            @forelse ($prescriptions as $prescription)
                 @php
                     $allItems = $prescription->items;
-                    $dispensedItems = $allItems->filter(fn($item) => $item->dispenses->count() > 0);
+                    $dispensedItems = $allItems->filter(function($item) {
+                        return $item->dispenses->count() > 0;
+                    });
                     $isFullyDispensed = $dispensedItems->count() === $allItems->count() && $allItems->count() > 0;
                     $isPartial = $dispensedItems->count() > 0 && !$isFullyDispensed;
 
                     $statusClass = $isFullyDispensed ? 'recipe-status--paid' : ($isPartial ? 'recipe-status--partial' : 'recipe-status--unpaid');
                     $statusText = $isFullyDispensed ? 'تم الصرف' : ($isPartial ? 'صرف جزئي' : 'لم يصرف');
 
-                    $lastDispense = $dispensedItems->flatMap->dispenses->sortByDesc('created_at')->first();
-                    $pharmacistName = $lastDispense?->pharmacist?->name ?? '—';
+                    $lastDispense = $allItems->flatMap(fn($item) => $item->dispenses)->sortByDesc('created_at')->first();
+                    $pharmacistName = $lastDispense?->pharmacist?->name ?? ($prescription->pharmacist?->name ?? '—');
                     $centerName = $lastDispense?->medicalCenter?->name ?? (auth()->user()->medicalCenter->name ?? '—');
+                    
+                    $itemData = $prescription->items->map(function($item) {
+                        return [
+                            "medicine" => $item->medicine->name ?? "—",
+                            "quantity" => $item->quantity,
+                            "dispensed" => $item->dispenses->count() > 0
+                        ];
+                    });
                 @endphp
                 <div class="recipes-rect recipes-card">
                     <div class="recipe-status {{ $statusClass }}">{{ $statusText }}</div>
@@ -75,11 +88,7 @@
                             data-center="{{ $centerName }}"
                             data-patient="{{ $selectedPatient->name }}"
                             data-notes="{{ $prescription->notes ?? '' }}"
-                            data-items='@json($prescription->items->map(fn($item) => [
-                                "medicine" => $item->medicine->name ?? "—",
-                                "quantity" => $item->quantity,
-                                "dispensed" => $item->dispenses->count() > 0
-                            ]))'>فتح الوصفة</button>
+                            data-items='@json($itemData)'>فتح الوصفة</button>
                 </div>
             @empty
                 <div class="recipes-rect rect-large recipes-empty-rect">
@@ -89,6 +98,9 @@
                     </div>
                 </div>
             @endforelse
+        </div>
+        <div class="mc-pagination" style="margin-top: 20px; display: flex; justify-content: center;">
+            {{ $prescriptions->links('pagination::bootstrap-4') }}
         </div>
         @endif
     </div>

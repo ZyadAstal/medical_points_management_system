@@ -17,13 +17,13 @@ class PrescriptionController extends Controller
     {
         $doctor = Auth::user();
 
-        $patientIds = Prescription::where('doctor_id', $doctor->id)
-            ->distinct()
-            ->pluck('patient_id');
-
-        $patients = Patient::whereIn('id', $patientIds)
-            ->orderBy('full_name')
-            ->get();
+        // Get patients who have prescriptions from this doctor, paginated
+        $patients = Patient::whereHas('prescriptions', function($q) use ($doctor) {
+            $q->where('doctor_id', $doctor->id);
+        })
+        ->orderBy('full_name')
+        ->paginate(20)
+        ->withQueryString();
 
         return view('doctor.recipes-record', compact('patients'));
     }
@@ -35,19 +35,21 @@ class PrescriptionController extends Controller
     {
         $doctor = Auth::user();
 
-        $patientIds = Prescription::where('doctor_id', $doctor->id)
-            ->distinct()
-            ->pluck('patient_id');
+        // Paginate patients list for the sidebar
+        $patients = Patient::whereHas('prescriptions', function($q) use ($doctor) {
+            $q->where('doctor_id', $doctor->id);
+        })
+        ->orderBy('full_name')
+        ->paginate(20)
+        ->withQueryString();
 
-        $patients = Patient::whereIn('id', $patientIds)
-            ->orderBy('full_name')
-            ->get();
-
+        // Paginate prescriptions for the selected patient
         $prescriptions = Prescription::where('doctor_id', $doctor->id)
             ->where('patient_id', $patient->id)
-            ->with(['items.medicine', 'items.dispenses.pharmacist', 'items.dispenses.medicalCenter'])
+            ->with(['pharmacist', 'items.medicine', 'items.dispenses.pharmacist', 'items.dispenses.medicalCenter'])
             ->latest()
-            ->get();
+            ->paginate(5, ['*'], 'pres_page')
+            ->withQueryString();
 
         return view('doctor.recipes-record', compact('patients', 'prescriptions', 'patient'))
             ->with('selectedPatient', $patient);

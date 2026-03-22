@@ -15,16 +15,8 @@ class ProfileController extends Controller
         $user = Auth::user();
         $role = $user->role->name;
 
-        // Determine view based on role
-        $view = match($role) {
-            'SuperAdmin' => 'superadmin.profile',
-            'CenterManager' => 'manager.profile',
-            'Doctor' => 'doctor.profile',
-            'Pharmacist' => 'pharmacist.profile',
-            'Reception' => 'reception.profile',
-            'Patient' => 'patient.profile',
-            default => 'shared.profile'
-        };
+        // All roles now use the shared profile view
+        $view = 'shared.profile';
 
         // Determine layout based on role (for shared.profile if used)
         $layout = match($role) {
@@ -43,16 +35,21 @@ class ProfileController extends Controller
     public function updatePersonal(Request $request)
     {
         $user = Auth::user();
+        $role = $user->role->name;
         
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
         ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
+        $updateData = ['email' => $request->email];
+
+        // Patients are not allowed to update their name
+        if ($role !== 'Patient') {
+            $updateData['name'] = $request->name;
+        }
+
+        $user->update($updateData);
 
         return back()->with('success', 'تم تحديث البيانات الشخصية بنجاح');
     }

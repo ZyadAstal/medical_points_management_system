@@ -62,6 +62,35 @@
                 value="{{ old('address') }}" />
         </div>
 
+        <div class="pr-field">
+            <label for="patientUsername">اسم المستخدم</label>
+            <input id="patientUsername" name="username" type="text"
+                placeholder="أدخل اسم المستخدم..."
+                value="{{ old('username') }}" required />
+            @error('username')
+                <span class="pr-error">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="pr-field">
+            <label for="patientEmail">البريد الإلكتروني</label>
+            <input id="patientEmail" name="email" type="email"
+                placeholder="أدخل البريد الإلكتروني..."
+                value="{{ old('email') }}" required />
+            @error('email')
+                <span class="pr-error">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="pr-field">
+            <label for="patientPassword">كلمة المرور</label>
+            <input id="patientPassword" name="password" type="password"
+                placeholder="أدخل كلمة المرور..." required />
+            @error('password')
+                <span class="pr-error">{{ $message }}</span>
+            @enderror
+        </div>
+
         <div class="pr-field pr-doctor-field">
             <label for="patientDoctor">اختيار الطبيب</label>
             <select id="patientDoctor" name="doctor_id" required>
@@ -73,6 +102,17 @@
                 @endforeach
             </select>
             @error('doctor_id')
+                <span class="pr-error">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="pr-field">
+            <label for="patientPriority">نوع الحالة</label>
+            <select id="patientPriority" name="priority" required>
+                <option value="0" {{ old('priority') == '0' ? 'selected' : '' }}>عادية</option>
+                <option value="1" {{ old('priority') == '1' ? 'selected' : '' }}>طارئة</option>
+            </select>
+            @error('priority')
                 <span class="pr-error">{{ $message }}</span>
             @enderror
         </div>
@@ -128,6 +168,14 @@
                 @foreach($doctors as $doctor)
                     <option value="{{ $doctor->id }}">د. {{ $doctor->name }}</option>
                 @endforeach
+            </select>
+        </div>
+
+        <div class="pr-field">
+            <label for="existingPriority">نوع الحالة</label>
+            <select class="pr-existing-priority-field" id="existingPriority">
+                <option value="0">عادية</option>
+                <option value="1">طارئة</option>
             </select>
         </div>
 

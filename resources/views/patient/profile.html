@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>الملف الشخصي - Medicare</title>
+<link href="../css/style.css" rel="stylesheet"/>
+ <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<style>
+*{
+   font-family: 'Tajawal', sans-serif;
+}
+  </style>
+<body data-page="profile">
+<div class="app">
+
+  <iframe class="sidebar-frame" src="./sidebar - 2.html" title="Sidebar"></iframe>
+
+  <div class="main">
+
+    <div id="headerMount">
+    </div>
+
+
+<div class="content profile-content">
+  <div class="profile-container">
+    <div class="profile-header">
+      <h1 class="profile-title" style=" font-family: 'Tajawal', sans-serif;">الملف الشخصي</h1>
+      <p class="profile-desc" style=" font-family: 'Tajawal', sans-serif;">إدارة البيانات الشخصية وإعدادات الأمان</p>
+    </div>
+
+
+        <div class="profile-frame">
+
+          <img class="profile-personal-icon" src="../assets/icons/dark-profile.svg" alt="" />
+          <div class="profile-personal-title" style=" font-family: 'Tajawal', sans-serif;font-size: 22px;">المعلومات الشخصية</div>
+
+
+          <div class="profile-name-label" style=" font-family: 'Tajawal', sans-serif;">الاسم</div>
+          <input class="profile-name-input" style=" font-family: 'Tajawal', sans-serif;" type="text" value="محمد جابر الماجد" />
+
+
+            <div class="profile-email-label" style=" font-family: 'Tajawal', sans-serif;">البريد الإلكتروني</div>
+            <input class="profile-email-input" style=" font-family: 'Tajawal', sans-serif;" type="email" value="mohammedalmajed@gmail.com" />
+
+
+            <button class="profile-save-btn" style=" font-family: 'Tajawal', sans-serif;" type="button">حفظ التعديلات</button>
+
+        </div>
+
+
+        <div class="profile-frame profile-frame-security" aria-label="Security settings">
+
+          <img class="security-icon" src="../assets/icons/safety.svg" alt="" />
+          <div class="security-title" style=" font-family: 'Tajawal', sans-serif;">الأمان</div>
+
+
+          <label class="security-label security-label-current" for="currentPassword" style=" font-family: 'Tajawal', sans-serif;">كلمة المرور الحالية</label>
+          <div class="security-field security-field-current">
+            <input style=" font-family: 'Tajawal', sans-serif;"
+              id="currentPassword"
+              class="security-input"
+              type="password"
+              placeholder="أدخل كلمة المرور الحالية"
+                data-password-target="security-current"
+              autocomplete="current-password"
+            />
+            <button class="security-eye-btn" type="button" aria-label="إظهار/إخفاء كلمة المرور" aria-pressed="false" data-toggle-target="currentPassword">
+              <img src="../assets/icons/eye.svg" alt="" />
+            </button>
+          </div>
+
+
+          <label class="security-label security-label-new" for="newPassword" style=" font-family: 'Tajawal', sans-serif;">كلمة المرور الجديدة</label>
+          <div class="security-field security-field-new">
+            <input style=" font-family: 'Tajawal', sans-serif;"
+              id="newPassword"
+              class="security-input"
+              type="password"
+              placeholder="أدخل كلمة المرور الجديدة"
+              data-password-target="security-new"
+              autocomplete="new-password"
+            />
+            <button class="security-eye-btn" type="button" aria-label="إظهار/إخفاء كلمة المرور"style=" font-family: 'Tajawal', sans-serif;" aria-pressed="false" data-toggle-target="newPassword">
+              <img src="../assets/icons/eye.svg" alt="" />
+            </button>
+          </div>
+
+
+          <label class="security-label security-label-confirm" for="confirmPassword"style=" font-family: 'Tajawal', sans-serif;">تأكيد كلمة المرور</label>
+          <div class="security-field security-field-confirm">
+            <input style=" font-family: 'Tajawal', sans-serif;"
+              id="confirmPassword"
+              class="security-input"
+              type="password"
+              placeholder="أعد إدخال كلمة المرور الجديدة"
+              data-password-target="security-confirm"
+              autocomplete="new-password"
+            />
+            <button class="security-eye-btn" type="button" aria-label="إظهار/إخفاء كلمة المرور"style=" font-family: 'Tajawal', sans-serif;" aria-pressed="false" data-toggle-target="confirmPassword">
+              <img src="../assets/icons/eye.svg" alt="" />
+            </button>
+          </div>
+
+
+          <div class="security-note">
+            <div class="security-note-icon">💡</div>
+            <div class="security-note-text" style=" font-family: 'Tajawal', sans-serif;">تأكد من أن كلمة المرور تحتوي على 8 أحرف على الأقل وتتضمن أحرف كبيرة وصغيرة وأرقام</div>
+          </div>
+
+
+          <button class="security-change-btn" id="changePasswordBtn" type="button"style=" font-family: 'Tajawal', sans-serif;">تغيير كلمة المرور</button>
+          
+
+
+        </div>
+  </div>
+</div>
+
+<script src="../js/password.js"></script>
+<script src="../js/include-header.js"></script>
+</body>
+</html>

@@ -122,7 +122,7 @@
 </div>
 
 <!-- Modals same as superadmin but with manager assets if needed -->
-@include('shared.manager-user-modals')
+@include('manager.partials.staff-modals')
 @endsection
 
 @push('scripts')

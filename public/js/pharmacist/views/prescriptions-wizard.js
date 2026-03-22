@@ -86,26 +86,29 @@
 
     window.addDrugToList = function() {
         const select = document.getElementById('drugSelect');
-        const qtyInput = document.getElementById('drugQuantity');
+        const pQtyInput = document.getElementById('drugPrescribedQty');
+        const dQtyInput = document.getElementById('drugDispensedQty');
         
         if(!select || !select.value) return;
         
         const id = select.value;
         const name = select.options[select.selectedIndex].getAttribute('data-name');
         const points = parseInt(select.options[select.selectedIndex].getAttribute('data-points'));
-        const quantity = parseInt(qtyInput.value);
+        const pQty = parseInt(pQtyInput.value);
+        const dQty = parseInt(dQtyInput.value);
 
-        if(isNaN(quantity) || quantity < 0) {
-            alert("يرجى إدخال كمية صالحة");
+        if(isNaN(pQty) || pQty < 1 || isNaN(dQty) || dQty < 0) {
+            alert("يرجى إدخال كميات صالحة");
             return;
         }
 
         // Check if duplicate
         const existing = selectedMedicines.find(m => m.id === id);
         if(existing) {
-            existing.quantity += quantity;
+            existing.pQty = pQty;
+            existing.dQty = dQty;
         } else {
-            selectedMedicines.push({ id, name, points, quantity });
+            selectedMedicines.push({ id, name, points, pQty, dQty });
         }
 
         renderMedicinesTable();
@@ -113,7 +116,8 @@
         
         // Reset inputs
         select.value = "";
-        qtyInput.value = 1;
+        pQtyInput.value = 1;
+        dQtyInput.value = 1;
     };
 
     function renderMedicinesTable() {
@@ -123,8 +127,9 @@
         container.innerHTML = selectedMedicines.map((m, index) => `
             <div class="table-row" style="background: #fff; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                 <div style="flex: 2; text-align: right; font-weight: 600;">${m.name}</div>
-                <div style="flex: 1;"><div class="value-box">${m.quantity}</div></div>
-                <div style="flex: 1;"><div class="value-box" style="color: #0764AE;">${m.points * m.quantity}</div></div>
+                <div style="flex: 0.5;"><div class="value-box">${m.pQty}</div></div>
+                <div style="flex: 0.5;"><div class="value-box" style="background: #e0f2fe; border-color: #bae6fd;">${m.dQty}</div></div>
+                <div style="flex: 1;"><div class="value-box" style="color: #0764AE;">${m.points * m.dQty}</div></div>
                 <div style="width: 30px;">
                     <span class="delete-row" onclick="removeMedicine(${index})">🗑</span>
                 </div>
@@ -141,7 +146,7 @@
     function updateWizardTotal() {
         const totalEl = document.getElementById('wizard_total_cost');
         if (!totalEl) return;
-        const total = selectedMedicines.reduce((sum, m) => sum + (m.points * m.quantity), 0);
+        const total = selectedMedicines.reduce((sum, m) => sum + (m.points * m.dQty), 0);
         totalEl.innerText = total;
     }
 
@@ -178,14 +183,14 @@
         let totalPoints = 0;
 
         selectedMedicines.forEach(m => {
-            const cost = m.points * m.quantity;
+            const cost = m.points * m.dQty;
             totalPoints += cost;
-
+            
             // Review UI
             if (listContainer) {
                 const div = document.createElement('div');
                 div.className = 'review-item';
-                div.innerHTML = `<span>${m.name}</span> <span style="color: #0B6CB8;">الكمية: ${m.quantity} (${cost} نقطة)</span>`;
+                div.innerHTML = `<span>${m.name}</span> <span style="color: #0B6CB8;">المقررة: ${m.pQty} | المصروفة: ${m.dQty} (${cost} نقطة)</span>`;
                 listContainer.appendChild(div);
             }
 
@@ -193,7 +198,8 @@
             if (hiddenContainer) {
                 hiddenContainer.innerHTML += `
                     <input type="hidden" name="items[${m.id}][medicine_id]" value="${m.id}">
-                    <input type="hidden" name="items[${m.id}][quantity]" value="${m.quantity}">
+                    <input type="hidden" name="items[${m.id}][prescribed_quantity]" value="${m.pQty}">
+                    <input type="hidden" name="items[${m.id}][dispensed_quantity]" value="${m.dQty}">
                 `;
             }
         });

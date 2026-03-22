@@ -14,9 +14,9 @@ class PrescriptionController extends Controller
         $patient = Auth::user()->patient;
         
         $prescriptions = $patient ? $patient->prescriptions()
-            ->with(['items.medicine', 'doctor'])
+            ->with(['items.medicine', 'items.dispense', 'doctor.medicalCenter'])
             ->orderBy('created_at', 'desc')
-            ->get() : [];
+            ->paginate(10) : collect([]);
 
         return view('patient.prescriptions.index', compact('prescriptions'));
     }

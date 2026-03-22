@@ -71,7 +71,7 @@
                     default                   => 'waiting-status-registered',
                 };
                 $statusLabel = match($visit->status) {
-                    \App\Models\Visit::STATUS_REGISTERED  => 'مسجل',
+                    \App\Models\Visit::STATUS_REGISTERED  => $visit->priority == \App\Models\Visit::PRIORITY_EMERGENCY ? 'مسجل طارئة' : 'مسجل',
                     \App\Models\Visit::STATUS_WAITING     => 'بانتظار',
                     \App\Models\Visit::STATUS_IN_PROGRESS => 'يتم الفحص',
                     \App\Models\Visit::STATUS_COMPLETED   => 'خرج',

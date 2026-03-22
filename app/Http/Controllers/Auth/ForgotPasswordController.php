@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class ForgotPasswordController extends Controller
@@ -16,10 +18,13 @@ class ForgotPasswordController extends Controller
     {
         $request->validate(['email' => 'required|email']);
 
-        // In a real production environment, we would use:
-        // $status = Password::sendResetLink($request->only('email'));
-        
-        // For this local setup, to avoid SMTP errors:
-        return back()->with('status', 'نظام استعادة كلمة المرور غير مفعل بالكامل في البيئة المحلية. يرجى مراجعة إدارة النظام لتغيير كلمة المرور.');
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            session(['reset_email' => $user->email]);
+            return redirect()->route('password.reset_direct')->with('success', 'البريد الإلكتروني صحيح. يرجى إدخال كلمة المرور الجديدة.');
+        }
+
+        return back()->with('error', 'البريد الإلكتروني غير مسجل في النظام.');
     }
 }

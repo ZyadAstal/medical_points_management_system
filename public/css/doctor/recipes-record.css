@@ -32,13 +32,16 @@ body[data-page="recipes-record"] .recipes-rectangles .recipes-rect{
 
 body[data-page="recipes-record"] .recipes-rectangles .rect-small{
   width: 317px;
-  height: 278px;
+  min-height: 278px;
+  height: auto;
   margin-top: 4px;
+  padding-bottom: 20px;
 }
 
 body[data-page="recipes-record"] .recipes-rectangles .rect-large{
   width: 666px;
-  height: 278px;
+  min-height: 278px;
+  height: auto;
 }
 
 
@@ -78,7 +81,7 @@ body[data-page="recipes-record"] .patients-search::placeholder{
 }
 
 body[data-page="recipes-record"] .patients-divider{
-  width: 318px;
+  width: 100%;
   height: 0;
   border-top: 1px solid #D4D4D4;
   margin: 14px auto 0 auto;

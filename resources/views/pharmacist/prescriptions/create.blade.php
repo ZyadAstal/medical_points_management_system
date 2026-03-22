@@ -111,9 +111,15 @@
                 </select>
             </div>
             
-            <div class="form-group">
-                <label>الكمية</label>
-                <input type="number" id="drugQuantity" value="1" min="1">
+            <div class="form-row" style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>الكمية المقررة</label>
+                    <input type="number" id="drugPrescribedQty" value="1" min="1">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>الكمية المصروفة</label>
+                    <input type="number" id="drugDispensedQty" value="1" min="0">
+                </div>
             </div>
 
             <button class="btn btn-primary" style="width: 100%;" onclick="addDrugToList()">+ إضافة للدائمة</button>
@@ -123,7 +129,8 @@
         <div class="drug-table">
             <div class="table-header">
                 <div style="flex: 2; text-align: right;">الدواء</div>
-                <div style="flex: 1;">الكمية</div>
+                <div style="flex: 0.5;">المقررة</div>
+                <div style="flex: 0.5;">المصروفة</div>
                 <div style="flex: 1;">النقاط</div>
                 <div style="width: 30px;"></div>
             </div>

@@ -96,6 +96,7 @@
         sendDoctorBtn.addEventListener('click', function () {
             const patientId = document.getElementById('existingPatientId').value;
             const doctorId = document.getElementById('existingDoctor').value;
+            const priority = document.getElementById('existingPriority').value;
 
             if (!doctorId) { showMsg('يرجى اختيار الطبيب أولاً'); return; }
             if (!patientId) { showMsg('يرجى البحث عن المريض أولاً'); return; }
@@ -107,7 +108,7 @@
                     'X-CSRF-TOKEN': csrfToken,
                     'X-Requested-With': 'XMLHttpRequest'
                 },
-                body: JSON.stringify({ doctor_id: doctorId })
+                body: JSON.stringify({ doctor_id: doctorId, priority: priority })
             })
             .then(r => r.json())
             .then(data => {

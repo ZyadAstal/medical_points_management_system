@@ -72,15 +72,18 @@ class PatientController extends Controller
             'phone'       => 'nullable|string|max:20',
             'address'     => 'nullable|string|max:500',
             'doctor_id'   => 'required|exists:users,id',
+            'username'    => 'required|string|max:255|unique:users,username',
+            'email'       => 'required|string|email|max:255|unique:users,email',
+            'password'    => 'required|string|min:6',
+            'priority'    => 'required|in:0,1',
         ]);
 
         // إنشاء مستخدم
-        $username = 'patient_' . $request->national_id;
         $user = User::create([
             'name'              => $request->full_name,
-            'username'          => $username,
-            'email'             => $username . '@patient.local',
-            'password'          => Hash::make($request->national_id),
+            'username'          => $request->username,
+            'email'             => $request->email,
+            'password'          => Hash::make($request->password),
             'role_id'           => Role::where('name', 'Patient')->first()->id,
             'medical_center_id' => Auth::user()->medical_center_id,
         ]);
@@ -103,7 +106,7 @@ class PatientController extends Controller
             'medical_center_id'=> Auth::user()->medical_center_id,
             'visit_date'       => now()->toDateString(),
             'status'           => Visit::STATUS_REGISTERED,
-            'priority'         => 0,
+            'priority'         => $request->priority,
         ]);
 
         return redirect()->route('reception.visits.waiting')
@@ -147,9 +150,13 @@ class PatientController extends Controller
      */
     public function searchByNationalId(Request $request)
     {
-        $nationalId = $request->input('national_id');
+        $nid = $request->input('national_id');
 
-        $patient = Patient::where('national_id', $nationalId)->first();
+        $patient = \App\Models\Patient::where('national_id', $nid)
+            ->orWhere(function($q) use ($nid) {
+                $q->searchArabic(['full_name'], $nid);
+            })
+            ->first();
 
         if (!$patient) {
             return response()->json(['found' => false]);
@@ -174,6 +181,7 @@ class PatientController extends Controller
     {
         $request->validate([
             'doctor_id' => 'required|exists:users,id',
+            'priority'  => 'required|in:0,1',
         ]);
 
         // التحقق من عدم وجود زيارة اليوم مسبقاً
@@ -192,7 +200,7 @@ class PatientController extends Controller
             'medical_center_id'=> Auth::user()->medical_center_id,
             'visit_date'       => now()->toDateString(),
             'status'           => Visit::STATUS_REGISTERED,
-            'priority'         => 0,
+            'priority'         => $request->priority,
         ]);
 
         return response()->json(['success' => true, 'message' => 'تم إضافة المريض لقائمة الانتظار']);

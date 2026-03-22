@@ -67,9 +67,4 @@
     {{ $dispenses->links('pagination::bootstrap-4') }}
 </div>
 
-@include('shared.manager-user-modals')
 @endsection
-
-@push('scripts')
-    <script src="{{ asset('js/manager/medical-centers-modals.js') }}"></script>
-@endpush

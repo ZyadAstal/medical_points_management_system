@@ -42,6 +42,7 @@ class VisitController extends Controller
                 WHEN status = '" . Visit::STATUS_COMPLETED . "' THEN 4
                 WHEN status = '" . Visit::STATUS_CANCELLED . "' THEN 5
                 ELSE 6 END")
+            ->orderBy('priority', 'desc')
             ->orderBy('created_at', 'asc');
 
         if ($request->has('print')) {
@@ -79,6 +80,7 @@ class VisitController extends Controller
     {
         $request->validate([
             'doctor_id' => 'required|exists:users,id',
+            'priority'  => 'required|in:0,1',
             'notes'     => 'nullable|string',
         ]);
 
@@ -89,7 +91,7 @@ class VisitController extends Controller
             'doctor_id'        => $request->doctor_id,
             'medical_center_id'=> $centerId,
             'visit_date'       => now()->toDateString(),
-            'priority'         => 0,
+            'priority'         => $request->priority,
             'status'           => Visit::STATUS_REGISTERED,
             'notes'            => $request->notes,
         ]);

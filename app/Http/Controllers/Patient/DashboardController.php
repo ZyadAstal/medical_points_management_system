@@ -14,7 +14,7 @@ class DashboardController extends Controller
         
         // إحصائيات للمريض
         $points_balance = $patient ? $patient->points : 0;
-        $prescriptions_count = $patient ? $patient->prescriptions()->count() : 0;
+        $prescripts_count = $patient ? $patient->prescriptions()->count() : 0;
         
         // الأدوية المصروفة (من خلال الوصفات وعناصرها التي تم صرفها)
         $dispensed_medicines_count = $patient ? $patient->prescriptions()
@@ -22,6 +22,29 @@ class DashboardController extends Controller
             ->join('dispenses', 'prescription_items.id', '=', 'dispenses.prescription_item_id')
             ->count() : 0;
 
-        return view('patient.dashboard', compact('points_balance', 'prescriptions_count', 'dispensed_medicines_count'));
+        // آخر مركز طبي تم التعامل معه
+        $lastVisit = $patient ? $patient->visits()
+            ->with('medicalCenter')
+            ->whereNotNull('medical_center_id')
+            ->latest('visit_date')
+            ->first() : null;
+            
+        $medicalCenter = $lastVisit ? $lastVisit->medicalCenter : null;
+        $last_center = $medicalCenter ? $medicalCenter->name : '---';
+
+        // آخر 3 وصفات طبية
+        $recent_prescriptions = $patient ? $patient->prescriptions()
+            ->with(['doctor', 'items'])
+            ->latest()
+            ->limit(3)
+            ->get() : collect([]);
+
+        return view('patient.dashboard', compact(
+            'points_balance', 
+            'prescripts_count', 
+            'dispensed_medicines_count',
+            'last_center',
+            'recent_prescriptions'
+        ));
     }
 }

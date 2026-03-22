@@ -116,7 +116,8 @@ class DispenseController extends Controller
             'doctor_id' => 'required|exists:users,id',
             'items' => 'required|array',
             'items.*.medicine_id' => 'required|exists:medicines,id',
-            'items.*.quantity' => 'required|integer|min:0',
+            'items.*.prescribed_quantity' => 'required|integer|min:1',
+            'items.*.dispensed_quantity' => 'required|integer|min:0',
         ]);
 
         $pharmacist = Auth::user();
@@ -133,20 +134,22 @@ class DispenseController extends Controller
             $totalPointsCost = 0;
             $itemsData = $request->input('items', []);
 
-            // 1. Create Prescription (Fixed non-existent fields)
+            // 1. Create Prescription
             $prescription = Prescription::create([
                 'patient_id' => $patient->id,
                 'doctor_id' => $request->doctor_id, 
+                'pharmacist_id' => $pharmacist->id,
                 'notes' => $request->notes,
             ]);
 
             // 2. Process Items
             foreach ($itemsData as $data) {
                 $medicineId = $data['medicine_id'];
-                $quantity = $data['quantity'];
+                $pQty = $data['prescribed_quantity'];
+                $dQty = $data['dispensed_quantity'];
                 
                 $medicine = \App\Models\Medicine::findOrFail($medicineId);
-                $isDispensed = ($quantity > 0);
+                $isDispensed = ($dQty > 0);
                 $cost = 0;
 
                 if ($isDispensed) {
@@ -156,22 +159,22 @@ class DispenseController extends Controller
                                           ->lockForUpdate()
                                           ->first();
 
-                    if (!$inventory || $inventory->quantity < $quantity) {
+                    if (!$inventory || $inventory->quantity < $dQty) {
                         throw new \Exception("الدواء {$medicine->name} غير متوفر بالكمية المطلوبة (المتوفر: " . ($inventory->quantity ?? 0) . ")");
                     }
 
-                    $cost = $medicine->points_cost * $quantity;
+                    $cost = $medicine->points_cost * $dQty;
                     $totalPointsCost += $cost;
 
                     // Deduct Inventory
-                    $inventory->decrement('quantity', $quantity);
+                    $inventory->decrement('quantity', $dQty);
                 }
 
                 // Create Prescription Item
                 $pItem = PrescriptionItem::create([
                     'prescription_id' => $prescription->id,
                     'medicine_id' => $medicineId,
-                    'quantity' => $quantity,
+                    'quantity' => $pQty,
                     'is_dispensed' => $isDispensed,
                 ]);
 
@@ -182,7 +185,7 @@ class DispenseController extends Controller
                         'pharmacist_id' => $pharmacist->id,
                         'medical_center_id' => $centerId,
                         'points_used' => $cost,
-                        'quantity' => $quantity, // Track quantity in dispense
+                        'quantity' => $dQty, 
                     ]);
                 }
             }

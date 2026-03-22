@@ -47,6 +47,17 @@
             </div>
 
             <div class="vc-field vc-field--full">
+                <label for="priority">نوع الحالة</label>
+                <select name="priority" id="priority" required>
+                    <option value="0" {{ old('priority') == '0' ? 'selected' : '' }}>عادية</option>
+                    <option value="1" {{ old('priority') == '1' ? 'selected' : '' }}>طارئة</option>
+                </select>
+                @error('priority')
+                    <span style="color:red; font-size:12px;">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="vc-field vc-field--full">
                 <label for="notes">ملاحظات إضافية</label>
                 <textarea name="notes" id="notes" rows="3" placeholder="أضف أي ملاحظات هامة هنا...">{{ old('notes') }}</textarea>
                 @error('notes')

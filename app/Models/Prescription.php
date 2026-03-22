@@ -14,6 +14,7 @@ class Prescription extends Model
     protected $fillable = [
         'patient_id',
         'doctor_id',
+        'pharmacist_id',
         'visit_id',
         'notes',
         'issued_at'
@@ -59,8 +60,8 @@ class Prescription extends Model
         return $this->hasMany(PrescriptionItem::class);
     }
 
-    public function dispenses()
+    public function pharmacist()
     {
-        return $this->hasManyThrough(Dispense::class, PrescriptionItem::class);
+        return $this->belongsTo(User::class, 'pharmacist_id');
     }
 }

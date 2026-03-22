@@ -22,15 +22,20 @@ class LoginController extends Controller
         $request->validate([
             'username' => 'required',
             'password' => 'required',
+        ], [
+            'username.required' => 'يرجى إدخال اسم المستخدم أو البريد الإلكتروني.',
+            'password.required' => 'يرجى إدخال كلمة المرور.',
         ]);
 
+        $loginType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
         $credentials = [
-            'username' => $request->username,
+            $loginType => $request->username,
             'password' => $request->password,
         ];
 
         // محاولة تسجيل الدخول
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
             
             return $this->authenticated($request, Auth::user());

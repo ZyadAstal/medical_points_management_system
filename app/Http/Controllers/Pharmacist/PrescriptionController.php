@@ -46,7 +46,11 @@ class PrescriptionController extends Controller
         // AJAX search for patient (used in wizard)
         if ($request->ajax()) {
             $nid = $request->input('national_id');
-            $patient = \App\Models\Patient::where('national_id', $nid)->first();
+            $patient = \App\Models\Patient::where('national_id', $nid)
+                ->orWhere(function($q) use ($nid) {
+                    $q->searchArabic(['full_name'], $nid);
+                })
+                ->first();
             
             if ($patient) {
                 return response()->json([
@@ -109,6 +113,7 @@ class PrescriptionController extends Controller
             $prescription = Prescription::create([
                 'patient_id' => $patient->id,
                 'doctor_id' => $request->doctor_id,
+                'pharmacist_id' => auth()->id(),
                 'notes' => $request->notes,
             ]);
 

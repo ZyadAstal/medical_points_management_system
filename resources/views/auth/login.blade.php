@@ -34,13 +34,13 @@
 
             <form class="auth-form" method="POST" action="{{ route('login') }}" autocomplete="off">
                 @csrf
-                <label class="field-label field-label-email" for="username">اسم المستخدم</label>
+                <label class="field-label field-label-email" for="username" style="width: auto; left: auto; right: 107px; text-align: right;">اسم المستخدم أو البريد الإلكتروني</label>
                 <input
                     id="username"
                     name="username"
                     class="field-input field-input-email"
                     type="text"
-                    placeholder="أدخل اسم المستخدم"
+                    placeholder="أدخل اسم المستخدم أو البريد الإلكتروني"
                     value="{{ old('username') }}"
                     required
                     autofocus

@@ -1,0 +1,63 @@
+.profile-frame {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+}
+.profile-personal-icon, .security-icon {
+    width: 48px;
+    margin-bottom: 15px;
+}
+.profile-personal-title, .security-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0d3b66;
+    margin-bottom: 25px;
+}
+.profile-name-label, .profile-email-label, .security-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #666;
+}
+.profile-name-input, .profile-email-input, .security-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: #f9f9f9;
+    margin-bottom: 20px;
+    outline: none;
+}
+.profile-save-btn, .security-change-btn {
+    background: #0277bd;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+.profile-save-btn:hover, .security-change-btn:hover { background: #01579b; }
+
+.security-field { position: relative; }
+.security-eye-btn {
+    position: absolute;
+    left: 12px;
+    top: 38px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.security-note {
+    display: flex;
+    gap: 10px;
+    background: #fef9e7;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    color: #856404;
+}

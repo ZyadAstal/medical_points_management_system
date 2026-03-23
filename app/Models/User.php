@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Traits\SearchableArabic;
 
 class User extends Authenticatable
 {
-    use HasFactory, SearchableArabic;
+    use HasFactory, SearchableArabic, Notifiable;
 
     protected $fillable = [
         'name',

@@ -3,48 +3,57 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules;
 
 class ResetPasswordController extends Controller
 {
-    public function showDirectResetForm()
+    /**
+     * Display the password reset view for the given token.
+     */
+    public function showResetForm(Request $request, $token = null)
     {
-        if (!session()->has('reset_email')) {
-            return redirect()->route('password.request')->with('error', 'يرجى إدخال بريدك الإلكتروني أولاً.');
-        }
-
-        return view('auth.passwords.reset_direct', ['email' => session('reset_email')]);
+        return view('auth.reset-password')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
     }
 
-    public function resetDirectly(Request $request)
+    /**
+     * Reset the given user's password.
+     */
+    public function reset(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => ['required', 'confirmed', Password::min(8)],
-        ], [
-            'password.required' => 'يرجى إدخال كلمة المرور.',
-            'password.confirmed' => 'كلمة المرور غير متطابقة.',
-            'password.min' => 'يجب أن لا تقل كلمة المرور عن 8 أحرف.',
-            'email.exists' => 'البريد الإلكتروني غير مسجل.',
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => ['required', 'confirmed', Rules\Password::min(8)],
         ]);
 
-        if (session('reset_email') !== $request->email) {
-            return redirect()->route('password.request')->with('error', 'حدث خطأ في العملية. يرجى المحاولة مرة أخرى.');
-        }
+        // Here we will attempt to reset the user's password. If it is successful we
+        // will update the password on an actual user model and persist it to the
+        // database. Otherwise we will parse the error and return the response.
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
 
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
-            $user->password = Hash::make($request->password);
-            $user->save();
+                $user->save();
 
-            session()->forget('reset_email');
+                event(new PasswordReset($user));
+            }
+        );
 
-            return redirect()->route('login')->with('success', 'تم تغيير كلمة المرور بنجاح. يمكنك تسجيل الدخول الآن.');
-        }
-
-        return back()->with('error', 'حدث خطأ. يرجى المحاولة مرة أخرى.');
+        // If the password was successfully reset, we will redirect the user back to
+        // the login view with a success message. Otherwise we will redirect back
+        // with the errors from the validator.
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
     }
 }

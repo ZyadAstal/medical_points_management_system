@@ -3,28 +3,34 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
+    /**
+     * Display the form to request a password reset link.
+     */
     public function showLinkRequestForm()
     {
-        return view('auth.passwords.email');
+        return view('auth.forgot-password');
     }
 
+    /**
+     * Send a reset link to the given user.
+     */
     public function sendResetLinkEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
 
-        $user = User::where('email', $request->email)->first();
+        // We will send the password reset link to this user. Once it has been sent
+        // we will examine the response then see the message we need to show to the user.
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
 
-        if ($user) {
-            session(['reset_email' => $user->email]);
-            return redirect()->route('password.reset_direct')->with('success', 'البريد الإلكتروني صحيح. يرجى إدخال كلمة المرور الجديدة.');
-        }
-
-        return back()->with('error', 'البريد الإلكتروني غير مسجل في النظام.');
+        return $status === Password::RESET_LINK_SENT
+                    ? back()->with('status', __($status))
+                    : back()->withErrors(['email' => __($status)]);
     }
 }

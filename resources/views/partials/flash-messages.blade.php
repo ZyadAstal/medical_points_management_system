@@ -1,6 +1,6 @@
-@if(session('success'))
+@if(session('success') || session('status'))
     <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; direction: rtl; border: 1px solid #c3e6cb;">
-        {{ session('success') }}
+        {{ session('success') ?? session('status') }}
     </div>
 @endif
 

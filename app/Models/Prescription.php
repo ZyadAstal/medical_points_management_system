@@ -64,4 +64,9 @@ class Prescription extends Model
     {
         return $this->belongsTo(User::class, 'pharmacist_id');
     }
+
+    public function dispenses()
+    {
+        return $this->hasManyThrough(Dispense::class, PrescriptionItem::class);
+    }
 }

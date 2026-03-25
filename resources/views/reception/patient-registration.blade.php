@@ -62,6 +62,15 @@
                 value="{{ old('address') }}" />
         </div>
 
+        <div class="pr-field pr-dob-field">
+            <label for="patientDob">تاريخ الميلاد</label>
+            <input id="patientDob" name="date_of_birth" type="date"
+                value="{{ old('date_of_birth') }}" required />
+            @error('date_of_birth')
+                <span class="pr-error">{{ $message }}</span>
+            @enderror
+        </div>
+
         <div class="pr-field">
             <label for="patientUsername">اسم المستخدم</label>
             <input id="patientUsername" name="username" type="text"

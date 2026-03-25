@@ -76,6 +76,7 @@ class PatientController extends Controller
             'email'       => 'required|string|email|max:255|unique:users,email',
             'password'    => 'required|string|min:6',
             'priority'    => 'required|in:0,1',
+            'date_of_birth' => 'required|date|before:today',
         ]);
 
         // إنشاء مستخدم
@@ -96,7 +97,7 @@ class PatientController extends Controller
             'phone'      => $request->phone,
             'address'    => $request->address,
             'points'     => 100,
-            'date_of_birth' => now()->toDateString(),
+            'date_of_birth' => $request->date_of_birth,
         ]);
 
         // إضافة زيارة مباشرة

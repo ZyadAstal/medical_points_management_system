@@ -76,7 +76,7 @@
             <div class="profile-personal-title">المعلومات الشخصية</div>
 
             <div class="profile-name-label">الاسم</div>
-            <input class="profile-name-input" name="name" type="text" value="{{ old('name', $user->name) }}" required @if($role == 'Patient') readonly style="background-color: #f1f5f9; cursor: not-allowed;" @endif />
+            <input class="profile-name-input" name="name" type="text" value="{{ old('name', $user->name) }}" required @if($role !== 'SuperAdmin') readonly style="background-color: #f1f5f9; cursor: not-allowed;" @endif />
 
             <div class="profile-email-label">البريد الإلكتروني</div>
             <input class="profile-email-input" name="email" type="email" value="{{ old('email', $user->email) }}" required />

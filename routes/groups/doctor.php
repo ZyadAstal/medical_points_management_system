@@ -5,7 +5,7 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\Doctor\DashboardController;
 use App\Http\Controllers\Doctor\PatientController;
 use App\Http\Controllers\Doctor\PrescriptionController;
-use App\Http\Controllers\Doctor\ProfileController;
+use App\Http\Controllers\Shared\ProfileController;
 
 Route::middleware(['auth', RoleMiddleware::class . ':Doctor'])
     ->prefix('doctor')

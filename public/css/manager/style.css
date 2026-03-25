@@ -8483,6 +8483,7 @@ body[data-page="reports"] .reports-cards .card__value--single{
   letter-spacing:0;
   text-align:center;
   color:#C01414;
+  cursor: pointer;
 }
 #userDropdown .user-dd__logoutIcon{
   position:absolute;
@@ -8490,6 +8491,7 @@ body[data-page="reports"] .reports-cards .card__value--single{
   left:130px;
   width:12px;
   height:12px;
+  cursor: pointer;
 }
 
 

@@ -84,7 +84,7 @@
                         @endif
                     </td>
                     <td style="font-family: 'Courier New', monospace; font-size: 16px;">
-                        {{ $inv->medicine->expiry_date ? \Carbon\Carbon::parse($inv->medicine->expiry_date)->format('H:i:s Y-m-d') : '---' }}
+                        {{ $inv->medicine->expiry_date ? \Carbon\Carbon::parse($inv->medicine->expiry_date)->format('Y-m-d') : '---' }}
                     </td>
                 </tr>
                 @empty

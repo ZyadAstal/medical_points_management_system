@@ -38,14 +38,13 @@ class ProfileController extends Controller
         $role = $user->role->name;
         
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => $role === 'SuperAdmin' ? 'required|string|max:255' : 'nullable',
             'email' => 'required|email|unique:users,email,' . $user->id,
         ]);
 
         $updateData = ['email' => $request->email];
 
-        // Patients are not allowed to update their name
-        if ($role !== 'Patient') {
+        if ($role === 'SuperAdmin') {
             $updateData['name'] = $request->name;
         }
 

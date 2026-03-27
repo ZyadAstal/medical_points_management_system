@@ -10,10 +10,10 @@ class MedicineController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Medicine::query();
+        $query = Medicine::query(); 
 
         if ($request->filled('search')) {
-            $query->searchArabic('name', $request->search);
+            $query->searchArabic('name', $request->search); // لو المستخدم بحث هات كل الادوية الي اسمها بيساوي هادي القيمة 
         }
 
         $medicines = $query->paginate(10)->withQueryString();

@@ -20,13 +20,13 @@ class PatientController extends Controller
         // Use selected date or today
         $date = $request->input('date', now()->toDateString());
 
-        // Fetch all visits for this doctor on this date
+
         $allVisits = Visit::where('doctor_id', $doctor->id)
             ->whereDate('visit_date', $date)
             ->with(['patient.prescriptions.items.dispenses'])
             ->orderBy('priority', 'desc')
             ->orderBy('created_at', 'asc')
-            ->get();
+            ->get();// بيجيب كل الزيارات للدكتور في تاريخ معين
 
         // Queue: Registered, Waiting or In Progress
         $queueVisits = $allVisits->filter(function($visit) {
@@ -36,7 +36,7 @@ class PatientController extends Controller
         // Past: Completed
         $pastVisits = $allVisits->filter(function($visit) {
             return $visit->status === Visit::STATUS_COMPLETED;
-        });
+        });// بيجيب المرضى اللي تم الكشف عليهم
 
         return view('doctor.today-patients', [
             'queueVisits' => $queueVisits,
@@ -134,6 +134,6 @@ class PatientController extends Controller
         }
 
         $patient->load(['prescriptions.items', 'prescriptions.doctor']);
-        return view('doctor.patients.show', compact('patient'));
+        //return view('doctor.patients.show', compact('patient'));
     }
 }

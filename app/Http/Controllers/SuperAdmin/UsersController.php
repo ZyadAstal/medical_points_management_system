@@ -27,7 +27,7 @@ class UsersController extends Controller
         // Role Filter
         if ($request->filled('role')) {
             $query->whereHas('role', function($q) use ($request) {
-                // Handle both ID and Name if needed, but here we expect name
+                // Handle both ID and Name if needed
                 if (is_numeric($request->role)) {
                     $q->where('id', $request->role);
                 } else {

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Prescription;
 use App\Models\Dispense;
+use \App\Models\Visit;
+use \App\Models\Inventory;
 
 class DashboardController extends Controller
 {
@@ -25,14 +27,14 @@ class DashboardController extends Controller
             ->sum('points_used');
 
         // 3. Patients Today (All visits in this center today)
-        $patients_served_count = \App\Models\Visit::where('medical_center_id', $center_id)
+        $patients_served_count = Visit::where('medical_center_id', $center_id)
             ->whereDate('visit_date', $today)
             ->distinct('patient_id')
             ->count('patient_id');
 
         // 4. Waiting for Doctor (Visits with status 'waiting' in this center today)
-        $waiting_for_doctor_count = \App\Models\Visit::where('medical_center_id', $center_id)
-            ->where('status', \App\Models\Visit::STATUS_WAITING)
+        $waiting_for_doctor_count = Visit::where('medical_center_id', $center_id)
+            ->where('status', Visit::STATUS_WAITING)
             ->whereDate('visit_date', $today)
             ->count();
 
@@ -44,7 +46,7 @@ class DashboardController extends Controller
             ->get();
 
         // 6. Stock alerts (Medicines with low quantity in this center)
-        $stock_alerts = \App\Models\Inventory::where('medical_center_id', $center_id)
+        $stock_alerts = Inventory::where('medical_center_id', $center_id)
             ->where('quantity', '<', 10)
             ->with('medicine')
             ->get();

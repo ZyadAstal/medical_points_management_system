@@ -17,24 +17,24 @@ class StaffController extends Controller
         
         $query = User::with('role')
             ->where('medical_center_id', $centerId)
-            ->whereHas('role', function($q) {
+            ->whereHas('role', function($q) { // هات كل الموظفين الي اسمهم دكتور او صيدلي او استقبال
                 $q->whereIn('name', ['Doctor', 'Pharmacist', 'Reception']);
             });
 
         // Search Filter (by name, email, or username)
         if ($request->filled('search')) {
-            $query->searchArabic(['name', 'username', 'email'], $request->search);
+            $query->searchArabic(['name', 'username', 'email'], $request->search); // لو المستخدم بحث هات كل الموظفين الي اسمهم او اسم المستخدم او الايميل بيساوي هادي القيمة 
         }
 
         // Role Filter
         if ($request->filled('role') && $request->role !== 'all') {
             $query->whereHas('role', function($q) use ($request) {
-                $q->where('name', $request->role);
+                $q->where('name', $request->role); // لو المستخدم اختار دور معين هات كل الموظفين الي اسمهم بيساوي هادي القيمة 
             });
         }
 
         $staff = $query->paginate(10)->withQueryString();
-        
+
         $availableRoles = Role::whereIn('name', ['Doctor', 'Pharmacist', 'Reception'])->get();
 
         return view('manager.employee', compact('staff', 'availableRoles'));

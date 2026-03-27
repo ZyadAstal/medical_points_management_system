@@ -17,23 +17,21 @@ class PatientController extends Controller
 
         // Hybrid Filter: Patients who belong to this center OR had interactions (visits/dispenses)
         $query = Patient::where(function($q) use ($centerId) {
-            // 1. Registered at this center
             $q->whereHas('user', function($u) use ($centerId) {
-                $u->where('medical_center_id', $centerId);
+                $u->where('medical_center_id', $centerId); // هات المرضى المسجلين في المركز
             })
-            // 2. OR Visited this center
+
             ->orWhereHas('visits', function($v) use ($centerId) {
-                $v->where('medical_center_id', $centerId);
+                $v->where('medical_center_id', $centerId); // هات المرضى الذين زاروا المركز
             })
-            // 3. OR Dispensed from this center
+
             ->orWhereHas('prescriptions.items.dispenses', function($ds) use ($centerId) {
-                $ds->where('medical_center_id', $centerId);
+                $ds->where('medical_center_id', $centerId); // هات المرضى الذين صرفوا من المركز
             });
         });
 
-        // Search Filter (Full Name or National ID)
         if ($request->filled('search')) {
-            $query->searchArabic(['full_name', 'national_id'], $request->search);
+            $query->searchArabic(['full_name', 'national_id'], $request->search); // هات المرضى الذين اسمهم او رقم الهوية بيساوي هادي القيمة 
         }
 
         // Include visited centers labels for the view modal
@@ -48,10 +46,10 @@ class PatientController extends Controller
         // Map centers for easy display
         $patients->getCollection()->each(function($patient) {
             $visitCenters = $patient->visits->map(fn($v) => optional($v->medicalCenter)->name)->filter()->unique()->values()->all();
-            $regCenter = optional($patient->user->medicalCenter)->name;
-            $patient->visited_centers_list = array_unique(array_merge([$regCenter], $visitCenters));
-        });
-
+            $regCenter = optional($patient->user->medicalCenter)->name;  //بيحيب المركز الطبي التابع للمريض نفسه (المركز المسجل فيه).
+            $patient->visited_centers_list = array_unique(array_merge([$regCenter], $visitCenters)); //يجمع المراكز اللي زارها المريض مع المركز المسجل فيه
+        });// هات المراكز اللي زارها المريض
+ 
         return view('manager.patients', compact('patients'));
     }
 
@@ -65,14 +63,14 @@ class PatientController extends Controller
                         Dispense::where('medical_center_id', $centerId)
                             ->whereHas('prescriptionItem.prescription', function($q) use ($patient) {
                                 $q->where('patient_id', $patient->id);
-                            })->exists();
+                            })->exists();//بيتاكد لو المريض زار المركز او صرف من المركز
 
         if (!$isRegistered && !$hasInteracted) {
             abort(403, 'Unauthorized access to patient data.');
         }
 
         // Add visited centers for display
-        $visitCenters = $patient->visits->map(fn($v) => optional($v->medicalCenter)->name)->filter()->unique()->values()->all();
+        $visitCenters = $patient->visits->map(fn($v) => optional($v->medicalCenter)->name)->filter()->unique()->values()->all();//
         $regCenter = optional($patient->user->medicalCenter)->name;
         $patient->visited_centers_list = array_unique(array_merge([$regCenter], $visitCenters));
 

@@ -12,14 +12,10 @@ class RoleController extends Controller
     {
         $allRoles = Role::all(); // Fetch all roles for the filter dropdown
         
-        $query = Role::withCount('users');
-
-        if ($request->filled('search')) {
-            $query->searchArabic('name', $request->search);
-        }
+        $query = Role::withCount('users'); // هات كل الادوار مع عدد المستخدمين المرتبطين بكل دور
 
         if ($request->filled('role')) {
-            $query->where('name', $request->role);
+            $query->where('name', $request->role); // لما المستخدم يختار قيمة دور هات كل السجلات الي اسمها بيساوي هادي القيمة 
         }
 
         $roles = $query->paginate(10)->withQueryString();
@@ -31,10 +27,6 @@ class RoleController extends Controller
         $request->validate([
             'name' => 'required|string|unique:roles,name,' . $role->id,
         ]);
-
-        // Prevent changing core system roles if necessary, but for now allow editing names or description if added
-        // The design only shows Name and User Count (readonly usually). 
-        // If the user wants to rename a role, we update it.
         
         $role->update(['name' => $request->name]);
 

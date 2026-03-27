@@ -10,10 +10,10 @@ class MedicalCenterController extends Controller
 {
     public function index(Request $request)
     {
-        $query = MedicalCenter::withCount(['users', 'dispenses']);
+        $query = MedicalCenter::withCount(['users', 'dispenses']); // هات كل المراكز مع عدد المستخدمين وعدد الصرفيات
 
         if ($request->filled('search')) {
-            $query->searchArabic(['name', 'location', 'phone'], $request->search);
+            $query->searchArabic(['name', 'location', 'phone'], $request->search); // لو المستخدم بحث هات كل السجلات الي اسمها او موقعها او رقم هاتفها بيساوي هادي القيمة 
         }
 
         $centers = $query->paginate(10)->withQueryString();

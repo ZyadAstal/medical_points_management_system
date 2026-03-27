@@ -28,7 +28,7 @@ class ReportController extends Controller
         if ($reportType === 'daily' && !$fromDate && !$toDate) {
             $fromDate = now()->toDateString();
             $toDate = now()->toDateString();
-        }
+        }//لو التقرير يومي ومش محدد تاريخ بيجيب تاريخ اليوم
 
         // Base Query for Stats
         $statsQuery = DB::table('dispenses')
@@ -37,11 +37,11 @@ class ReportController extends Controller
             ->where('dispenses.medical_center_id', $centerId)
             ->select('medicines.name', 'medicines.id', DB::raw('count(dispenses.id) as count'), DB::raw('sum(dispenses.points_used) as points'))
             ->groupBy('medicines.id', 'medicines.name')
-            ->orderBy('count', 'desc');
+            ->orderBy('count', 'desc');//بيجيب الادوية اللي اتصرفت
 
         // Apply filters
-        if ($medicineId) $statsQuery->where('medicines.id', $medicineId);
-        if ($fromDate) $statsQuery->where('dispenses.created_at', '>=', $fromDate);
+        if ($medicineId) $statsQuery->where('medicines.id', $medicineId);// لو محدد دواء معين بيجيب هاد الدواء 
+        if ($fromDate) $statsQuery->where('dispenses.created_at', '>=', $fromDate);//لو محدد تاريخ معين بيجيب هاد التاريخ
         if ($toDate) $statsQuery->where('dispenses.created_at', '<=', $toDate . ' 23:59:59');
 
         $medicineStats = $statsQuery->get();
@@ -60,7 +60,7 @@ class ReportController extends Controller
             ->with('medicine')
             ->get();
 
-        $allMedicines = \App\Models\Medicine::all();
+        $allMedicines = Medicine::all();
 
         return view('manager.reports', compact('totalPointsUsed', 'medicineStats', 'lowStock', 'totalDispenses', 'allMedicines'));
     }
@@ -90,7 +90,7 @@ class ReportController extends Controller
             ->groupBy('medicines.id', 'medicines.name')
             ->orderBy('count', 'desc');
 
-        if ($medicineId) $medicineStats->where('medicines.id', $medicineId);
+        if ($medicineId) $medicineStats->where('medicines.id', $medicineId);//
         if ($fromDate) $medicineStats->where('dispenses.created_at', '>=', $fromDate);
         if ($toDate) $medicineStats->where('dispenses.created_at', '<=', $toDate . ' 23:59:59');
         $medicineStats = $medicineStats->get();

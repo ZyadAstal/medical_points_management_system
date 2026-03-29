@@ -109,12 +109,18 @@
                     <div class="search-patient-result-prescription-pill {{ $prescClass }}">{{ $prescStatus }}</div>
                 </div>
 
-                <div class="search-patient-result-actions" style="display:flex; gap:8px; margin-top:12px;">
+                <div class="search-patient-result-actions" style="display:flex; flex-direction:column; gap:8px; top:15px;">
                     <a href="{{ route('reception.visits.create', $patient) }}"
                         class="search-patient-action-button search-patient-search-button"
-                        style="text-decoration:none; font-size:13px; padding:8px 16px;">
+                        style="text-decoration:none; font-size:13px; padding:0 16px; height:32px; border:none; border-radius:5px; align-items:center; justify-content:center; display:flex;">
                         + إضافة لقائمة الانتظار
                     </a>
+                    <button type="button"
+                        class="search-patient-action-button search-patient-reset-button"
+                        style="font-size:13px; padding:0 16px; height:32px; border:none; border-radius:5px; cursor:pointer; align-items:center; justify-content:center; display:flex;"
+                        onclick="openEditPatientModal({{ $patient->id }}, '{{ addslashes($patient->full_name) }}', '{{ $patient->national_id }}', '{{ $patient->phone }}', '{{ $patient->address }}', {{ $patient->points }})">
+                        ✏️ تعديل البيانات
+                    </button>
                 </div>
             </div>
         @empty
@@ -136,3 +142,67 @@
 </div>
 </div>
 @endsection
+
+@push('scripts')
+{{-- Modal تعديل بيانات المريض --}}
+<div id="editPatientOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:10px; box-shadow:0 8px 32px rgba(0,0,0,0.2); width:460px; max-width:95vw; padding:36px 36px 28px; direction:rtl; position:relative;">
+        <h2 style="font-family:Inter,sans-serif; font-size:22px; font-weight:700; color:#053052; margin:0 0 6px; text-align:center;">تعديل بيانات المريض</h2>
+        <div style="border-top:1px solid #e0e0e0; margin:0 0 22px;"></div>
+
+        @if(session('success'))
+            <div style="background:#f0fff4; border:1px solid #38a169; border-radius:5px; color:#276749; padding:8px 14px; margin-bottom:14px; font-size:13px; text-align:right;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form id="editPatientForm" method="POST" action="">
+            @csrf
+            @method('PUT')
+
+            <input type="hidden" id="editPatientId" name="_patient_id">
+
+            <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:14px; font-weight:500; color:#444; margin-bottom:5px;">الاسم الكامل</label>
+                <input id="editFullName" name="full_name" type="text" required
+                    style="width:100%; height:36px; border:1px solid #ccc; border-radius:5px; padding:0 12px; font-size:14px; box-sizing:border-box;"/>
+            </div>
+
+            <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:14px; font-weight:500; color:#444; margin-bottom:5px;">رقم الهوية</label>
+                <input id="editNationalId" name="national_id" type="text" required
+                    style="width:100%; height:36px; border:1px solid #ccc; border-radius:5px; padding:0 12px; font-size:14px; box-sizing:border-box;"/>
+            </div>
+
+            <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:14px; font-weight:500; color:#444; margin-bottom:5px;">رقم الهاتف</label>
+                <input id="editPhone" name="phone" type="text"
+                    style="width:100%; height:36px; border:1px solid #ccc; border-radius:5px; padding:0 12px; font-size:14px; box-sizing:border-box;"/>
+            </div>
+
+            <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:14px; font-weight:500; color:#444; margin-bottom:5px;">العنوان</label>
+                <input id="editAddress" name="address" type="text"
+                    style="width:100%; height:36px; border:1px solid #ccc; border-radius:5px; padding:0 12px; font-size:14px; box-sizing:border-box;"/>
+            </div>
+
+            <div style="margin-bottom:22px;">
+                <label style="display:block; font-size:14px; font-weight:500; color:#053052; margin-bottom:5px;">النقاط 🏅</label>
+                <input id="editPoints" name="points" type="number" min="0"
+                    style="width:100%; height:36px; border:1.5px solid #053052; border-radius:5px; padding:0 12px; font-size:14px; box-sizing:border-box;"/>
+            </div>
+
+            <div style="display:flex; gap:12px; justify-content:center;">
+                <button type="submit"
+                    style="width:160px; height:40px; background:#053052; color:#fff; border:none; border-radius:6px; font-size:15px; font-weight:600; cursor:pointer;">
+                    حفظ التعديلات
+                </button>
+                <button type="button" onclick="closeEditPatientModal()"
+                    style="width:130px; height:40px; background:#7a7a7a; color:#fff; border:none; border-radius:6px; font-size:15px; font-weight:600; cursor:pointer;">
+                    إلغاء
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@endpush

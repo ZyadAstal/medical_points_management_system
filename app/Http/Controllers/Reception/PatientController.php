@@ -121,14 +121,25 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $data = $request->validate([
-            'phone'   => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:500',
+            'full_name'   => 'required|string|max:255',
+            'national_id' => 'required|string|unique:patients,national_id,' . $patient->id,
+            'phone'       => 'nullable|string|max:20',
+            'address'     => 'nullable|string|max:500',
+            'points'      => 'nullable|integer|min:0',
         ]);
 
         $patient->update([
-            'phone'   => $data['phone'] ?? $patient->phone,
-            'address' => $data['address'] ?? $patient->address,
+            'full_name'   => $data['full_name'],
+            'national_id' => $data['national_id'],
+            'phone'       => $data['phone'] ?? $patient->phone,
+            'address'     => $data['address'] ?? $patient->address,
+            'points'      => $data['points'] ?? $patient->points,
         ]);
+
+        // Also update the linked user's name
+        if ($patient->user) {
+            $patient->user->update(['name' => $data['full_name']]);
+        }
 
         if ($request->ajax() || $request->expectsJson()) {
             return response()->json(['success' => true, 'message' => 'تم تحديث البيانات بنجاح']);

@@ -16,7 +16,7 @@ class UsersController extends Controller
     {
         $query = User::with(['role', 'medicalCenter'])
             ->whereHas('role', function($q) {
-                $q->whereNotIn('name', ['Super Admin', 'Patient']);
+                $q->whereNotIn('name', ['SuperAdmin', 'Patient']);
             });
 
         // Search Filter
@@ -42,20 +42,20 @@ class UsersController extends Controller
         }
 
         $users = $query->paginate(10)->withQueryString();
-        $roles = Role::whereNotIn('name', ['Super Admin', 'Patient'])->get();
+        $roles = Role::whereNotIn('name', ['SuperAdmin', 'Patient'])->get();
         $centers = MedicalCenter::all();
 
         return view('superadmin.users', compact('users', 'roles', 'centers'));
     }
 
     // صفحة إنشاء مستخدم جديد
-    public function create()
-    {
-        $roles = Role::whereNotIn('name', ['Super Admin', 'Patient'])->get();
-        $centers = MedicalCenter::all();
+    // public function create()
+    // {
+    //     $roles = Role::whereNotIn('name', ['SuperAdmin', 'Patient'])->get();
+    //     $centers = MedicalCenter::all();
         
-        return view('superadmin.users.create', compact('roles', 'centers'));
-    }
+    //     return view('superadmin.users.create', compact('roles', 'centers'));
+    // }
 
     // حفظ المستخدم الجديد
     public function store(Request $request)
@@ -82,13 +82,13 @@ class UsersController extends Controller
     }
 
     // صفحة تعديل بيانات المستخدم
-    public function edit(User $user)
-    {
-        $roles = Role::whereNotIn('name', ['Super Admin', 'Patient'])->get();
-        $centers = MedicalCenter::all();
+    // public function edit(User $user)
+    // {
+    //     $roles = Role::whereNotIn('name', ['SuperAdmin', 'Patient'])->get();
+    //     $centers = MedicalCenter::all();
         
-        return view('superadmin.users.edit', compact('user', 'roles', 'centers'));
-    }
+    //     return view('superadmin.users.edit', compact('user', 'roles', 'centers'));
+    // }
 
     // تحديث بيانات المستخدم
     public function update(Request $request, User $user)

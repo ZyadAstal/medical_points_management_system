@@ -8,6 +8,7 @@ use App\Models\Patient;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Visit;
+
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -153,7 +154,7 @@ class PatientController extends Controller
     {
         $nid = $request->input('national_id');
 
-        $patient = \App\Models\Patient::where('national_id', $nid)
+        $patient = Patient::where('national_id', $nid)
             ->orWhere(function($q) use ($nid) {
                 $q->searchArabic(['full_name'], $nid);
             })

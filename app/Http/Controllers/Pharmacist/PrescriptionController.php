@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Prescription;
 use App\Models\User;
+use App\Models\Medicine;
+use App\Models\Patient;
+use App\Models\PrescriptionItem;
 use Illuminate\Support\Facades\DB;
 
 class PrescriptionController extends Controller
@@ -46,7 +49,7 @@ class PrescriptionController extends Controller
         // AJAX search for patient (used in wizard)
         if ($request->ajax()) {
             $nid = $request->input('national_id');
-            $patient = \App\Models\Patient::where('national_id', $nid)
+            $patient = Patient::where('national_id', $nid)
                 ->orWhere(function($q) use ($nid) {
                     $q->searchArabic(['full_name'], $nid);
                 })
@@ -86,7 +89,7 @@ class PrescriptionController extends Controller
                 $query->where('name', 'Doctor');
             })->get();
         
-        $medicines = \App\Models\Medicine::whereHas('inventories', function($query) use ($centerId) {
+        $medicines = Medicine::whereHas('inventories', function($query) use ($centerId) {
             $query->where('medical_center_id', $centerId);
         })->with(['inventories' => function($query) use ($centerId) {
             $query->where('medical_center_id', $centerId);
@@ -106,7 +109,7 @@ class PrescriptionController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        $patient = \App\Models\Patient::where('national_id', $request->patient_national_id)->first();
+        $patient = Patient::where('national_id', $request->patient_national_id)->first();
 
         DB::beginTransaction();
         try {
@@ -118,7 +121,7 @@ class PrescriptionController extends Controller
             ]);
 
             foreach ($request->medicines as $item) {
-                \App\Models\PrescriptionItem::create([
+                PrescriptionItem::create([
                     'prescription_id' => $prescription->id,
                     'medicine_id' => $item['id'],
                     'quantity' => $item['quantity'],

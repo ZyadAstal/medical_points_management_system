@@ -108,10 +108,11 @@
                                     onclick="editUser({{ $user->id }}, '{{ $user->name }}', '{{ $user->username }}', '{{ $user->email }}', {{ $user->role_id }}, {{ $user->medical_center_id ?? 'null' }})">
                                 <img alt="تعديل" height="20" src="{{ asset('assets/admin/icons/edit.svg') }}" width="20"/>
                             </button>
-                            <form action="{{ route('superadmin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف المستخدم ؟')" style="display:inline;">
+                            <form action="{{ route('superadmin.users.destroy', $user) }}" method="POST" id="deleteForm_{{ $user->id }}" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button class="action-square" title="حذف" type="submit">
+                                <button class="action-square" title="حذف" type="button"
+                                        onclick="confirmDelete({{ $user->id }}, '{{ $user->name }}')">
                                     <img alt="حذف" height="20" src="{{ asset('assets/admin/icons/delete.svg') }}" width="20"/>
                                 </button>
                             </form>
@@ -251,6 +252,7 @@
             </div>
             <h2 class="change-pass-title" id="changePassTitle">تغيير كلمة المرور</h2>
             <form action="#" class="change-pass-form" id="changePassForm" onsubmit="return false;">
+                <div id="changePassError" style="display:none; background:#fff0f0; border:1px solid #e53e3e; border-radius:5px; color:#c0392b; font-family:Inter,sans-serif; font-size:13px; text-align:right; padding:8px 14px; margin:0 auto 12px; width:317px; box-sizing:border-box; direction:rtl;"></div>
                 <div class="change-pass-group">
                     <label class="change-pass-label" for="newPassword">كلمة المرور الجديدة</label>
                     <div class="change-pass-input-wrap">

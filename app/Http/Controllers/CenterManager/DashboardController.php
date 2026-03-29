@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\CenterManager;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Inventory;
 use App\Models\Dispense;
@@ -40,11 +40,11 @@ class DashboardController extends Controller
             ->distinct('patient_id')
             ->count('patient_id'); // هات عدد المرضى
 
-        $doctors_count = $user->medicalCenter->users()->whereHas('role', function($q) {
+        $doctors_count = $user->medicalCenter->users()->whereHas('role', function ($q) {
             $q->where('name', 'Doctor'); // هات عدد الدكاترة
         })->count();
 
-        $pharmacists_count = $user->medicalCenter->users()->whereHas('role', function($q) {
+        $pharmacists_count = $user->medicalCenter->users()->whereHas('role', function ($q) {
             $q->where('name', 'Pharmacist'); // هات عدد الصيادلة
         })->count();
 
@@ -53,10 +53,10 @@ class DashboardController extends Controller
             ->sum('points_used'); // هات عدد النقاط المستخدمة اليوم
 
         return view('manager.dashboard', compact(
-            'low_stock_count', 
-            'total_medicines', 
-            'dispensed_today', 
-            'recent_dispenses', 
+            'low_stock_count',
+            'total_medicines',
+            'dispensed_today',
+            'recent_dispenses',
             'patients_count',
             'doctors_count',
             'pharmacists_count',

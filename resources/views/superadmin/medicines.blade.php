@@ -30,7 +30,8 @@
 
             <thead>
                 <tr>
-                    <th class="col-drug">اسم الدواء</th>
+                    <th class="col-drug">اسم الدواء (عربي)</th>
+                    <th class="col-drug">الاسم الإنجليزي</th>
                     <th class="col-points">تكلفة النقاط</th>
                     <th class="col-expiry">تاريخ الانتهاء</th>
                     <th class="col-actions">الإجراءات</th>
@@ -40,12 +41,13 @@
                 @foreach($medicines as $medicine)
                 <tr>
                     <td class="col-drug-cell">{{ $medicine->name }}</td>
+                    <td class="col-drug-cell" style="direction:ltr; text-align:left;">{{ $medicine->name_en ?? '-' }}</td>
                     <td class="col-points-cell">{{ $medicine->points_cost }}</td>
                     <td class="col-expiry-cell">{{ $medicine->expiry_date->format('Y-m-d') }}</td>
                     <td class="col-actions-cell">
                         <div class="actions-group" style="display: flex; gap: 8px; justify-content: center;">
                             <div class="action-edit" role="button" tabindex="0" aria-label="تعديل الدواء"
-                                 onclick="editMedicine({{ $medicine->id }}, '{{ $medicine->name }}', {{ $medicine->points_cost }}, '{{ $medicine->expiry_date->format('Y-m-d') }}')">
+                                 onclick="editMedicine({{ $medicine->id }}, '{{ addslashes($medicine->name) }}', '{{ addslashes($medicine->name_en ?? '') }}', {{ $medicine->points_cost }}, '{{ $medicine->expiry_date->format('Y-m-d') }}')">
                                 <img src="{{ asset('assets/admin/icons/edit.svg') }}" alt="edit" />
                             </div>
                             <form action="{{ route('superadmin.medicines.destroy', $medicine) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا الدواء؟')" style="display:inline;">
@@ -76,8 +78,11 @@
         <form id="editDrugForm" method="POST">
             @csrf
             @method('PUT')
-            <label class="modal-label modal-label-name" for="editDrugName">اسم الدواء</label>
+            <label class="modal-label modal-label-name" for="editDrugName">اسم الدواء (عربي)</label>
             <input id="editDrugName" name="name" class="modal-input modal-input-name" type="text" required />
+
+            <label class="modal-label" for="editDrugNameEn" style="margin-top:10px;">الاسم بالإنجليزي <span style="font-size:12px;opacity:.7;">(اختياري)</span></label>
+            <input id="editDrugNameEn" name="name_en" class="modal-input modal-input-name" type="text" placeholder="English name" style="direction:ltr;" />
             
             <label class="modal-label modal-label-points" for="editDrugPoints">عدد النقاط</label>
             <input id="editDrugPoints" name="points_cost" class="modal-input modal-input-points" type="number" required />
@@ -101,8 +106,11 @@
         <div class="modal-divider"></div>
         <form action="{{ route('superadmin.medicines.store') }}" method="POST">
             @csrf
-            <label class="modal-label modal-label-name" for="addDrugName">اسم الدواء</label>
-            <input id="addDrugName" name="name" class="modal-input modal-input-name" type="text" placeholder="ادخل اسم الدواء" required />
+            <label class="modal-label modal-label-name" for="addDrugName">اسم الدواء (عربي)</label>
+            <input id="addDrugName" name="name" class="modal-input modal-input-name" type="text" placeholder="ادخل اسم الدواء بالعربي" required />
+
+            <label class="modal-label" for="addDrugNameEn" style="margin-top:10px;">الاسم بالإنجليزي <span style="font-size:12px;opacity:.7;">(اختياري)</span></label>
+            <input id="addDrugNameEn" name="name_en" class="modal-input modal-input-name" type="text" placeholder="English name" style="direction:ltr;" />
             
             <label class="modal-label modal-label-points" for="addDrugPoints">تكلفة النقاط</label>
             <input id="addDrugPoints" name="points_cost" class="modal-input modal-input-points" type="number" placeholder="ادخل تكلفة النقاط" required />

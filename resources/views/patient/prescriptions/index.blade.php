@@ -117,9 +117,13 @@
         tbody.innerHTML = "";
         
         data.items.forEach(item => {
+            const nameEn = item.medicine.name_en ? `<br><small style="color: #6184A0;">${item.medicine.name_en}</small>` : '';
             tbody.innerHTML += `
                 <tr>
-                    <td>${item.medicine.name}</td>
+                    <td>
+                        <div style="font-weight:600;">${item.medicine.name}</div>
+                        ${nameEn}
+                    </td>
                     <td>${item.quantity}</td>
                     <td>${item.dispense ? item.dispense.quantity : 0}</td>
                 </tr>

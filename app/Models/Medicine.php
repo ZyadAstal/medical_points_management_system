@@ -11,7 +11,7 @@ class Medicine extends Model
 {
     use HasFactory, SearchableArabic;
 
-    protected $fillable = ['name', 'points_cost', 'expiry_date'];
+    protected $fillable = ['name', 'name_en', 'points_cost', 'expiry_date'];
 
     protected $casts = [
         'expiry_date' => 'date',

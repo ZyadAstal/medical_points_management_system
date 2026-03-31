@@ -28,7 +28,7 @@
                 <select name="medicine_id" class="form-control" required>
                     <option value="" disabled selected>-- اختر الدواء من القائمة --</option>
                     @foreach($all_medicines as $med)
-                        <option value="{{ $med->id }}">{{ $med->name }}</option>
+                        <option value="{{ $med->id }}">{{ $med->name }}{{ $med->name_en ? ' - ' . $med->name_en : '' }}</option>
                     @endforeach
                 </select>
             </div>
@@ -61,7 +61,8 @@
         <table class="medicine-table">
             <thead>
                 <tr>
-                    <th>اسم الدواء</th>
+                    <th>اسم الدواء (عربي)</th>
+                    <th>الاسم الإنجليزي</th>
                     <th>تكلفة النقاط</th>
                     <th>الكمية المتوفرة</th>
                     <th>الحالة</th>
@@ -72,6 +73,7 @@
                 @forelse($inventories as $inv)
                 <tr>
                     <td style="font-size: 18px;">{{ $inv->medicine->name }}</td>
+                    <td style="font-size: 16px; direction:ltr; text-align:left;">{{ $inv->medicine->name_en ?? '-' }}</td>
                     <td>{{ $inv->medicine->points_cost }}</td>
                     <td style="color: var(--primary-navy); font-size: 20px;">{{ $inv->quantity }}</td>
                     <td>
@@ -89,7 +91,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" style="padding: 40px; color: #999;">لا توجد أدوية متوفرة في المخزون حالياً</td>
+                    <td colspan="6" style="padding: 40px; color: #999;">لا توجد أدوية متوفرة في المخزون حالياً</td>
                 </tr>
                 @endforelse
             </tbody>

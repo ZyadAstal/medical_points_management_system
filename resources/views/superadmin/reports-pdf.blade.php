@@ -130,6 +130,7 @@
                 <!-- Reordered headers -->
                 <th>{{ $headers['sum'] }}</th>
                 <th>{{ $headers['count'] }}</th>
+                <th>{{ $headers['medicine_en'] }}</th>
                 <th>{{ $headers['medicine'] }}</th>
             </tr>
         </thead>
@@ -139,6 +140,7 @@
                 <!-- Reordered cells -->
                 <td>{{ number_format($med->total_points) }}</td>
                 <td>{{ number_format($med->count) }}</td>
+                <td>{{ $med->name_en ?? '-' }}</td>
                 <td>{{ $med->shaped_name }}</td>
             </tr>
             @endforeach
@@ -154,6 +156,7 @@
                 <th>{{ $headers['date'] }}</th>
                 <th>{{ $headers['points'] }}</th>
                 <th>{{ $headers['qty'] }}</th>
+                <th>{{ $headers['medicine_en'] }}</th>
                 <th>{{ $headers['medicine'] }}</th>
                 <th>{{ $headers['center'] }}</th>
             </tr>
@@ -165,6 +168,7 @@
                 <td>{{ $dispense->created_at->format('Y-m-d') }}</td>
                 <td>{{ number_format($dispense->points_used) }}</td>
                 <td>{{ number_format($dispense->quantity) }}</td>
+                <td>{{ $dispense->prescriptionItem->medicine->name_en ?? '-' }}</td>
                 <td>{{ $dispense->shaped_medicine }}</td>
                 <td>{{ $dispense->shaped_center }}</td>
             </tr>

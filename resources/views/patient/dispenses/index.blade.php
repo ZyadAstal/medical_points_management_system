@@ -29,7 +29,12 @@
                 @forelse($dispenses as $dispense)
                     <tr>
                         <td style="font-weight: 500">{{ $dispense->created_at->format('Y/m/d') }}</td>
-                        <td class="med-name">{{ $dispense->prescriptionItem->medicine->name }}</td>
+                        <td class="med-name">
+                            <div style="font-weight: 700;">{{ $dispense->prescriptionItem->medicine->name }}</div>
+                            @if($dispense->prescriptionItem->medicine->name_en)
+                                <div style="font-size: 13px; color: #6184A0; direction: ltr; text-align: left;">{{ $dispense->prescriptionItem->medicine->name_en }}</div>
+                            @endif
+                        </td>
                         <td style="color: #7F7676;">{{ $dispense->quantity }}</td>
                         <td class="points">{{ $dispense->points_used }}</td>
                         <td style="font-weight: 400;">{{ $dispense->medicalCenter->name }}</td>

@@ -67,6 +67,7 @@
                     $itemData = $prescription->items->map(function($item) {
                         return [
                             "medicine" => $item->medicine->name ?? "—",
+                            "medicine_en" => $item->medicine->name_en ?? null,
                             "quantity" => $item->quantity,
                             "dispensed" => $item->dispenses->count() > 0
                         ];

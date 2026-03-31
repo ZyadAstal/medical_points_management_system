@@ -104,8 +104,12 @@
                     <option value="">اختر الدواء</option>
                     @foreach($medicines as $med)
                         @php $stock = $med->inventories->first()->quantity ?? 0; @endphp
-                        <option value="{{ $med->id }}" data-name="{{ $med->name }}" data-points="{{ $med->points_cost }}" data-stock="{{ $stock }}">
-                            {{ $med->name }} ({{ $med->points_cost }} نقطة) - المتوفر: {{ $stock }}
+                        <option value="{{ $med->id }}" 
+                                data-name="{{ $med->name }}" 
+                                data-name-en="{{ $med->name_en }}"
+                                data-points="{{ $med->points_cost }}" 
+                                data-stock="{{ $stock }}">
+                            {{ $med->name }}{{ $med->name_en ? ' - ' . $med->name_en : '' }} ({{ $med->points_cost }} نقطة) - المتوفر: {{ $stock }}
                         </option>
                     @endforeach
                 </select>

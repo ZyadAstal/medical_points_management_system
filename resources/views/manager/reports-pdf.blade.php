@@ -102,6 +102,7 @@
             <tr>
                 <th>{{ $headers['points'] }}</th>
                 <th>{{ $headers['count'] }}</th>
+                <th>{{ $headers['medicine_en'] }}</th>
                 <th>{{ $headers['medicine'] }}</th>
             </tr>
         </thead>
@@ -110,6 +111,7 @@
             <tr>
                 <td>{{ number_format($stat->points) }}</td>
                 <td>{{ number_format($stat->count) }}</td>
+                <td>{{ $stat->name_en ?? '-' }}</td>
                 <td>{{ $stat->shaped_name }}</td>
             </tr>
             @endforeach
@@ -124,6 +126,7 @@
             <tr>
                 <th>{{ $headers['status'] }}</th>
                 <th>{{ $headers['qty'] }}</th>
+                <th>{{ $headers['medicine_en'] }}</th>
                 <th>{{ $headers['medicine'] }}</th>
             </tr>
         </thead>
@@ -134,6 +137,7 @@
                     {{ $inv->shaped_status }}
                 </td>
                 <td>{{ $inv->quantity }}</td>
+                <td>{{ $inv->medicine->name_en ?? '-' }}</td>
                 <td>{{ $inv->shaped_name }}</td>
             </tr>
             @endforeach

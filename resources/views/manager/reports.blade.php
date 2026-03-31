@@ -65,7 +65,7 @@
                     <select name="medicine_id" class="filter-control">
                         <option value="">كل الأدوية</option>
                         @foreach($allMedicines as $m)
-                            <option value="{{ $m->id }}" {{ request('medicine_id') == $m->id ? 'selected' : '' }}>{{ $m->name }}</option>
+                            <option value="{{ $m->id }}" {{ request('medicine_id') == $m->id ? 'selected' : '' }}>{{ $m->name }}{{ $m->name_en ? ' - ' . $m->name_en : '' }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -95,7 +95,8 @@
             <table class="report-table">
                 <thead>
                     <tr>
-                        <th>اسم الدواء</th>
+                        <th>اسم الدواء (عربي)</th>
+                        <th>اسم الدواء (إنجليزي)</th>
                         <th>عدد مرات الصرف</th>
                         <th>النقاط المصروفة</th>
                     </tr>
@@ -104,11 +105,12 @@
                     @forelse($medicineStats as $stat)
                     <tr>
                         <td>{{ $stat->name }}</td>
+                        <td style="direction:ltr; text-align:left;">{{ $stat->name_en ?? '-' }}</td>
                         <td>{{ $stat->count }}</td>
                         <td>{{ number_format($stat->points) }}</td>
                     </tr>
                     @empty
-                    <tr><td colspan="3" style="padding: 40px; color: #999;">لا توجد بيانات متاحة</td></tr>
+                    <tr><td colspan="4" style="padding: 40px; color: #999;">لا توجد بيانات متاحة</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -122,7 +124,8 @@
                 <thead>
                     <tr>
                         <th>الترتيب</th>
-                        <th>اسم الدواء</th>
+                        <th>اسم الدواء (عربي)</th>
+                        <th>اسم الدواء (إنجليزي)</th>
                         <th>الكمية المتبقية</th>
                         <th>الحالة</th>
                     </tr>
@@ -132,13 +135,14 @@
                     <tr>
                         <td style="color: #000;">{{ $index + 1 }}</td>
                         <td>{{ $inv->medicine->name }}</td>
+                        <td style="direction:ltr; text-align:left;">{{ $inv->medicine->name_en ?? '-' }}</td>
                         <td>{{ $inv->quantity }}</td>
                         <td class="{{ $inv->quantity <= 3 ? 'status-critical' : 'status-warning' }}">
                             {{ $inv->quantity <= 3 ? 'حرجة' : 'منخفضة' }}
                         </td>
                     </tr>
                     @empty
-                    <tr><td colspan="4" style="padding: 40px; color: #999;">المخزون سليم، لا توجد تنبيهات</td></tr>
+                    <tr><td colspan="5" style="padding: 40px; color: #999;">المخزون سليم، لا توجد تنبيهات</td></tr>
                     @endforelse
                 </tbody>
             </table>

@@ -115,6 +115,7 @@ class PatientController extends Controller
             $dispenseHistory = $allDispenses->sortByDesc('created_at')->take(20)->map(function ($dispense) {
                 return [
                     'medicine' => $dispense->prescriptionItem->medicine->name ?? '—',
+                    'medicine_en' => $dispense->prescriptionItem->medicine->name_en ?? null,
                     'quantity' => $dispense->quantity,
                     'points' => $dispense->points_used,
                     'date' => $dispense->created_at->format('Y/m/d'),

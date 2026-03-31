@@ -24,12 +24,13 @@
         });
     }
 
-    window.editMedicine = function (id, name, points, expiry) {
+    window.editMedicine = function (id, name, nameEn, points, expiry) {
         const form = document.getElementById('editDrugForm');
         if (!form) return;
 
         form.action = `/superadmin/medicines/${id}`;
         document.getElementById('editDrugName').value = name;
+        document.getElementById('editDrugNameEn').value = nameEn || '';
         document.getElementById('editDrugPoints').value = points;
         document.getElementById('e_expiry').value = expiry;
 

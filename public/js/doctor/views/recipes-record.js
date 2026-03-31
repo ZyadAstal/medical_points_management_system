@@ -35,7 +35,10 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML =
                     '<td style="text-align:center; color:#94a3b8; font-weight:700;">' + (i + 1) + '</td>' +
-                    '<td style="font-weight:600;">' + item.medicine + '</td>' +
+                    '<td style="font-weight:600;">' + 
+                        '<div>' + item.medicine + '</div>' + 
+                        (item.medicine_en ? '<div style="font-size:12px; color:#64748b; font-style:italic; margin-top:2px;">' + item.medicine_en + '</div>' : '') +
+                    '</td>' +
                     '<td style="text-align:center;">' + item.quantity + '</td>' +
                     '<td style="text-align:center;">' +
                         (item.dispensed

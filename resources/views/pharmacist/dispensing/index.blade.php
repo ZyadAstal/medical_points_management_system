@@ -18,7 +18,8 @@
             <tr>
                 <th>التاريخ والوقت</th>
                 <th>اسم المريض</th>
-                <th>الدواء</th>
+                <th>اسم الدواء (عربي)</th>
+                <th>الاسم الإنجليزي</th>
                 <th>النقاط المخصومة</th>
                 <th>الحالة</th>
             </tr>
@@ -29,12 +30,13 @@
                 <td>{{ $dispense->created_at->format('Y/m/d H:i') }}</td>
                 <td style="font-weight:600;">{{ $dispense->prescriptionItem->prescription->patient->name }}</td>
                 <td>{{ $dispense->prescriptionItem->medicine->name }}</td>
+                <td style="direction:ltr; text-align:left;">{{ $dispense->prescriptionItem->medicine->name_en ?? '-' }}</td>
                 <td style="color: #053052; font-weight: 700;">{{ $dispense->points_used }} نقطة</td>
                 <td><span class="status-badge">تم الصرف</span></td>
             </tr>
             @empty
             <tr>
-                <td colspan="5" style="text-align: center; color: #888; padding: 30px;">لم يتم إجراء أي عمليات صرف حتى الآن.</td>
+                <td colspan="6" style="text-align: center; color: #888; padding: 30px;">لم يتم إجراء أي عمليات صرف حتى الآن.</td>
             </tr>
             @endforelse
         </tbody>

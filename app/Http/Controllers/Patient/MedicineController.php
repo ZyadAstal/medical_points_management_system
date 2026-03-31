@@ -17,7 +17,7 @@ class MedicineController extends Controller
         $medicines = collect([]);
         
         if ($query) {
-            $medicines = Medicine::searchArabic('name', $query)
+            $medicines = Medicine::searchArabic(['name', 'name_en'], $query)
                 ->with(['inventories.medicalCenter'])
                 ->when($centerId && $centerId !== 'all', function ($q) use ($centerId) {
                     $q->whereHas('inventories', function ($innerQ) use ($centerId) {

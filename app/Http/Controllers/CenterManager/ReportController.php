@@ -35,8 +35,8 @@ class ReportController extends Controller
             ->join('prescription_items', 'dispenses.prescription_item_id', '=', 'prescription_items.id')
             ->join('medicines', 'prescription_items.medicine_id', '=', 'medicines.id')
             ->where('dispenses.medical_center_id', $centerId)
-            ->select('medicines.name', 'medicines.id', DB::raw('count(dispenses.id) as count'), DB::raw('sum(dispenses.points_used) as points'))
-            ->groupBy('medicines.id', 'medicines.name')
+            ->select('medicines.name', 'medicines.name_en', 'medicines.id', DB::raw('count(dispenses.id) as count'), DB::raw('sum(dispenses.points_used) as points'))
+            ->groupBy('medicines.id', 'medicines.name', 'medicines.name_en')
             ->orderBy('count', 'desc');//بيجيب الادوية اللي اتصرفت
 
         // Apply filters
@@ -86,8 +86,8 @@ class ReportController extends Controller
             ->join('prescription_items', 'dispenses.prescription_item_id', '=', 'prescription_items.id')
             ->join('medicines', 'prescription_items.medicine_id', '=', 'medicines.id')
             ->where('dispenses.medical_center_id', $centerId)
-            ->select('medicines.name', DB::raw('count(dispenses.id) as count'), DB::raw('sum(dispenses.points_used) as points'))
-            ->groupBy('medicines.id', 'medicines.name')
+            ->select('medicines.name', 'medicines.name_en', DB::raw('count(dispenses.id) as count'), DB::raw('sum(dispenses.points_used) as points'))
+            ->groupBy('medicines.id', 'medicines.name', 'medicines.name_en')
             ->orderBy('count', 'desc');
 
         if ($medicineId) $medicineStats->where('medicines.id', $medicineId);//
@@ -122,6 +122,7 @@ class ReportController extends Controller
         // Column Headers
         $headers = [
             'medicine' => $arabic->utf8Glyphs('اسم الدواء', 100),
+            'medicine_en' => 'English Name',
             'count' => $arabic->utf8Glyphs('عدد مرات الصرف', 100),
             'points' => $arabic->utf8Glyphs('النقاط المصروفة', 100),
             'qty' => $arabic->utf8Glyphs('الكمية المتبقية', 100),

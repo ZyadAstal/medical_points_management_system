@@ -43,7 +43,7 @@ class DispensingController extends Controller
                 $q->whereHas('prescriptionItem.prescription.patient', function($pq) use ($search) {
                     $pq->searchArabic('full_name', $search);
                 })->orWhereHas('prescriptionItem.medicine', function($mq) use ($search) {
-                    $mq->searchArabic('name', $search);
+                    $mq->searchArabic(['name', 'name_en'], $search);
                 });
             });
         }

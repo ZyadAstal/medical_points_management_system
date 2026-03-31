@@ -42,7 +42,8 @@
     <div class="mc-table">
         <div class="mc-table-head">
             <div class="mc-th">اسم المريض</div>
-            <div class="mc-th"> اسم الدواء</div>
+            <div class="mc-th"> اسم الدواء (عربي)</div>
+            <div class="mc-th"> اسم الدواء (إنجليزي)</div>
             <div class="mc-th">الكمية</div>
             <div class="mc-th">النقاط المصروفة</div>
             <div class="mc-th">الصيدلي </div>
@@ -53,6 +54,7 @@
             <div class="mc-row">
                 <div class="mc-td mc-name">{{ $dispense->prescriptionItem->prescription->patient->full_name }}</div>
                 <div class="mc-td">{{ $dispense->prescriptionItem->medicine->name }}</div>
+                <div class="mc-td" style="direction:ltr; text-align:left;">{{ $dispense->prescriptionItem->medicine->name_en ?? '-' }}</div>
                 <div class="mc-td">{{ $dispense->quantity }}</div>
                 <div class="mc-td">{{ number_format($dispense->points_used) }}</div>
                 <div class="mc-td">{{ $dispense->pharmacist?->name ?? 'غير محدد' }}</div>

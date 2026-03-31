@@ -52,11 +52,11 @@
                             if ($inventory->quantity <= 0) {
                                 $statusClass = 'status-none';
                                 $statusText = 'غير متوفر';
-                                $qtyText = '0';
+                                $qtyText = 'نفذ المخزون';
                             } elseif ($inventory->quantity <= 10) {
                                 $statusClass = 'status-limited';
                                 $statusText = 'كمية محدودة';
-                                $qtyText = 'أقل من 10';
+                                $qtyText = 'كمية محدودة';
                             }
                         @endphp
                         <div class="medicine-card">
@@ -64,6 +64,9 @@
                                 <i class="fas fa-pills" style="font-size: 2rem; color: #0B6CB8"></i>
                                 <div class="med-details">
                                     <h3 style="margin: 0;">{{ $medicine->name }}</h3>
+                                    @if($medicine->name_en)
+                                        <p style="font-size: 0.9rem; color: #0B6CB8; margin: 2px 0; direction: ltr; text-align: right;">{{ $medicine->name_en }}</p>
+                                    @endif
                                     <p style="font-size: 0.8rem; color: #999; margin-top: 5px;">
                                         {{ $inventory->medicalCenter->name }} | انتهاء: {{ $medicine->expiry_date?->format('m/Y') ?? '---' }}
                                     </p>

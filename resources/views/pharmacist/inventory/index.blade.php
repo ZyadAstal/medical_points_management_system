@@ -16,8 +16,8 @@
     <table class="inventory-table">
         <thead>
             <tr>
-                <th>اسم الدواء</th>
-                <th>التصنيف</th>
+                <th>اسم الدواء (عربي)</th>
+                <th>الاسم الإنجليزي</th>
                 <th>الكمية المتوفرة</th>
                 <th>تكلفة النقاط</th>
                 <th>الحالة</th>
@@ -27,7 +27,7 @@
             @forelse($inventory as $item)
             <tr>
                 <td style="font-weight:600;">{{ $item->medicine->name }}</td>
-                <td style="color: #6b7280;">{{ $item->medicine->category }}</td>
+                <td style="direction:ltr; text-align:left;">{{ $item->medicine->name_en ?? '-' }}</td>
                 <td>{{ $item->quantity }} عبوة</td>
                 <td>{{ $item->medicine->points_cost }} نقطة</td>
                 <td>

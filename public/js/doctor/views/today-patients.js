@@ -103,7 +103,16 @@
                     if (tbody) {
                         if (info.dispense_history && info.dispense_history.length > 0) {
                             tbody.innerHTML = info.dispense_history.map(h =>
-                                `<tr><td class="drug">${h.medicine}</td><td>${h.quantity}</td><td>${h.points}</td><td>${h.date}</td><td class="pharm">${h.pharmacist}</td></tr>`
+                                `<tr>
+                                    <td class="drug">
+                                        <div>${h.medicine}</div>
+                                        ${h.medicine_en ? `<div style="font-size:11px; color:#64748b; font-style:italic; margin-top:2px;">${h.medicine_en}</div>` : ''}
+                                    </td>
+                                    <td>${h.quantity}</td>
+                                    <td>${h.points}</td>
+                                    <td>${h.date}</td>
+                                    <td class="pharm">${h.pharmacist}</td>
+                                </tr>`
                             ).join('');
                         } else {
                             tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا يوجد سجل صرف</td></tr>';

@@ -70,7 +70,13 @@
                     </td>
                     <td>
                         @foreach($p->items as $item)
-                            {{ $item->medicine->name }}{{ !$loop->last ? '، ' : '' }}
+                            <div style="margin-bottom: 2px;">
+                                {{ $item->medicine->name }}
+                                @if($item->medicine->name_en)
+                                    <br><small style="color: #6184A0; direction: ltr; display: inline-block;">{{ $item->medicine->name_en }}</small>
+                                @endif
+                                {{ !$loop->last ? '، ' : '' }}
+                            </div>
                         @endforeach
                     </td>
                     <td class="points">

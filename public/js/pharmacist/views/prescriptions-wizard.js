@@ -93,6 +93,7 @@
         
         const id = select.value;
         const name = select.options[select.selectedIndex].getAttribute('data-name');
+        const nameEn = select.options[select.selectedIndex].getAttribute('data-name-en');
         const points = parseInt(select.options[select.selectedIndex].getAttribute('data-points'));
         const pQty = parseInt(pQtyInput.value);
         const dQty = parseInt(dQtyInput.value);
@@ -108,7 +109,7 @@
             existing.pQty = pQty;
             existing.dQty = dQty;
         } else {
-            selectedMedicines.push({ id, name, points, pQty, dQty });
+            selectedMedicines.push({ id, name, nameEn, points, pQty, dQty });
         }
 
         renderMedicinesTable();
@@ -126,7 +127,10 @@
         
         container.innerHTML = selectedMedicines.map((m, index) => `
             <div class="table-row" style="background: #fff; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                <div style="flex: 2; text-align: right; font-weight: 600;">${m.name}</div>
+                <div style="flex: 2; text-align: right; font-weight: 600;">
+                    ${m.name}
+                    ${m.nameEn ? `<br><small style="color: #6184A0;">${m.nameEn}</small>` : ''}
+                </div>
                 <div style="flex: 0.5;"><div class="value-box">${m.pQty}</div></div>
                 <div style="flex: 0.5;"><div class="value-box" style="background: #e0f2fe; border-color: #bae6fd;">${m.dQty}</div></div>
                 <div style="flex: 1;"><div class="value-box" style="color: #0764AE;">${m.points * m.dQty}</div></div>
@@ -190,7 +194,13 @@
             if (listContainer) {
                 const div = document.createElement('div');
                 div.className = 'review-item';
-                div.innerHTML = `<span>${m.name}</span> <span style="color: #0B6CB8;">المقررة: ${m.pQty} | المصروفة: ${m.dQty} (${cost} نقطة)</span>`;
+                div.innerHTML = `
+                    <div style="display:flex; flex-direction:column;">
+                        <span style="font-weight:600;">${m.name}</span>
+                        ${m.nameEn ? `<span style="font-size:0.8rem; color:#6184A0;">${m.nameEn}</span>` : ''}
+                    </div>
+                    <span style="color: #0B6CB8;">المقررة: ${m.pQty} | المصروفة: ${m.dQty} (${cost} نقطة)</span>
+                `;
                 listContainer.appendChild(div);
             }
 

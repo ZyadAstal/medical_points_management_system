@@ -60,8 +60,8 @@ class ReportController extends Controller
         $topMedQuery = DB::table('dispenses')
             ->join('prescription_items', 'dispenses.prescription_item_id', '=', 'prescription_items.id')
             ->join('medicines', 'prescription_items.medicine_id', '=', 'medicines.id')
-            ->select('medicines.name', DB::raw('count(dispenses.id) as count'), DB::raw('sum(dispenses.points_used) as total_points'))
-            ->groupBy('medicines.id', 'medicines.name')
+            ->select('medicines.name', 'medicines.name_en', DB::raw('count(dispenses.id) as count'), DB::raw('sum(dispenses.points_used) as total_points'))
+            ->groupBy('medicines.id', 'medicines.name', 'medicines.name_en')
             ->orderBy('count', 'desc');
 
         if ($centerId) $topMedQuery->where('dispenses.medical_center_id', $centerId);
@@ -141,8 +141,8 @@ class ReportController extends Controller
         $topMedQuery = DB::table('dispenses')
             ->join('prescription_items', 'dispenses.prescription_item_id', '=', 'prescription_items.id')
             ->join('medicines', 'prescription_items.medicine_id', '=', 'medicines.id')
-            ->select('medicines.name', DB::raw('count(dispenses.id) as count'), DB::raw('sum(dispenses.points_used) as total_points'))
-            ->groupBy('medicines.id', 'medicines.name')
+            ->select('medicines.name', 'medicines.name_en', DB::raw('count(dispenses.id) as count'), DB::raw('sum(dispenses.points_used) as total_points'))
+            ->groupBy('medicines.id', 'medicines.name', 'medicines.name_en')
             ->orderBy('count', 'desc');
 
         if ($centerId) $topMedQuery->where('dispenses.medical_center_id', $centerId);
@@ -182,6 +182,7 @@ class ReportController extends Controller
         $headers = [
             'center' => $arabic->utf8Glyphs('اسم المركز', 100),
             'medicine' => $arabic->utf8Glyphs('اسم الدواء', 100),
+            'medicine_en' => 'English Name',
             'qty' => $arabic->utf8Glyphs('نقاط الصرف', 100),
             'points' => $arabic->utf8Glyphs('النقاط المصروفة', 100),
             'date' => $arabic->utf8Glyphs('التاريخ', 100),

@@ -44,7 +44,7 @@
                     <select id="filterMedicine" class="filter-control" name="medicine_id">
                         <option value="">كل الأدوية</option>
                         @foreach($medicines as $medicine)
-                            <option value="{{ $medicine->id }}" {{ request('medicine_id') == $medicine->id ? 'selected' : '' }}>{{ $medicine->name }}</option>
+                            <option value="{{ $medicine->id }}" {{ request('medicine_id') == $medicine->id ? 'selected' : '' }}>{{ $medicine->name }}{{ $medicine->name_en ? ' - ' . $medicine->name_en : '' }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -76,7 +76,8 @@
                     <thead>
                         <tr>
                             <th>اسم المركز</th>
-                            <th>اسم الدواء</th>
+                            <th>اسم الدواء (عربي)</th>
+                            <th>الاسم الإنجليزي</th>
                             <th>عدد نقاط الصرف</th>
                             <th>النقاط المصروفة</th>
                             <th>التاريخ</th>
@@ -87,6 +88,7 @@
                         <tr>
                             <td>{{ $dispense->medicalCenter->name }}</td>
                             <td>{{ $dispense->prescriptionItem->medicine->name }}</td>
+                            <td style="direction:ltr; text-align:left;">{{ $dispense->prescriptionItem->medicine->name_en ?? '-' }}</td>
                             <td>{{ $dispense->quantity }}</td>
                             <td>{{ number_format($dispense->points_used) }}</td>
                             <td>{{ $dispense->created_at->format('Y/m/d') }}</td>
@@ -192,7 +194,12 @@
             <div class="card__icon"><img alt="" src="{{ asset('assets/admin/cards/most-prescribed-medicine.svg') }}"/></div>
             <div>
                 <div class="card__label">أكثر دواء صرفاً</div>
-                <div class="card__value card__value--single">{{ $topMedicines->first()->name ?? '---' }}</div>
+                <div class="card__value card__value--single">
+                    {{ $topMedicines->first()->name ?? '---' }}
+                    @if(isset($topMedicines->first()->name_en))
+                        <br><span style="font-size:12px; color:#888;">{{ $topMedicines->first()->name_en }}</span>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

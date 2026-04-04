@@ -8408,7 +8408,7 @@ body[data-page="medicines"] .medicines-modal-overlay.is-open {
 
 body[data-page="medicines"] .medicines-modal-box {
   width: 491px;
-  height: 468px;
+  height: 520px;
   background: #ffffff;
   border-radius: 4px;
   position: relative;
@@ -8447,27 +8447,34 @@ body[data-page="medicines"] .modal-label {
   line-height: 100%;
   letter-spacing: 0;
   color: #959595;
-  text-align: center;
+  text-align: right;
   position: absolute;
   height: 17px;
   white-space: nowrap;
 }
 
 body[data-page="medicines"] .modal-label-name {
-  top: 121px;
+  top: 110px;
   left: 347px;
   width: 58px;
 }
 
+body[data-page="medicines"] .modal-label-name-en {
+  top: 185px;
+  left: 280px;
+  width: 130px;
+  text-align: right;
+}
+
 body[data-page="medicines"] .modal-label-points {
-  top: 195px;
-  left: 295px;
+  top: 260px;
+  left: 247px;
   width: 160px;
 }
 
 body[data-page="medicines"] .modal-label-expiry {
-  top: 264px;
-  left: 309px;
+  top: 335px;
+  left: 286px;
   width: 123px;
   height: 23px;
 }
@@ -8476,14 +8483,14 @@ body[data-page="medicines"] .modal-input {
   position: absolute;
   left: 91px;
   width: 318px;
-  height: 30px;
+  height: 35px;
   border: 0.8px solid #939393;
   border-radius: 4px;
   background: #ffffff;
   box-sizing: border-box;
   font-family: Inter, sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 100%;
   letter-spacing: 0;
   color: #000000;
@@ -8493,11 +8500,15 @@ body[data-page="medicines"] .modal-input {
 }
 
 body[data-page="medicines"] .modal-input-name {
-  top: 145px;
+  top: 130px;
+}
+
+body[data-page="medicines"] .modal-input-name-en {
+  top: 205px;
 }
 
 body[data-page="medicines"] .modal-input-points {
-  top: 217px;
+  top: 280px;
   opacity: 0.9;
 }
 
@@ -8520,14 +8531,14 @@ body[data-page="medicines"] .modal-btn {
 }
 
 body[data-page="medicines"] .modal-btn-update {
-  top: 345px;
+  top: 420px;
   left: 258px;
   background: linear-gradient(90deg, #053052, #0B6CB8);
   border-color: #5B91E9;
 }
 
 body[data-page="medicines"] .modal-btn-cancel {
-  top: 344px;
+  top: 420px;
   left: 89px;
   background: linear-gradient(90deg, #7A7A7A, #626262);
   border-color: #444444;
@@ -8536,10 +8547,10 @@ body[data-page="medicines"] .modal-btn-cancel {
 
 body[data-page="medicines"] .modal-date-field {
   position: absolute;
-  top: 287px;
+  top: 355px;
   left: 91px;
   width: 317px;
-  height: 30px;
+  height: 35px;
   border: 0.8px solid #939393;
   border-radius: 4px;
   background: #ffffff;

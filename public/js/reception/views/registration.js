@@ -126,14 +126,28 @@
         if (!searchMsg) return;
         searchMsg.textContent = msg;
         searchMsg.style.display = 'block';
-        searchMsg.style.color = '#e74c3c';
+        searchMsg.style.padding = '15px';
+        searchMsg.style.borderRadius = '8px';
+        searchMsg.style.marginBottom = '20px';
+        searchMsg.style.border = '1px solid #f5c6cb';
+        searchMsg.style.background = '#f8d7da';
+        searchMsg.style.color = '#721c24';
+        searchMsg.style.fontWeight = 'bold';
     }
+
     function showSuccessMsg(msg) {
         if (!searchMsg) return;
         searchMsg.textContent = msg;
         searchMsg.style.display = 'block';
-        searchMsg.style.color = '#1a6d3c';
+        searchMsg.style.padding = '15px';
+        searchMsg.style.borderRadius = '8px';
+        searchMsg.style.marginBottom = '20px';
+        searchMsg.style.border = '1px solid #c3e6cb';
+        searchMsg.style.background = '#d4edda';
+        searchMsg.style.color = '#155724';
+        searchMsg.style.fontWeight = 'bold';
     }
+
     function hideMsg() {
         if (!searchMsg) return;
         searchMsg.style.display = 'none';

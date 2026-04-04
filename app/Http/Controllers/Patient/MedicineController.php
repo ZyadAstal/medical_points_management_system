@@ -14,20 +14,38 @@ class MedicineController extends Controller
         $query = $request->get('query');
         $centerId = $request->get('medical_center_id');
         
+        $patient = auth()->user()->patient;
+        
+        // جلب معرفات المراكز التي زارها المريض أو صرف منها
+        $visitedCenterIds = \App\Models\MedicalCenter::whereHas('visits', function($q) use ($patient) {
+            $q->where('patient_id', $patient->id);
+        })->orWhereHas('dispenses.prescriptionItem.prescription', function($q) use ($patient) {
+            $q->where('patient_id', $patient->id);
+        })->pluck('id');
+
         $medicines = collect([]);
         
         if ($query) {
             $medicines = Medicine::searchArabic(['name', 'name_en'], $query)
-                ->with(['inventories.medicalCenter'])
-                ->when($centerId && $centerId !== 'all', function ($q) use ($centerId) {
-                    $q->whereHas('inventories', function ($innerQ) use ($centerId) {
-                        $innerQ->where('medical_center_id', $centerId);
-                    });
+                ->whereHas('inventories', function ($q) use ($visitedCenterIds, $centerId) {
+                    if ($centerId && $centerId !== 'all') {
+                        $q->where('medical_center_id', $centerId);
+                    } else {
+                        $q->whereIn('medical_center_id', $visitedCenterIds);
+                    }
                 })
+                ->with(['inventories' => function($q) use ($visitedCenterIds, $centerId) {
+                    if ($centerId && $centerId !== 'all') {
+                        $q->where('medical_center_id', $centerId);
+                    } else {
+                        $q->whereIn('medical_center_id', $visitedCenterIds);
+                    }
+                    $q->with('medicalCenter');
+                }])
                 ->get();
         }
 
-        $medicalCenters = \App\Models\MedicalCenter::all();
+        $medicalCenters = \App\Models\MedicalCenter::whereIn('id', $visitedCenterIds)->get();
 
         return view('patient.medicines.search', compact('medicines', 'medicalCenters'));
     }

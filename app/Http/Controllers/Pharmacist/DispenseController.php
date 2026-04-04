@@ -9,6 +9,7 @@ use App\Models\Inventory;
 use App\Models\Prescription;
 use App\Models\PrescriptionItem;
 use App\Models\Patient;
+use App\Models\Visit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,8 +42,19 @@ class DispenseController extends Controller
                 return back()->with('error', 'لم يتم اختيار عناصر صالحة للصرف.');
             }
 
-            $totalPointsCost = 0;
             $patient = $itemsToDispense->first()->prescription->patient;
+            $totalPointsCost = 0;
+
+            // التأكد من أن المريض قد أتم زيارة الطبيب في هذا المركز اليوم
+            $hasCompletedVisit = Visit::where('patient_id', $patient->id)
+                ->where('medical_center_id', $centerId)
+                ->where('status', Visit::STATUS_COMPLETED)
+                ->whereDate('visit_date', now()->toDateString())
+                ->exists();
+
+            if (!$hasCompletedVisit) {
+                throw new \Exception('لا يمكن صرف الدواء لهذا المريض بسبب عدم وجود زيارة مكتملة للطبيب في هذا المركز اليوم.');
+            }
 
             // 1. Calculate Total Cost & Check Inventory
             foreach ($itemsToDispense as $item) {
@@ -60,7 +72,7 @@ class DispenseController extends Controller
 
             // 2. Check Patient Balance
             if ($patient->points < $totalPointsCost) {
-                return back()->with('error', "رصيد المريض غير كافٍ. المطلوب: $totalPointsCost، المتوفر: {$patient->points}");
+                throw new \Exception("رصيد المريض غير كافٍ. المطلوب: {$totalPointsCost}، المتوفر: {$patient->points}");
             }
 
             // 3. Process Dispense
@@ -72,7 +84,7 @@ class DispenseController extends Controller
                 $inventory->decrement('quantity');
 
                 // Mark Item as Dispensed
-                $item->update(['is_dispensed' => true]);
+                PrescriptionItem::where('id', $item->id)->update(['is_dispensed' => true]);
 
                 // Create Dispense Record
                 Dispense::create([
@@ -131,6 +143,18 @@ class DispenseController extends Controller
             DB::beginTransaction();
 
             $patient = Patient::findOrFail($request->patient_id);
+
+            // التأكد من أن المريض قد أتم زيارة الطبيب في هذا المركز اليوم
+            $hasCompletedVisit = Visit::where('patient_id', $patient->id)
+                ->where('medical_center_id', $centerId)
+                ->where('status', Visit::STATUS_COMPLETED)
+                ->whereDate('visit_date', now()->toDateString())
+                ->exists();
+
+            if (!$hasCompletedVisit) {
+                throw new \Exception('لا يمكن صرف الدواء لهذا المريض بسبب عدم وجود زيارة مكتملة للطبيب في هذا المركز اليوم.');
+            }
+
             $totalPointsCost = 0;
             $itemsData = $request->input('items', []);
 
@@ -192,7 +216,7 @@ class DispenseController extends Controller
 
             // 3. Check & Deduct Points
             if ($patient->points < $totalPointsCost) {
-                throw new \Exception("رصيد المريض غير كافٍ. المطلوب: $totalPointsCost، المتوفر: {$patient->points}");
+                throw new \Exception("رصيد المريض غير كافٍ. المطلوب: {$totalPointsCost}، المتوفر: {$patient->points}");
             }
 
             if ($totalPointsCost > 0) {

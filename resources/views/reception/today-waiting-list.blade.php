@@ -5,6 +5,107 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/reception/views/waiting-list.css') }}">
+    <style>
+        /* Custom Modal Styles */
+        .mc-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            direction: rtl;
+        }
+        .mc-modal-overlay.is-visible {
+            display: flex;
+            opacity: 1;
+        }
+        .mc-modal-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 400px;
+            max-width: 90vw;
+            padding: 32px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .mc-modal-overlay.is-visible .mc-modal-box {
+            transform: scale(1);
+        }
+        .mc-modal-icon-wrapper {
+            width: 64px;
+            height: 64px;
+            background: #FFF0F0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .mc-modal-icon-wrapper svg {
+            width: 32px;
+            height: 32px;
+            color: #D32F2F;
+        }
+        .mc-modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+        .mc-modal-text {
+            font-size: 15px;
+            color: #64748B;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+        .mc-modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .mc-btn-confirm {
+            padding: 10px 24px;
+            background: #D32F2F;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(211, 47, 47, 0.2);
+        }
+        .mc-btn-confirm:hover {
+            background: #B71C1C;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(211, 47, 47, 0.3);
+        }
+        .mc-btn-cancel {
+            padding: 10px 24px;
+            background: #F1F5F9;
+            color: #475569;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .mc-btn-cancel:hover {
+            background: #E2E8F0;
+            color: #1E293B;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -134,7 +235,7 @@
 
 {{-- روابط التصفح (Pagination) --}}
 <div class="mc-pagination">
-    {{ $visits->links('pagination::bootstrap-4') }}
+    {{ $visits->links('vendor.pagination.bootstrap-4') }}
 </div>
 
 {{-- إحصاء سريع --}}
@@ -155,6 +256,25 @@
         <strong>خروج:</strong> {{ $stats['completed'] }}
     </div>
 </div>
+</div>
+
+{{-- Custom Confirmation Modal --}}
+<div id="confirmModal" class="mc-modal-overlay">
+    <div class="mc-modal-box">
+        <div class="mc-modal-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 16.01L12.01 15.999" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </div>
+        <div class="mc-modal-title">تأكيد الإجراء</div>
+        <div class="mc-modal-text" id="confirmModalText">هل أنت متأكد من تنفيذ هذا الإجراء؟</div>
+        <div class="mc-modal-actions">
+            <button type="button" class="mc-btn-confirm" id="confirmBtnYes">نعم، متأكد</button>
+            <button type="button" class="mc-btn-cancel" id="confirmBtnNo">إلغاء</button>
+        </div>
+    </div>
 </div>
 @endsection
 

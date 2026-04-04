@@ -49,26 +49,50 @@ class PrescriptionController extends Controller
         // AJAX search for patient (used in wizard)
         if ($request->ajax()) {
             $nid = $request->input('national_id');
+            $center_id = auth()->user()->medical_center_id;
+
+            // 1. البحث العام في كل النظام
             $patient = Patient::where('national_id', $nid)
                 ->orWhere(function($q) use ($nid) {
                     $q->searchArabic(['full_name'], $nid);
                 })
                 ->first();
             
-            if ($patient) {
-                return response()->json([
-                    'success' => true,
-                    'patient' => $patient,
-                    'prescriptions' => Prescription::where('patient_id', $patient->id)
-                        ->whereHas('items', function($q) {
-                            $q->where('is_dispensed', false);
-                        })
-                        ->with(['doctor', 'items.medicine'])
-                        ->latest()
-                        ->get()
-                ]);
+            if (!$patient) {
+                return response()->json(['success' => false, 'message' => 'المريض غير موجود في النظام']);
             }
-            return response()->json(['success' => false, 'message' => 'المريض غير موجود']);
+
+            // 2. التحقق من وجود بيانات للمريض في هذا المركز المريض بمركزك
+            $hasDataInCenter = \App\Models\Visit::where('patient_id', $patient->id)
+                ->where('medical_center_id', $center_id)
+                ->exists() 
+                || \App\Models\Dispense::where('medical_center_id', $center_id)
+                ->whereHas('prescriptionItem.prescription', function($q) use ($patient) {
+                    $q->where('patient_id', $patient->id);
+                })
+                ->exists();
+
+            if (!$hasDataInCenter) {
+                return response()->json(['success' => false, 'message' => 'المريض ليس لديه أي بيانات في مركزك الطبي']);
+            }
+
+            // 3. استرجاع الوصفات المتاحة للصرف في هذا المركز
+            $prescriptions = Prescription::where('patient_id', $patient->id)
+                ->whereHas('doctor', function($q) use ($center_id) {
+                    $q->where('medical_center_id', $center_id);
+                })
+                ->whereHas('items', function($q) {
+                    $q->where('is_dispensed', false);
+                })
+                ->with(['doctor', 'items.medicine'])
+                ->latest()
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'patient' => $patient,
+                'prescriptions' => $prescriptions
+            ]);
         }
 
         // Fallback for non-ajax

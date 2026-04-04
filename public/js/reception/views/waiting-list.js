@@ -9,6 +9,35 @@ function printWaitingList() {
 }
 
 (function () {
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmText = document.getElementById('confirmModalText');
+    const confirmYes = document.getElementById('confirmBtnYes');
+    const confirmNo = document.getElementById('confirmBtnNo');
+
+    function showCustomConfirm(msg) {
+        return new Promise((resolve) => {
+            confirmText.textContent = msg;
+            confirmModal.classList.add('is-visible');
+
+            const handleYes = () => {
+                cleanup();
+                resolve(true);
+            };
+            const handleNo = () => {
+                cleanup();
+                resolve(false);
+            };
+            const cleanup = () => {
+                confirmYes.removeEventListener('click', handleYes);
+                confirmNo.removeEventListener('click', handleNo);
+                confirmModal.classList.remove('is-visible');
+            };
+
+            confirmYes.addEventListener('click', handleYes);
+            confirmNo.addEventListener('click', handleNo);
+        });
+    }
+
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     function initButtons() {
@@ -51,14 +80,14 @@ function printWaitingList() {
         // ---- زر تراجع (إلغاء أو فك إدخال) ----
         document.querySelectorAll('.js-undo-btn:not(.initialized)').forEach(btn => {
             btn.classList.add('initialized');
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', async function () {
                 if (this.disabled) return;
                 const row = this.closest('.waiting-row');
                 const badge = row.querySelector('.js-status-badge');
                 const isWaiting = badge.textContent.trim() === 'بانتظار';
                 
                 const msg = isWaiting ? 'هل تريد التراجع عن إدخال المريض؟' : 'هل تريد إلغاء موعد هذا المريض نهائياً؟';
-                if (!confirm(msg)) return;
+                if (!(await showCustomConfirm(msg))) return;
 
                 const url = this.dataset.url;
 

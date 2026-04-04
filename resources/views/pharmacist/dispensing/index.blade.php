@@ -43,7 +43,7 @@
     </table>
 
     <div class="custom-pagination-nav">
-        {{ $dispenses->links('pagination::bootstrap-4') }}
+        {{ $dispenses->links('vendor.pagination.bootstrap-4') }}
     </div>
 </div>
 @endsection

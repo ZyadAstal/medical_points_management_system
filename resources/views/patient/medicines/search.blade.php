@@ -21,7 +21,9 @@
             <form action="{{ route('patient.medicines.search') }}" method="GET" class="input-group">
                 <input type="text" name="query" value="{{ request('query') }}" placeholder="أدخل اسم الدواء هنا .." required>
                 <select name="medical_center_id">
-                    <option value="all">جميع المراكز</option>
+                    @if($medicalCenters->count() > 1)
+                        <option value="all">جميع مراكزك الطبية</option>
+                    @endif
                     @foreach($medicalCenters as $center)
                         <option value="{{ $center->id }}" {{ request('medical_center_id') == $center->id ? 'selected' : '' }}>
                             {{ $center->name }}

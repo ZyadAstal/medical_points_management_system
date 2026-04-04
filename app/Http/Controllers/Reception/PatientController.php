@@ -20,30 +20,35 @@ class PatientController extends Controller
      */
     public function index(Request $request)
     {
-        $patients = collect();
+        $query = Patient::query();
         $searched = false;
 
+        // التحقق من وجود معايير بحث
         if ($request->hasAny(['name', 'national_id', 'phone'])) {
             $searched = true;
-            $query = Patient::query();
+        }
 
-            if ($request->filled('name')) {
-                $query->searchArabic('full_name', $request->name);
-            }
-            if ($request->filled('national_id')) {
-                $query->where('national_id', 'like', '%' . $request->national_id . '%');
-            }
-            if ($request->filled('phone')) {
-                $query->where('phone', 'like', '%' . $request->phone . '%');
-            }
+        if ($request->filled('name')) {
+            $query->searchArabic('full_name', $request->name);
+        }
+        if ($request->filled('national_id')) {
+            $query->where('national_id', 'like', '%' . $request->national_id . '%');
+        }
+        if ($request->filled('phone')) {
+            $query->where('phone', 'like', '%' . $request->phone . '%');
+        }
 
-            $patients = $query->withCount('visits')
-                ->with(['visits' => function ($q) {
-                    $q->latest()->limit(1);
-                }])
-                ->latest()
-                ->paginate(10)
-                ->withQueryString();
+        $patients = $query->withCount('visits')
+            ->with(['visits' => function ($q) {
+                $q->latest()->limit(1);
+            }])
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        // نعتبر أنه تم البحث إذا كانت هناك نتائج وكان هناك معيار بحث، أو إذا كنا نتصفح الصفحات
+        if ($request->has('page')) {
+            $searched = true;
         }
 
         return view('reception.search-patient', compact('patients', 'searched'));
@@ -101,11 +106,24 @@ class PatientController extends Controller
             'date_of_birth' => $request->date_of_birth,
         ]);
 
+        $priority = (int)$request->priority;
+        $centerId = Auth::user()->medical_center_id;
+
+        // التحقق من وجود زيارات في مراكز أخرى اليوم (رغم أن المريض جديد، تحسباً لحالات إعادة التسجيل)
+        $otherCenterVisit = Visit::where('patient_id', $patient->id)
+            ->whereDate('visit_date', now()->toDateString())
+            ->where('medical_center_id', '!=', $centerId)
+            ->exists();
+
+        if ($otherCenterVisit && $priority != Visit::PRIORITY_EMERGENCY) {
+             return back()->with('error', 'لا يمكن تسجيل المريض لأنه قام بزيارة مركز طبي آخر اليوم، إلا في حالة كون الزيارة طارئة.');
+        }
+
         // إضافة زيارة مباشرة
         Visit::create([
             'patient_id'       => $patient->id,
             'doctor_id'        => $request->doctor_id,
-            'medical_center_id'=> Auth::user()->medical_center_id,
+            'medical_center_id'=> $centerId,
             'visit_date'       => now()->toDateString(),
             'status'           => Visit::STATUS_REGISTERED,
             'priority'         => $request->priority,
@@ -204,16 +222,35 @@ class PatientController extends Controller
             ->first();
 
         if ($existingVisit) {
-            return redirect()->back()->with('warning', 'المريض موجود بالفعل في قائمة الانتظار اليوم');
+            $msg = 'المريض موجود بالفعل في قائمة الانتظار اليوم';
+            return $request->ajax() 
+                ? response()->json(['success' => false, 'message' => $msg], 422) 
+                : redirect()->back()->with('warning', $msg);
+        }
+
+        $priority = (int)$request->priority;
+        $centerId = Auth::user()->medical_center_id;
+
+        // التحقق من وجود زيارات في مراكز أخرى اليوم
+        $otherCenterVisit = Visit::where('patient_id', $patient->id)
+            ->whereDate('visit_date', now()->toDateString())
+            ->where('medical_center_id', '!=', $centerId)
+            ->exists();
+
+        if ($otherCenterVisit && $priority != Visit::PRIORITY_EMERGENCY) {
+            $msg = 'لا يمكن تسجيل المريض لأنه قام بزيارة مركز طبي آخر اليوم، إلا في حالة كون الزيارة طارئة.';
+            return $request->ajax() 
+                ? response()->json(['success' => false, 'message' => $msg], 422) 
+                : redirect()->back()->with('error', $msg);
         }
 
         Visit::create([
             'patient_id'       => $patient->id,
             'doctor_id'        => $request->doctor_id,
-            'medical_center_id'=> Auth::user()->medical_center_id,
+            'medical_center_id'=> $centerId,
             'visit_date'       => now()->toDateString(),
             'status'           => Visit::STATUS_REGISTERED,
-            'priority'         => $request->priority,
+            'priority'         => $priority,
         ]);
 
         return response()->json(['success' => true, 'message' => 'تم إضافة المريض لقائمة الانتظار']);

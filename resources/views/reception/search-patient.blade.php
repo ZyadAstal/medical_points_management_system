@@ -131,7 +131,7 @@
 
         @if($patients instanceof \Illuminate\Pagination\LengthAwarePaginator && $patients->hasPages())
             <div style="margin-top:16px;">
-                {{ $patients->links() }}
+                {{ $patients->links('vendor.pagination.bootstrap-4') }}
             </div>
         @endif
     @else

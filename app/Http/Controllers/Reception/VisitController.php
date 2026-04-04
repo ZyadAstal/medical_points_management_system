@@ -85,6 +85,17 @@ class VisitController extends Controller
         ]);
 
         $centerId = Auth::user()->medical_center_id;
+        $priority = (int)$request->priority;
+
+        // التحقق من وجود زيارات في مراكز أخرى اليوم
+        $otherCenterVisit = Visit::where('patient_id', $patient->id)
+            ->whereDate('visit_date', now()->toDateString())
+            ->where('medical_center_id', '!=', $centerId)
+            ->exists();
+
+        if ($otherCenterVisit && $priority != Visit::PRIORITY_EMERGENCY) {
+            return back()->with('error', 'لا يمكن تسجيل المريض لأنه قام بزيارة مركز طبي آخر اليوم، إلا في حالة كون الزيارة طارئة.');
+        }
 
         Visit::create([
             'patient_id'       => $patient->id,

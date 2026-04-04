@@ -81,8 +81,8 @@
             <label class="modal-label modal-label-name" for="editDrugName">اسم الدواء (عربي)</label>
             <input id="editDrugName" name="name" class="modal-input modal-input-name" type="text" required />
 
-            <label class="modal-label" for="editDrugNameEn" style="margin-top:10px;">الاسم بالإنجليزي <span style="font-size:12px;opacity:.7;">(اختياري)</span></label>
-            <input id="editDrugNameEn" name="name_en" class="modal-input modal-input-name" type="text" placeholder="English name" style="direction:ltr;" />
+            <label class="modal-label modal-label-name-en" for="editDrugNameEn">الاسم بالإنجليزي</label>
+            <input id="editDrugNameEn" name="name_en" class="modal-input modal-input-name-en" type="text" placeholder="Enter English name" style="direction:ltr;" required />
             
             <label class="modal-label modal-label-points" for="editDrugPoints">عدد النقاط</label>
             <input id="editDrugPoints" name="points_cost" class="modal-input modal-input-points" type="number" required />
@@ -109,8 +109,8 @@
             <label class="modal-label modal-label-name" for="addDrugName">اسم الدواء (عربي)</label>
             <input id="addDrugName" name="name" class="modal-input modal-input-name" type="text" placeholder="ادخل اسم الدواء بالعربي" required />
 
-            <label class="modal-label" for="addDrugNameEn" style="margin-top:10px;">الاسم بالإنجليزي <span style="font-size:12px;opacity:.7;">(اختياري)</span></label>
-            <input id="addDrugNameEn" name="name_en" class="modal-input modal-input-name" type="text" placeholder="English name" style="direction:ltr;" />
+            <label class="modal-label modal-label-name-en" for="addDrugNameEn">الاسم بالإنجليزي</label>
+            <input id="addDrugNameEn" name="name_en" class="modal-input modal-input-name-en" type="text" placeholder="Enter English name" style="direction:ltr;" required />
             
             <label class="modal-label modal-label-points" for="addDrugPoints">تكلفة النقاط</label>
             <input id="addDrugPoints" name="points_cost" class="modal-input modal-input-points" type="number" placeholder="ادخل تكلفة النقاط" required />

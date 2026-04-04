@@ -8653,8 +8653,10 @@ body[data-page="search-patient"] .search-patient-box-panel{
 
 body[data-page="search-patient"] .search-patient-results-panel{
   width: 996px;
-  height: 107px;
+  height: auto;
+  min-height: 107px;
   margin-top: 31px;
+  padding-bottom: 20px;
 }
 
 

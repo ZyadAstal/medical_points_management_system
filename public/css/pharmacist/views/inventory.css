@@ -1,3 +1,47 @@
-@push('styles')
-    <link href="{{ asset('css/pharmacist/views/inventory.css') }}" rel="stylesheet">
-@endpush
+.inventory-search {
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+
+.inventory-search form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.inventory-search-input {
+    flex: 1;
+    height: 42px;
+    border: 1px solid #d9dee3;
+    border-radius: 10px;
+    padding: 0 15px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.inventory-search-input:focus {
+    border-color: #0b3a5a;
+}
+
+.search-submit-btn {
+    background: #0b3a5a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.search-submit-btn:hover {
+    background: #0a2f49;
+}
+
+.search-submit-btn svg {
+    stroke: white;
+}

@@ -1,15 +1,4 @@
 (function () {
-    // Patient search filter in sidebar
-    const searchInput = document.getElementById('recipesPatientSearch');
-    if (searchInput) {
-        searchInput.addEventListener('input', function () {
-            const q = searchInput.value.trim().toLowerCase();
-            document.querySelectorAll('.patient-btn').forEach(function (btn) {
-                btn.style.display = btn.textContent.toLowerCase().includes(q) ? '' : 'none';
-            });
-        });
-    }
-
     // Modal elements
     const overlay = document.getElementById('rxModalOverlay');
     const closeBtn = document.getElementById('rxModalClose');

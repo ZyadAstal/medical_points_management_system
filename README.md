@@ -307,7 +307,7 @@ The routing system is split into role-specific sub-route modules loaded through 
 Ensure your environment satisfies the following prerequisites:
 - **PHP:** `>= 8.2` (Extensions required: `OpenSSL`, `PDO`, `Mbstring`, `Tokenizer`, `XML`, `Ctype`, `JSON`, `BCMath`, `Fileinfo`, `GD`)
 - **Composer:** `>= 2.2`
-- **Node.js & NPM:** Node `>= 18.x`, NPM `>= 9.x`
+- **Node.js & NPM:** Node `>= 18`, NPM `>= 9`
 - **Database Server:** MySQL `>= 8.0` or MariaDB `>= 10.4`
 - **Web Server:** Apache / Nginx / XAMPP / Laragon
 
